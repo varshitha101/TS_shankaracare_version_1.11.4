@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="assets/img/svasthya.png" rel="icon">
+  <title> Svasthya Login</title>
+
+  <!-- Bootstrap -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <!-- NProgress -->
+  <link href="assets/vendor/nprogress/nprogress.css" rel="stylesheet">
+  <!-- Animate.css -->
+  <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <!-- Toastify library -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <!-- Custom Theme Style -->
+  <!-- <link href="../build/css/login-custom.css" rel="stylesheet"> -->
+  <link href="assets/css/login-custom.css" rel="stylesheet">
+  <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
+  <!-- <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-analytics.js"></script>
+    <script type="module" src="../build/js/livepage/database_function.js"   ></script> -->
+
+  <style>
+      /* @media only screen and (max-width: 412px) and (max-height: 915px) {
+        #Content{
+            display: none;
+        }
+} */
+  </style>
+</head>
+
+
+
+<body id="loginform" class="login">
+
+
+  <div class="svasthya_icon" style="align-content: center;">
+    <img src="assets/img/svasthya(1).png" alt="..." style="z-index: 1;">
+    <img src="assets/img/login_icon.png" alt="..." style="z-index: 1;">
+  </div>
+
+  <div class="login_layout">
+    <a class="hiddenanchor" id="signup"></a>
+    <a class="hiddenanchor" id="signin"></a>
+
+    <div class="login_wrapper">
+      <div class="animate form login_form">
+        <section class="login_content">
+          <form>
+            <div>
+              <input type="text" id="email" class="form-control" placeholder="Enter ID" name="uname" />
+              <span class=" icon1 fa fa-user form-control-feedback right " aria-hidden="false"></span>
+            </div>
+            <br />
+            <div>
+              <input type="password" id="password" value="" class="form-control" placeholder="Enter Password"
+                name="psw" />
+              <span class="icon2" onclick="hideshow()">
+
+                <!-- <i id="slash" class="fa fa-eye-slash" aria-hidden="false"></i> -->
+                <i id="eye" class="fa fa-eye" aria-hidden="true"></i>
+              </span>
+            </div>
+
+            <div>
+              <label class="container">Remember me
+                <input id="rememberMe" type="checkbox">
+                <span class="checkmark"></span>
+              </label>
+
+              <a id="submit_button" class="btn btn-default submit">LOGIN</a>
+
+            </div>
+            <div class="clearfix"></div>
+
+          </form>
+        </section>
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <div class="svasthya_about" id="Content">
+    <h1> Sri Shankara National Centre for Cancer Prevention and Research is a leading centre for oncology research in
+      India and is committed to advancing the strategies for cancer prevention, cancer detection and cancer treatment to
+      alleviate the burden of cancer across the globe. Under Sri Shankara Cancer Foundation, Sri Shankara National
+      Centre for Cancer Prevention & Research is recognised as a Scientific & Industrial Research Organisation by DSIR,
+      Government of India.</h1>
+
+  </div>
+  &nbsp;
+ 
+  <div class="svasthya_about" id="Content">
+    <h1> "Svasthya" is a Bio-informatics platform for remote health discovery and delivery. Svasthya enables automation
+      of complex clinical workflows along with the time coordinated bio vitals measurement. Svasthya enables remote
+      review of the users vitals, context & other details enabling effective triaging & screening.</h1>
+  </div>
+
+
+
+  </div>
+  <!-- Custom Theme Scripts -->
+  <script type="module" src="assets/js/login.js"></script>
+  <!-- <script type="module" src="login.js" ></script> -->
+
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+	  https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-analytics.js"></script>
+
+
+  <script>
+    var state = false;
+    function hideshow() {
+      if (state) {
+        document.getElementById("password").setAttribute("type", "password");
+        document.getElementById("eye").style.color = '#7a797c';
+        state = false;
+      }
+      else {
+        document.getElementById("password").setAttribute("type", "text");
+        document.getElementById("eye").style.color = '#5887ef';
+        state = true;
+      }
+
+    }
+  </script>
+
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</body>
+
+</html>

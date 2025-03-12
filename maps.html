@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Maps Scatter Plot with Dynamic Markers</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div element. */
+      #map {
+        height: 600px;
+        width: 100%;
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdRG1GxrdRTXK39zysIT57solJYXuqDm8&callback=initMap" defer></script>
+    <script>
+      function initMap() {
+        // Initialize the map centered on India
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 5,
+          center: { lat: 20.5937, lng: 78.9629 }, // Coordinates for India
+        });
+
+        // Data similar to your `effectScatter` series: [latitude, longitude, value]
+        const data = [
+          [12.9512465, 77.4833269, 100],
+          [12.9532465, 77.4633269, 30],
+          [12.9412465, 77.4833269, 80],
+        ];
+
+        // Function to calculate symbol size based on the third parameter (value)
+        function calculateSymbolSize(value) {
+          return (value / 100) * 15 + 5; // Similar to your effectScatter symbol size formula
+        }
+
+        // Create markers
+        data.forEach(([lat, lng, value]) => {
+          const size = calculateSymbolSize(value); // Get the size of the marker
+
+          const marker = new google.maps.Marker({
+            position: { lat, lng },
+            map: map,
+            icon: {
+              path: google.maps.SymbolPath.CIRCLE, // Circle symbol
+              scale: size, // Dynamic size
+              fillColor: '#b02a02',
+              fillOpacity: 0.8,
+              strokeWeight: 1,
+              strokeColor: '#b02a02',
+            },
+            title: `Value: ${value}`, // Tooltip text
+          });
+        });
+
+        // Adding a click event listener to capture the latitude and longitude on map click
+        google.maps.event.addListener(map, 'click', (event) => {
+          const latLng = event.latLng;
+          console.log(`Clicked at latitude: ${latLng.lat()}, longitude: ${latLng.lng()}`);
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <h3>Google Maps Scatter Plot with Dynamic Markers</h3>
+    <div id="map"></div>
+  </body>
+</html>

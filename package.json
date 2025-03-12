@@ -1,0 +1,9 @@
+{
+  "name": "js",
+  "exports": {
+    "./index.js": "./index.js",
+    "./plots.js": "./plots.js"
+  },
+  "type": "module"
+  
+}

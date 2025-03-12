@@ -1,0 +1,1953 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Shankara Statistics</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="assets/img/svasthya.png" rel="icon">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+
+    <!-- Template Main CSS File -->
+    <link href="assets/css/style.css" rel="stylesheet">
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-analytics.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-messaging.js"></script>
+    <script>(g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })
+            ({ key: "AIzaSyAdRG1GxrdRTXK39zysIT57solJYXuqDm8", v: "weekly" });</script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="assets/js/index.js"></script>
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.4/dist/xlsx.full.min.js"></script>
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <script type="module" src="assets/js/toastmsg.js"></script>
+
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fefefe;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 300px;
+            text-align: center;
+        }
+
+        #surveyPhases {
+            display: none;
+        }
+
+        /*.modal {*/
+        /*    width:400px;*/
+        /*    height:800px;*/
+        /*    margin-top:400px;*/
+        /*   // padding-top:300px;*/
+        /*    margin-left:700px;*/
+
+        /*}*/
+
+
+
+
+        @media only screen and (max-width: 395px) and (max-height: 877px) {
+            .col-lg-3 {
+                display: flex;
+                justify-content: center;
+            }
+
+            .col-lg-12 {
+                margin: 0 auto;
+            }
+
+            #pendingFollowupData {
+                overflow-x: auto;
+                white-space: normal;
+                position: relative;
+                width: 1231px;
+                height: 500px;
+                user-select: none;
+                padding: 0;
+                margin: 0;
+                border: 0;
+            }
+
+            #chart {
+                overflow-x: auto;
+                white-space: normal;
+                position: relative;
+                width: 976px;
+                height: 500px;
+                user-select: none;
+                padding: 0;
+                margin: 0;
+                border: 0;
+            }
+
+            #OverallScreening {
+                overflow-x: auto;
+                white-space: normal;
+                position: relative;
+                width: 976px;
+                height: 500px;
+                user-select: none;
+                padding: 0;
+                margin: 0;
+                border: 0;
+            }
+
+        }
+
+        @media only screen and (max-width: 412px) and (max-height: 915px) {
+
+            #follow_Data_1,
+            #follow_Data_2,
+            #follow_Data_3,
+            #follow_Data_4,
+            #follow_Data_5,
+            #follow_Data_6,
+            #follow_Data_7 {
+                margin: 0 auto;
+            }
+
+            #follow_Chart_1,
+            #follow_Chart_2,
+            #follow_Chart_3,
+            #follow_Chart_4,
+            #follow_Chart_5,
+            #follow_Chart_6,
+            #follow_Chart_7 {
+                margin: 0 auto;
+            }
+
+            #follow_Graph_1,
+            #follow_Graph_2,
+            #follow_Graph_3,
+            #follow_Graph_4,
+            #follow_Graph_5,
+            #follow_Graph_6,
+            #follow_Graph_7 {
+                margin: 0 auto;
+            }
+
+            #nodata {
+                margin: 0 auto;
+            }
+
+            #follow_RS_1,
+            #follow_RS_2,
+            #follow_RS_3,
+            #follow_RS_4,
+            #follow_RS_5,
+            #follow_RS_6,
+            #follow_RS_7 {
+                margin: 0 auto;
+            }
+
+            .FollowupData {
+                overflow-x: auto;
+                scroll-behavior: smooth;
+                width: 100%;
+            }
+
+            .surveyP1P2 {
+                overflow-x: auto;
+                scroll-behavior: smooth;
+                width: 100%;
+            }
+
+            .docScrStatus {
+                overflow-x: auto;
+                scroll-behavior: smooth;
+                width: 100%;
+            }
+
+            #download {
+                /* background-color: transparent;
+                border: none;
+                width: 60px;
+                height: 40px;
+                background-image: url('./assets/img/download(1).svg'); 
+                background-size: 100px 40px;
+                background-repeat: no-repeat;
+                background-position: center;
+                font-size: 0; 
+                text-indent: -9999px;  */
+                display: none;
+            }
+
+
+        }
+
+        #download {
+            align-content: center;
+            border-width: 2px;
+            border-color: white;
+            color: white;
+            border-radius: 10px;
+            font-size: 18px;
+            height: 40px;
+            width: 160px;
+        }
+
+        #content {
+
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top " style="padding: 10px 0;">
+        <div class="container d-flex align-items-center">
+            <img src="assets/img/svasthya(1).png" style='width:100px ; height:55px;'></img>
+            <img src="assets/img/svasthya.png" style='width:55 ; height:55px;'></img>
+            <h1 class="logo me-auto"><a href="index.html"></a></h1>
+            &emsp;
+            &emsp;
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link scrollto" href="#portfolio">Apply Filter</a></li>
+
+                    <li><a class="nav-link scrollto" href="#screening">Survey</a></li>
+                    <li><a class="nav-link scrollto" href="#recommandation">Doctor review</a></li>
+                    <li><a class="nav-link scrollto" href="#Tobacco">TCC</a></li>
+
+                    <!-- <li><a class="nav-link scrollto" href="#review">InPerson Review Summary</a></li> -->
+
+
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+
+            </nav>
+
+            <!-- &emsp;
+            &emsp;
+            &emsp;
+            &emsp;
+            &emsp;
+            &emsp;
+            &emsp; -->
+            &emsp;
+            &emsp;
+            <input type="button" value="FollowUp Status" class="btn btn-default" id="download">
+
+            <!-- <button
+            style="align-content:center;border-width:2px;border-color:white;color:white;border-radius: 10px ;font-size: 20px;height: 40px;width:100px;"
+            class="btn btn-default" onclick="logout()">Logout</button> -->
+            &emsp;
+            <img src="assets/img/logout-svgrepo-com.svg" width="100px" height="50px" onclick="logout()"
+                class="btn btn-default">
+        </div>
+
+
+    </header><!-- End Header -->
+
+    <!-- ======= Hero Section ======= -->
+    <section id="hero" class="d-flex align-items-top" style="padding:40px">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-12 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
+           <img src="assets/img/ccare.jpg" style="width:100%;height: 50%;" class="img-fluid " alt=""> -->
+                <!--  </div> -->
+            </div>
+        </div>
+
+    </section><!-- End Hero -->
+
+
+    <div id="loading" class="modal">
+        <div class="modal-content">
+            <div class="row">
+                <div class="col-4">
+                    <div class="spinner"></div>
+                </div>
+                <div class="col-8">
+                    <h3 style="align-content: center;padding-top: 20px;"> Loading...</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="d-flex justify-content-center" style="display: none;">
+        <div id="loading" class="spinner-border" role="status" style="display: none;">
+            <span class="sr-only"></span>
+        </div>
+    </div> -->
+
+    <!-- ======= Portfolio Section ======= -->
+    <div id="portfolio">
+        <div class="" data-aos="fade-up">
+            <div class="section-title">
+                <p style="padding:5px 35px 5px 35px;" id="content">The population cancer screening conducted by Sri
+                    Shankara Cancer
+                    Hospital is being streamlined for
+                    remote
+                    review & workflow management by Svasthya.
+                    In addition to the standard cancer screening & triaging protocols developed by Shankara, Svasthya
+                    captures
+                    multiple vitals of the individuals.
+                    Triaging for the oral cancer screening is also being improved due to the individual's oral cavity
+                    photographs
+                    captured at the field level through Svasthya.
+                    Doctors can remotely review the data captured on the field to evaluate the risk that an individual
+                    carries &
+                    recommend a follow up action.
+                    This website provides statistics about the Cancer screening using svasthya.</p>
+                <!-- <section name="form1" id="form1" href="why-us" style="padding: 10px 0 10px 0;">
+                    <select name="phase" id="phase" class="dropbtn">
+                        <option value="Select">Select</option>
+
+                        <option value="All">All</option>
+                        <option value="1">Phase 1</option>
+                        <option value="2">Phase 2</option>
+                    </select>
+                    <select name="fieldworker" id="fieldworker" class="dropbtn">
+                        <option value="Select" selected="selected">Select</option>
+                        <option value="All" >All</option>
+                    </select>
+                    <select name="panchayat" id="panchayat" class="dropbtn">
+                        <option value="Select">Select</option>
+
+                        <option value="All" selected="selected">All</option>
+                    </select>
+                    <select name="village" id="village" class="dropbtn dropbtnV">
+                        <option value="Select">Select</option>
+
+                        <option value="All" selected="selected">All</option>
+                    </select>
+                    <!-- <select disabled name="daterange" id="daterange" class="dropbtn">
+                        <option value="All" selected="selected">All</option>
+                        <option value="Day" selected="selected">Day</option>
+                        <option value="Week" selected="selected">Week</option>
+                        <option value="Custom" selected>Custom</option>
+                    </select>
+                    <label for="start">From date:</label>
+                    <input type="date" id="start" name="trip-start" class="dropbtn" />
+
+                    <label for="start">To date:</label> -->
+                <!-- <input type="date" id="stop" name="trip-stop" value="2018-07-22" min="2018-01-01" max="2018-12-31" /> -->
+                <!-- <input type="date" id="stop" name="trip-stop" class="dropbtn" /> -->
+                <!-- <input type="submit" value="submit" class="dropbtn" onclick="onSubmit()" id="submit">
+
+                    &emsp;
+                    &emsp;
+
+                </section> -->
+                <section name="form1" id="form1" href="why-us" style="padding: 10px 0 10px 0;">
+                    <select name="phase" id="phase" class="dropbtn">
+                        <option value="Select" selected="selected">Select</option>
+                        <option value="All">All</option>
+                        <option value="1">Phase 1</option>
+                        <option value="2">Phase 2</option>
+                    </select>
+
+                    <select name="fieldworker" id="fieldworker" class="dropbtn">
+                        <option value="Select" selected="selected">Select</option>
+                    </select>
+
+                    <select name="panchayat" id="panchayat" class="dropbtn">
+                        <option value="Select" selected="selected">Select</option>
+                    </select>
+
+                    <select name="village" id="village" class="dropbtn dropbtnV">
+                        <option value="Select" selected="selected">Select</option>
+                        <option value="All">All</option>
+                    </select>
+
+                    <input type="submit" value="submit" class="dropbtn" onclick="onSubmit()" id="submit">
+                </section>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- End Portfolio Section -->
+    <!-- <div class="d-flex justify-content-center" style="display: none;">
+        <div id="loading" class="spinner-border" style="width: 3rem; height: 3rem;" role="status"
+            style="display: none;">
+            <span class="sr-only"></span>
+        </div>
+    </div> -->
+
+    <main id="main">
+        <section id="screening" class="why-us section-bg" style="padding-bottom: 10px;">
+            <div class="container-fluid" data-aos="fade-up">
+                <div class="card col-lg-12">
+                    <div class="row">
+                        <h2 class="section-title" style="align-content: center;"><strong>Survey
+                                Summary</strong></h2>
+                        <div class="row">
+                            <div class="content">
+
+                                <div class="row">
+                                    <h4 class="section-title"><strong>Total Number of Survey: <span
+                                                id="ts"></span></strong>
+                                    </h4>
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                        <div class="row"
+                            style="margin-right:0px; margin-left:0px; padding-left:20px; padding-right:20px; justify-content: space-evenly;">
+                            <div class="card col-lg-6" style="margin: 10px 0px 10px 0px;">
+
+                                <div class="row" style="margin-top: 20px;">
+                                    <div class="col-lg-4">
+                                        <section class="row" style="padding: 0 0;">
+                                            <h6 class="section-title" style="align-content: center;">Gender Statistics
+                                            </h6>
+                                            <!-- <div>
+                                            <p class="section-title" style="margin-bottom: 0px;">Total Number of People:
+                                                
+                                            </p>
+                                        </div> -->
+                                            <div class="col-lg-12 align-items-stretch  order-lg-3 img" id="mf"
+                                                style="height:190px;" data-aos="zoom-in" data-aos-delay="0">
+                                                &nbsp;</div>
+
+                                        </section>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <section class="row" style="padding: 0 0;">
+                                            <h6 class="section-title" style="align-content: center;">Status Summary
+                                            </h6>
+                                            <!-- <div>
+                                            <p class="section-title" style="margin-bottom: 0px;">Total Number of People:
+                                                
+                                            </p>
+                                        </div> -->
+                                            <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                id="attendance" style="height:190px;" data-aos="zoom-in"
+                                                data-aos-delay="0">
+                                                &nbsp;</div>
+                                        </section>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <section class="row" style="padding: 0 0;">
+                                            <h6 class="section-title" style="align-content: center;">Eligibility Summary
+                                            </h6>
+                                            <!-- <div>
+                                            <p class="section-title" style="margin-bottom: 0px;">Total Number of People:
+                                                
+                                            </p>
+                                        </div> -->
+                                            <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                id="eligible" style="height:190px;" data-aos="zoom-in"
+                                                data-aos-delay="0">
+                                                &nbsp;</div>
+                                        </section>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <section class="row" style="padding: 0 0;">
+                                            <h6 class="section-title" style="align-content: center;">Screening
+                                            </h6>
+                                            <!-- <div>
+                                            <p class="section-title" style="margin-bottom: 0px;">Total Number of People:
+                                                
+                                            </p>
+                                        </div> -->
+                                            <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                id="doscreening" style="height:190px;" data-aos="zoom-in"
+                                                data-aos-delay="0">
+                                                &nbsp;</div>
+
+                                        </section>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <section class="row" style="padding: 0 0;">
+                                            <h6 class="section-title" style="align-content: center;">Habits Summary
+                                            </h6>
+                                            <!-- <div>
+                                            <p class="section-title" style="margin-bottom: 0px;">Total Number of People:
+                                                
+                                            </p>
+                                        </div> -->
+                                            <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                id="doc_rec" style="height:190px;width: 200%;" data-aos="zoom-in"
+                                                data-aos-delay="0">
+                                                &nbsp;</div>
+
+                                        </section>
+                                    </div>
+                                    <div class="col-lg-4" id="survey_chart">
+                                        <section class="row" style="padding: 0 0;">
+                                            <h6 class="section-title" style="align-content: center;">Re-Survey</h6>
+                                            <!-- <h6 class="section-title" style="align-content: center;">Re-Survey: <snap id="RC">
+                                        </snap>
+                                        </h6> -->
+                                            <!-- <div>
+                                            <p class="section-title" style="margin-bottom: 0px;">Total Number of People:
+                                                
+                                            </p>
+                                        </div> -->
+                                            <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                id="neworold" style="height:190px; width: 211px;" data-aos="zoom-in"
+                                                data-aos-delay="0">
+                                                &nbsp;</div>
+                                        </section>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <section class="row" style="padding: 0 0;">
+                                            <h6 class="section-title" style="align-content: center;">Tobacco Consumption
+                                            </h6>
+                                            <!-- <div>
+                                            <p class="section-title" style="margin-bottom: 0px;">Total Number of People:
+                                                
+                                            </p>
+                                        </div> -->
+                                            <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                id="tcc_Fm" style="height:190px;" data-aos="zoom-in" data-aos-delay="0">
+                                                &nbsp;</div>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card col-lg-5" style="margin: 10px 0px 10px 0px;">
+                                <div class="row" style="margin-top: 20px;">
+                                    <h6 class="section-title" style="align-content: center;">Location Summary</h6>
+                                    <div id="map" style="height: 600px; padding: 20px;"></div>
+                                    <p><span>
+                                            <div id="nodata" style="text-align:center;margin: auto; padding: 10px;"
+                                                hidden="true"></div>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="recommandation" class="why-us section-bg">
+            <div class="card" style="padding: 10px; margin: 10px;">
+                <div class="container-fluid" data-aos="fade-up">
+                    <div class="col">
+                        <div class="row" style="margin-bottom: 10px;">
+                            <div class="col-lg-12">
+                                <h2 class="section-title" style="align-content: center; margin: 20px;"><strong>
+                                        Screening Summary</strong>
+                                </h2>
+                                <div class=" col-lg-12" style="margin-bottom: 10px;">
+                                    <div class="card">
+                                        <h5 class="section-title" style="align-content: center; margin-top: 10px;">
+                                            <strong>Screening Registrations: <span id="nrg"></span>
+                                            </strong>
+                                        </h5>
+                                        <div style="margin:0 10px 0 10px;">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="row">
+                                                        <div class="col-lg-4">
+                                                            <section class="row" style=" padding: 30px 0px 0px 0px; ">
+                                                                <h6 class="section-title"
+                                                                    style="align-content: center;">
+                                                                    Gender
+                                                                </h6>
+                                                                <!-- <div>
+                                                                <p class="section-title" style="margin-bottom: 0px;">Total Number of People: <snap id="TG"></snap></p>
+                                                            </div> -->
+                                                                <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                                    height:200px; id="newscreening" style="height:250px;"
+                                                                    data-aos="zoom-in" data-aos-delay="0">
+                                                                    &nbsp;</div>
+
+                                                            </section>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <section class="row" style=" padding: 30px 0px 0px 0px; ">
+                                                                <h6 class="section-title"
+                                                                    style="align-content: center;">
+                                                                    Blood Pressure
+                                                                </h6>
+                                                                <!-- <div>
+                                                                <p class="section-title" style="margin-bottom: 0px;">Total Number of People: <snap id="TF"></snap></p>
+                                                            </div> -->
+                                                                <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                                    id="bloodP" style="height:250px;" data-aos="zoom-in"
+                                                                    data-aos-delay="0">
+                                                                    &nbsp;
+                                                                </div>
+
+                                                            </section>
+                                                        </div>
+
+                                                        <div class="col-lg-4">
+                                                            <section class="row" style=" padding: 30px 0px 0px 0px; ">
+                                                                <h6 class="section-title"
+                                                                    style="align-content: center;">
+                                                                    GRBS 
+                                                                </h6>
+                                                                <!-- <div>
+                                                                <p class="section-title" style="margin-bottom: 0px;">Total Number of People: <snap id="TG"></snap></p>
+                                                            </div> -->
+                                                                <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                                    height:200px; id="grbs" style="height:250px;"
+                                                                    data-aos="zoom-in" data-aos-delay="0">
+                                                                    &nbsp;
+                                                                </div>
+                                                            </section>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card" style="margin-bottom: 10px;">
+
+                                    <div class="row" style="margin-bottom: 10px;">
+                                        <div class="col-lg-4">
+                                            <div class="col-lg-12">
+                                                <h5 class="section-title"><strong>Remote Screening: <snap id="rs">
+                                                        </snap> </strong></h5>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <section class="row" style="padding: 30px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;"> Remote
+                                                        Screening
+                                                    </h6>
+                                                    <!-- <div>
+                                                        <p class="section-title" style="margin-bottom: 0px;">Total Number of People</p>
+                                                    </div> -->
+                                                    <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                        id="remote_screening" style="height:280px;" data-aos="zoom-in"
+                                                        data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+
+                                        </div>
+                                        <!-- <div class="row">
+                                            <div class="content" style="padding: 0 5px 0 5px;">
+                
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <h4 class="section-title"><strong>Remote Screening: <snap id="rs">
+                                                                </snap> </strong></h4>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <h4><strong>Inperson Screening: <snap id="ps"></snap></strong>
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                
+                
+                                            </div>
+                
+                
+                                        </div> -->
+                                        <div class="col-lg-8">
+                                            <div class="col-lg-12">
+                                                <h5 class="section-title"><strong>Inperson Screening: <snap id="ps">
+                                                        </snap></strong>
+                                                </h5>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <section class="row" style=" padding: 30px 0px 0px 0px; ">
+                                                        <h6 class="section-title" style="align-content: center;">
+                                                            Inperson
+                                                            Screening
+                                                        </h6>
+                                                        <!-- <div>
+                                                    <p class="section-title" style="margin-bottom: 0px;">Total Number of People: <snap id="IPM"></snap></p>
+                                                </div> -->
+                                                        <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                            id="inperson_screening" style="height:280px;"
+                                                            data-aos="zoom-in" data-aos-delay="0">
+                                                            &nbsp;</div>
+                                                    </section>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <section class="row" style=" padding: 30px 0px 0px 0px; ">
+                                                        <h6 class="section-title"
+                                                            style="align-content: center; padding: 0px;">Doctor
+                                                            recommendation
+                                                        </h6>
+                                                        <!-- <div>
+                                                    <p class="section-title" style="margin-bottom: 0px;">Total Number of People: <snap id="DR"></snap></p>
+                                                </div> -->
+                                                        <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                            id="doc_recommendation" style="height:280px;"
+                                                            data-aos="zoom-in" data-aos-delay="0">
+                                                            &nbsp;</div>
+                                                    </section>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!-- <div class="col-lg-4">
+                                            <div class="col-lg-12">
+                                                <h5 class="section-title"><strong> Tobacco Consumption: <snap id="TC">
+                                                        </snap></strong></h5>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <section class="row" style="padding: 30px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;"> Tobacco
+                                                        Consumption </h6>
+                                                    
+                                                    <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                        id="tcc_Doc" style="height:280px;" data-aos="zoom-in"
+                                                        data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+
+                                        </div> -->
+                                    </div>
+                                    <div class="row" style="margin-bottom: 10px;">
+                                        <div class="col-lg-6">
+                                            <div class="col-lg-12">
+                                                <h5 class="section-title"><strong>Re-Screening</strong></h5>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <section class="row" style="padding: 30px 0px 0px 0px; ">
+                                                    <!-- <h6 class="section-title" style="align-content: center;"> Remote
+                                                        Screening
+                                                    </h6> -->
+                                                    <!-- <div>
+                                                        <p class="section-title" style="margin-bottom: 0px;">Total Number of People</p>
+                                                    </div> -->
+                                                    <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                        id="re_screening" style="height:280px;" data-aos="zoom-in"
+                                                        data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="col-lg-12">
+                                                <h5 class="section-title"><strong> Tobacco Consumption: <snap id="TC">
+                                                        </snap></strong></h5>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <section class="row" style="padding: 30px 0px 0px 0px; ">
+                                                    <!-- <h6 class="section-title" style="align-content: center;"> Tobacco
+                                                        Consumption </h6> -->
+                                                    <!-- <div>
+                                                        <p class="section-title" style="margin-bottom: 0px;">Total Number of People</p>
+                                                    </div> -->
+                                                    <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                        id="tcc_Doc" style="height:280px;" data-aos="zoom-in"
+                                                        data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                <h6 class="section-title" style="align-content: center;">Oral Screening:
+                                                    <snap id="orscount"></snap>
+                                                </h6>
+
+                                                <div class="col-lg-12 align-items-stretch  order-lg-3 img"
+                                                    id="oralScreening" style="height:250px;" data-aos="zoom-in"
+                                                    data-aos-delay="0">
+                                                    &nbsp;</div>
+
+                                            </section>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                <h6 class="section-title" style="align-content: center;">Breast
+                                                    Screening: <snap id="brscount"></snap>
+                                                </h6>
+
+                                                <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                    id="breastScreening" style="height:250px;" data-aos="zoom-in"
+                                                    data-aos-delay="0">
+                                                    &nbsp;</div>
+
+                                            </section>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                <h6 class="section-title" style="align-content: center;">Cervical
+                                                    Screening: <snap id="crscount"></snap>
+                                                </h6>
+
+                                                <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                    id="CervicalScreening" style="height:250px;" data-aos="zoom-in"
+                                                    data-aos-delay="0">
+                                                    &nbsp;</div>
+                                            </section>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                <h6 class="section-title" style="align-content: center;">Abnormal Oral
+                                                    Screening: <snap id="AChart"></snap>
+                                                </h6>
+
+                                                <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                    id="abnormalScreening" style="height:250px;" data-aos="zoom-in"
+                                                    data-aos-delay="0">
+                                                    &nbsp;</div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 10px;">
+                            <div class="col">
+                                <div class="card">
+                                    <section id="survey" style="padding: 10px 0 0 0;">
+                                        <div data-aos="fade-up">
+                                            <h5 class="section-title" style="align-content: center; margin-top: 15px;">
+                                                <strong>Phasewise Screening</strong>
+                                            </h5>
+                                            <section class="docScrStatus" style="align-content: center;">
+                                                <div class="align-items-stretch  order-lg-3 img" id="OverallScreening"
+                                                    style="height:500px; width: 1200px;" data-aos="zoom-in"
+                                                    data-aos-delay="0">
+                                                    &nbsp;</div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="Tobacco" class="why-us section-bg">
+
+            <div class="card" style="padding: 10px; margin: 10px;">
+                <div class="container-fluid" data-aos="fade-up">
+                    <div class="col">
+                        <div class="row" style="margin-bottom: 10px;">
+                            <h2 class="section-title" style="align-content: center;  margin: 20px 0 20px 0;">
+                                <strong>TCC Screening</strong>
+                            </h2>
+                            <div class=" col-lg-12">
+                                <div class="card">
+                                    <h5 class="section-title" style="align-content: center; margin-top: 10px;">
+                                        <strong>Total number of
+                                            TCC: <span id="total_TCC"></span></strong>
+                                    </h5>
+                                    <div style="margin:0 10px 0 10px;">
+                                        <div class="row">
+                                            <div class="col-lg-7">
+                                                <div class="row">
+                                                    <div class="col-lg-5">
+                                                        <section class="row" style=" padding: 30px 0px 0px 0px; ">
+                                                            <h6 class="section-title" style="align-content: center;">
+                                                                Gender
+                                                                Statistics
+                                                            </h6>
+                                                            <!-- <div>
+                                                            <p class="section-title" style="margin-bottom: 0px;">Total Number of People: <snap id="TG"></snap></p>
+                                                        </div> -->
+                                                            <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                                height:200px; id="tccGender" style="height:250px;"
+                                                                data-aos="zoom-in" data-aos-delay="0">
+                                                                &nbsp;</div>
+
+                                                        </section>
+                                                    </div>
+                                                    <div class="col-lg-7">
+                                                        <section class="row" style=" padding: 30px 0px 0px 0px; ">
+                                                            <h6 class="section-title" style="align-content: center;">
+                                                                Tobacco Consumption
+                                                            </h6>
+                                                            <!-- <div>
+                                                            <p class="section-title" style="margin-bottom: 0px;">Total Number of People: <snap id="TF"></snap></p>
+                                                        </div> -->
+                                                            <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                                id="pending_follow" style="height:250px;"
+                                                                data-aos="zoom-in" data-aos-delay="0">
+                                                                &nbsp;</div>
+
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <section class="row" style=" padding: 30px 0px 0px 0px; ">
+                                                            <h6 class="section-title" style="align-content: center;">
+                                                                Smoke Dependency: <snap id="TCC_S"></snap>
+                                                            </h6>
+                                                            <!-- <div>
+                                                            <p class="section-title" style="margin-bottom: 0px;">Total Number of People: <snap id="TG"></snap></p>
+                                                        </div> -->
+                                                            <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                                height:200px; id="main1" style="height:250px;"
+                                                                data-aos="zoom-in" data-aos-delay="0">
+                                                                &nbsp;</div>
+
+                                                        </section>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <section class="row" style=" padding: 30px 0px 0px 0px; ">
+                                                            <h6 class="section-title" style="align-content: center;">
+                                                                Smokeless Dependency: <snap id="TCC_SL"></snap>
+                                                            </h6>
+                                                            <!-- <div>
+                                                            <p class="section-title" style="margin-bottom: 0px;">Total Number of People: <snap id="TG"></snap></p>
+                                                        </div> -->
+                                                            <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                                height:200px; id="main2" style="height:250px;"
+                                                                data-aos="zoom-in" data-aos-delay="0">
+                                                                &nbsp;</div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12" style="margin: 10px 0 10px 0;">
+                                <div class="card">
+                                    <div class="row">
+                                        <h5 class="section-title" style="align-content: center; margin-top: 15px;">
+                                            <strong>FollowUps</strong>
+                                        </h5>
+                                        <div class="section-title" style="margin: 20px 0 20px 0;">
+                                            <select id="followUpDropdown">
+                                                <option value="1">Follow-Up 1</option>
+                                                <option value="2">Follow-Up 2</option>
+                                                <option value="3">Follow-Up 3</option>
+                                                <option value="4">Follow-Up 4</option>
+                                                <option value="5">Follow-Up 5</option>
+                                                <option value="6">Follow-Up 6</option>
+                                                <option value="7">Follow-Up 7</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="col-lg-12" id="follow_Data_1">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">Followup:
+                                                        <snap id="F_1"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 align-items-stretch  order-lg-3 img"
+                                                        id="follow_1" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_Data_2">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">Followup:
+                                                        <snap id="F_2"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                        id="follow_2" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_Data_3">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">Followup:
+                                                        <snap id="F_3"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                        id="follow_3" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_Data_4">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">Followup:
+                                                        <snap id="F_4"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                        id="follow_4" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_Data_5">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">Followup:
+                                                        <snap id="F_5"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                        id="follow_5" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_Data_6">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">Followup:
+                                                        <snap id="F_6"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                        id="follow_6" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_Data_7">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">Followup:
+                                                        <snap id="F_7"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                        id="follow_7" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="col-lg-12" id="follow_Chart_1">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">
+                                                        Availability Status: <snap id="BA_1"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 align-items-stretch  order-lg-3 img"
+                                                        id="chart_BA_1" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_Chart_2">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">
+                                                        Availability Status: <snap id="BA_2"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                        id="chart_BA_2" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_Chart_3">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">
+                                                        Availability Status: <snap id="BA_3"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                        id="chart_BA_3" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_Chart_4">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">
+                                                        Availability Status: <snap id="BA_4"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                        id="chart_BA_4" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_Chart_5">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">
+                                                        Availability Status: <snap id="BA_5"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                        id="chart_BA_5" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_Chart_6">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">
+                                                        Availability Status: <snap id="BA_6"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                        id="chart_BA_6" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_Chart_7">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">
+                                                        Availability Status: <snap id="BA_7"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                        id="chart_BA_7" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="col-lg-12" id="follow_Graph_1">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">Willing to
+                                                        Speak: <snap id="BW_1"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 section-title align-items-stretch  order-lg-3 img"
+                                                        id="chart_BW_1" style=" height:250px; width: 320px; "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_Graph_2">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">Willing to
+                                                        Speak: <snap id="BW_2"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 section-title align-items-stretch order-1 order-lg-3 img"
+                                                        id="chart_BW_2" style=" height:250px; width: 320px; "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_Graph_3">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">Willing to
+                                                        Speak: <snap id="BW_3"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 section-title align-items-stretch order-1 order-lg-3 img "
+                                                        id="chart_BW_3" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_Graph_4">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">Willing to
+                                                        Speak: <snap id="BW_4"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 section-title align-items-stretch order-1 order-lg-3 img"
+                                                        id="chart_BW_4" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_Graph_5">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">Willing to
+                                                        Speak: <snap id="BW_5"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 section-title align-items-stretch order-1 order-lg-3 img"
+                                                        id="chart_BW_5" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_Graph_6">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">Willing to
+                                                        Speak: <snap id="BW_6"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 section-title align-items-stretch order-1 order-lg-3 img"
+                                                        id="chart_BW_6" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_Graph_7">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">Willing to
+                                                        Speak: <snap id="BW_7"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 section-title align-items-stretch order-1 order-lg-3 img"
+                                                        id="chart_BW_7" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="col-lg-12" id="follow_RS_1">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">Status:
+                                                        <snap id="RS_1"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 align-items-stretch  order-lg-3 img"
+                                                        id="chart_RS_1" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_RS_2">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">Status:
+                                                        <snap id="RS_2"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                        id="chart_RS_2" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_RS_3">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">Status:
+                                                        <snap id="RS_3"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                        id="chart_RS_3" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_RS_4">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">Status:
+                                                        <snap id="RS_4"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                        id="chart_RS_4" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_RS_5">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">Status:
+                                                        <snap id="RS_5"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                        id="chart_RS_5" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_RS_6">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">Status:
+                                                        <snap id="RS_6"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                        id="chart_RS_6" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                            <div class="col-lg-12" id="follow_RS_7">
+                                                <section class="row" style="padding: 10px 0px 0px 0px; ">
+                                                    <h6 class="section-title" style="align-content: center;">Status:
+                                                        <snap id="RS_7"></snap>
+                                                    </h6>
+
+                                                    <div class="col-lg-12 align-items-stretch order-1 order-lg-3 img"
+                                                        id="chart_RS_7" style=" height:250px; width: 320px;  "
+                                                        data-aos="zoom-in" data-aos-delay="0">
+                                                        &nbsp;</div>
+                                                </section>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card" id="pendingFollowupDatas">
+                                    <section id="survey" style="padding: 10px 0 0 0;">
+                                        <div data-aos="fade-up">
+                                            <h5 class="section-title" style="align-content: center;">
+                                                <strong>TCC Pending FollowUps</strong>
+                                            </h5>
+                                            <section style="align-content: center;" class="FollowupData">
+                                                <div class="align-items-stretch order-1 order-lg-3 img"
+                                                    id="pendingFollowupData" style="height:500px; width: 1200px;"
+                                                    data-aos="zoom-in" data-aos-delay="50">
+                                                    &nbsp;</div>
+                                            </section>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="surveyPhases" class="why-us section-bg">
+            <div class="card" style="padding: 10px; margin: 10px;">
+                <div class="container-fluid" data-aos="fade-up">
+                    <div class="col">
+                        <div class="row" style="margin-bottom: 10px;">
+                            <div class="col">
+                                <div class="card">
+                                    <section id="survey" style="padding: 10px 0 0 0 ; ">
+                                        <div data-aos="fade-up">
+                                            <h3 class="section-title" style="align-content: center;">
+                                                <strong>Phase - Comparision</strong>
+                                            </h3>
+
+                                            <section class="surveyP1P2" style="align-content: center;">
+                                                <div class="align-items-stretch order-1 order-lg-3 img" id="chart"
+                                                    style="height:500px; width: 1200px;" data-aos="zoom-in"
+                                                    data-aos-delay="0">
+                                                    &nbsp;</div>
+                                            </section>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+        <!-- <div class="footer-top">
+      <div class="container">
+        <div class="row">
+        </div>
+      </div>
+    </div> -->
+
+
+
+        <div class="container footer-bottom clearfix">
+            <div class="copyright">
+                &copy; Copyright <strong><span>Samasti Health Technologies Ltd</span></strong>. All Rights Reserved
+            </div>
+            <div class="credits">
+                <!-- All the links in the footer should remain intact. -->
+                <!-- You can delete the links only if you purchased the pro version. -->
+                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/ -->
+                <!-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> -->
+            </div>
+            <div class="version" style="float: right; font-size: 12px; color: rgb(255, 255, 255);">
+                Version 1.11.4
+            </div>
+        </div>
+    </footer><!-- End Footer -->
+
+    <div id="preloader"></div>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+
+    <!-- for svasthya-->
+    <!-- ECharts -->
+
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
+
+
+    <script src="assets/vendor/echarts/dist/echarts.min.js"></script>
+    <script src="assets/vendor/echarts/map/js/world.js"></script>
+
+
+
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js"></script>
+
+    <script src="assets/js/backend_ui.js"></script>
+    <script src="assets/js/doc.js"></script>
+    <script src="assets/js/tcc.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+
+
+    <script>
+        // import { showToast } from 'assets/js/toastmsg.js';
+
+        // document.addEventListener('contextmenu', event => event.preventDefault());
+        //         document.addEventListener('keydown', event => {
+        //   if (event.keyCode === 123 || (event.ctrlKey && event.shiftKey && event.keyCode === 73)) {
+        //     event.preventDefault();
+        //   }
+        // });
+        function showToast(message) {
+            Toastify({
+                text: message,
+                duration: 3000,
+                newWindow: true,
+                close: true,
+                gravity: "top",
+                position: "center",
+                style: {
+                    background: "#2F89B3",
+                },
+                closeIcon: '<i class="material-icons" style="margin-left: auto;">close</i>',
+            }).showToast();
+        }
+
+
+
+
+        document.getElementById('download').addEventListener('click', generateExcelData);
+
+        if (!sessionStorage.getItem('isLoggedIn') || sessionStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = "login.html";
+        }
+        else {
+            let role = sessionStorage.getItem('role');
+            if (role === "OPH" || role === "Director") {
+                console.log('Welcome, Director!');
+            } else {
+                window.location.href = "login.html";
+            }
+        }
+        // setTimeout(() => {
+        //     loadingAnimation.style.display = "none";
+        // }, 2000);
+
+        async function onSubmit() {
+            try {
+                const currentDate = new Date().getTime();
+                console.log("Time delay", currentDate)
+
+                const loadingAnimation = document.getElementById("loading");
+                loadingAnimation.style.display = "block";
+
+                const phaseSelect = document.getElementById("phase");
+                const fieldworkerSelect = document.getElementById("fieldworker");
+                const panchayatSelect = document.getElementById("panchayat");
+                const villageSelect = document.getElementById("village");
+
+                const selectedPhase = phaseSelect.value;
+                const selectedFieldworker = fieldworkerSelect.options[fieldworkerSelect.selectedIndex].value;
+                const selectedPanchayat = panchayatSelect.options[panchayatSelect.selectedIndex].value;
+                const selectedVillage = villageSelect.options[villageSelect.selectedIndex].value;
+
+                console.log("Phase:", selectedPhase);
+                console.log("Fieldworker:", selectedFieldworker);
+                console.log("Panchayat:", selectedPanchayat);
+                console.log("Village:", selectedVillage);
+
+                // if (selectedVillage === "All") {
+                //     if (selectedPhase === "All" && selectedFieldworker === "All" && selectedPanchayat === "All") {
+                //         await fetchAndMatchPatientData(selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+
+                //     }
+                //     else if (selectedPhase != "All" || selectedFieldworker != "All" || selectedPanchayat != "All") {
+                //         loadingAnimation.style.display = "none";
+
+                //     showToast("These Data is not Available", "error");
+                //     }
+
+                // } else if (selectedVillage != "All") {
+                //     if (selectedPanchayat != "All") {
+                //         await fetchAndMatchPatientData(selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+
+
+                //     }
+                // } 
+                if (selectedPhase === "Select" || selectedFieldworker === "Select" || selectedPanchayat === "Select" || selectedVillage === "Select") {
+                    loadingAnimation.style.display = "none";
+                    showToast("Please select the below filters", "error");
+                }
+                else {
+                    await fetchAndMatchPatientData(selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+                }
+
+
+            } catch (error) {
+                const loadingAnimation = document.getElementById("loading");
+                loadingAnimation.style.display = "none";
+                showToast("Error: " + error.message, "error");
+            }
+        }
+
+        // fetchAndCheckPatientData();
+
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     // Hide all follow-up charts initially
+        //     function hideAllFollowUpCharts() {
+        //         for (let i = 1; i <= 7; i++) {
+        //             document.getElementById(`follow_Data_${i}`).style.display = 'none';
+        //         }
+        //     }
+
+        //     function showFollowUpChart(followUpNumber) {
+        //         hideAllFollowUpCharts();
+        //         document.getElementById(`follow_Data_${followUpNumber}`).style.display = 'block';
+        //     }
+
+        //     document.getElementById('followUpDropdown').addEventListener('change', function(event) {
+        //         const selectedFollowUp = event.target.value;
+        //         if (selectedFollowUp) {
+        //             showFollowUpChart(selectedFollowUp);
+        //         }
+        //     });
+
+        //     hideAllFollowUpCharts();
+        // });
+        document.addEventListener('DOMContentLoaded', function () {
+            function hideAllFollowUpCharts() {
+                for (let i = 1; i <= 7; i++) {
+                    document.getElementById(`follow_Data_${i}`).style.display = 'none';
+                    document.getElementById(`follow_Chart_${i}`).style.display = 'none';
+                    document.getElementById(`follow_Graph_${i}`).style.display = 'none';
+                    document.getElementById(`follow_RS_${i}`).style.display = 'none';
+                }
+            }
+
+            function showFollowUpChart(followUpNumber) {
+                hideAllFollowUpCharts();
+                if (followUpNumber >= 1 && followUpNumber <= 7) {
+                    document.getElementById(`follow_Data_${followUpNumber}`).style.display = 'block';
+                    document.getElementById(`follow_Chart_${followUpNumber}`).style.display = 'block';
+                    document.getElementById(`follow_Graph_${followUpNumber}`).style.display = 'block';
+                    document.getElementById(`follow_RS_${followUpNumber}`).style.display = 'block';
+                }
+            }
+
+            const defaultFollowUp = 1;
+            document.getElementById('followUpDropdown').value = defaultFollowUp;
+            showFollowUpChart(defaultFollowUp);
+
+            document.getElementById('followUpDropdown').addEventListener('change', function (event) {
+                const selectedFollowUp = parseInt(event.target.value, 10);
+                showFollowUpChart(selectedFollowUp);
+            });
+
+            hideAllFollowUpCharts();
+            showFollowUpChart(defaultFollowUp);
+        });
+
+
+
+        let uuidTimestampArray = [];
+
+        // Function to fetch Form 1 data and populate uuidTimestampArray
+
+        // var form1ids = fb.database().ref('Form_1');
+        // form1ids.once("value").then(snap => {
+        //     if (snap.val() != null) {
+        //         snap.forEach(data => {
+        //             let uuid = data.key;  // UUID is the key here
+        //             let timestamps = data.val();
+
+        //             // Iterate through each timestamp key
+        //             for (let timestamp in timestamps) {
+        //                 if (timestamps.hasOwnProperty(timestamp)) {
+        //                     // Store the UUID and timestamp correctly
+        //                     uuidTimestampArray.push({ uuid: uuid, timestamp: timestamp });
+        //                 }
+        //             }
+        //         });
+
+        //         // After populating uuidTimestampArray, you can call other functions that need it
+        //         console.log("Form-1 UUIDs and Timestamp", uuidTimestampArray);
+
+        //         // Now you can proceed with further operations
+        //         // For example, fetch and match patient data:
+
+        //     }
+        // }).catch(error => {
+        //     console.error('Error fetching Form 1 data:', error);
+        // });
+
+
+
+
+        // Function to fetch and match patient data based on the selected fields
+        // function fetchAndMatchPatientData(selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
+        //     var form1ids = fb.database().ref('Form_1');U_pchyat
+        //     var patientsData = fb.database().ref('patients');
+
+
+
+        //     // Fetch Form 1 data
+        //     form1ids.once("value").then(form1Snap => {
+        //         if (form1Snap.val() != null) {
+        //             // Fetch patients data
+        //             patientsData.once("value").then(patientSnap => {
+        //                 if (patientSnap.val() != null) {
+        //                     let phase1UUIDs = [];
+        //                     let phase2UUIDs = [];
+        //                     let allphasesUUIDs = [];
+
+
+        //                     // Process Form 1 data to match with patient data
+        //                     patientSnap.forEach(patientSnap1 => {
+        //                         let patient = patientSnap1.val();
+        //                         // console.log("Print -- ",patient.panchayat_name);
+        //                         let patientUUID = patientSnap1.key;
+        //                         // console.log("Print Patients UUids :",patientUUID.length);
+
+        //                         /*console.log(" if condition check - "+(((selectedFieldworker === 'All' || patient.fieldworker === selectedFieldworker) &&
+        //                             (patient.panchayat === selectedPanchayat) &&
+        //                             (patient.village === selectedVillage))))*/
+
+        //                         // Filter based on selected fields
+        //                         if ((selectedFieldworker === 'All' || patient.field_worker_id === selectedFieldworker) &&
+        //                             (patient.panchayat_name === selectedPanchayat) &&
+        //                             (patient.village_name === selectedVillage)) {
+
+        //                             // Find matching entries in Form 1 data for this patient
+        //                             form1Snap.forEach(data => {
+        //                                 let uuid = data.key;  // UUID is the key here
+        //                                 let timestamps = data.val();
+
+        //                                 // console.log("data -- ", timestamps);
+
+        //                                 // let parentNodes = Object.keys(timestamps);
+
+        //                                 // // Iterate over the array of keys
+        //                                 // parentNodes.forEach(parentNode => {
+        //                                 //     console.log(`Parent Node: ${parentNode}`);
+        //                                 //     console.log('Child Nodes:', timestamp[parentNode]);
+        //                                 // });
+
+        //                                 // Iterate through each timestamp key
+        //                             //   /*  for (let timestamp in timestamps) {
+        //                             //         if (timestamps.hasOwnProperty(timestamp)) {
+        //                             //             // 
+
+        //                             //             // Store the UUID and timestamp correctly
+        //                             //             // uuidTimestampArray.push({ uuid: uuid, timestamp: timestamp });
+        //                             //         }
+        //                             //     }*/
+
+        //                                 //console.log("data -- ", timestamps);
+        //                                 // let timestamps = data.val();
+
+
+        //                                 // If the UUID matches, check the timestamps
+        //                                 if (uuid === patientUUID) {
+        //                                     // for (let timestamp in timestamps) {
+        //                                     //     if (timestamps.hasOwnProperty(timestamp)) {
+        //                                     //         let entryYear = new Date(timestamp).getFullYear();
+        //                                     //         console.log("Time :", entryYear)
+        //                                     //         if (selectedPhase === 'All') {
+        //                                     //             // For "All" phase, get the latest timestamp
+        //                                     //             let latestEntry = Object.keys(timestamps).reduce((latest, current) => {
+        //                                     //                 return new Date(timestamps[current]) > new Date(timestamps[latest]) ? current : latest;
+        //                                     //             });
+
+        //                                     //             let latestTimestamp = new Date(timestamps[latestEntry]);
+        //                                     //             // if (latestTimestamp.getFullYear() > 2022) {
+        //                                     //             //     allphasesUUIDs.push(uuid);
+        //                                     //             // }
+        //                                     //            // console.log("Time",Date(latestEntry));
+
+        //                                     //          } 
+        //                                     //         else {
+        //                                     //             // Separate based on specific phase
+        //                                     //             if (entryYear < 2024) {
+        //                                     //                 phase1UUIDs.push(uuid);
+        //                                     //             } else {
+        //                                     //                 phase2UUIDs.push(uuid);
+        //                                     //             }
+        //                                     //         }
+        //                                     //     }
+        //                                     // }
+        //                                     // // patuuids.push(uuid);
+
+
+
+        //                                 }
+        //                             });
+        //                         }
+        //                     });
+
+        //                     // Log the results based on the selected phase
+        //                     // if (selectedPhase === '1') {
+        //                     //     console.log('Phase 1 UUIDs:', phase1UUIDs);
+        //                     // } else if (selectedPhase === '2') {
+        //                     //     console.log('Phase 2 UUIDs:', phase2UUIDs);
+        //                     // } else {
+        //                     //     console.log('Both Phase 1 and 2 UUIDs:', allphasesUUIDs);
+        //                     // }
+        //                     // console.log("Patients uuids : ", patuuids)
+        //                 } else {
+        //                     console.log('No patient data available.');
+        //                 }
+        //             }).catch(error => {
+        //                 console.error('Error fetching patient data:', error);
+        //             });
+        //         } else {
+        //             console.log('No Form 1 data available.');
+        //         }
+        //     }).catch(error => {
+        //         console.error('Error fetching Form 1 data:', error);
+        //     });
+        // }
+
+        // function fetchAndMatchPatientData(selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
+        //     let upvids = [];
+        //     let mpuid = [];
+        //     let filteredids =[];
+        //     var upids = fb.database().ref().child('U_pchyat').child(selectedPanchayat).child(selectedVillage);
+        //     var pref = fb.database().ref().child("patients");
+        //     var form1 = fb.database().ref().child("Form_1");
+
+        //     upids.once("value")
+        //         .then(function (snap) {
+        //             let info = snap.val();
+        //             filteredids.push(info); // Push the object containing UUIDs
+
+        //             // Since upvids is an array containing one object, we need to access that object
+        //             let uuidObject = filteredids[0];
+
+        //             // Now, loop through the keys of that object to print each UUID
+        //             for (let uuid in uuidObject) {
+        //                 if (uuidObject.hasOwnProperty(uuid)) {
+        //                     upvids.push(uuid)
+        //                 }
+        //             }
+        //             console.log("Matched UUids:",upvids );
+        //             for (let i in upvids){
+
+        //                 // pref.child(upvids[i]);
+        //                 //     pref.once("value")
+        //                 //         .then(function (snap) {
+        //                 //             console.log("pinfo --- ",snap.val());
+        //                 //             let pinfo = [];
+
+        //                 //             var fw = snap.child("field_worker_id").val();
+        //                 //             console.log("fw: ", fw);
+        //                 //             pinfo.push (snap);
+        //                 //             let fw_id = pinfo.field_worker_id;
+        //                 //             if (fw_id === selectedFieldworker) {
+        //                 //                 mpuid.push(uuid);
+        //                 //                 console.log("Matched and filtered UUID: ", uuid);
+        //                 //             }
+        //                 //         });
+        //             }
+
+        //             // If you need to further match UUIDs against another database:
+        //             // for (let uuid in uuidObject) {
+        //             //     if (uuidObject.hasOwnProperty(uuid)) {
+        //             //         pref.child(uuid).once("value")
+        //             //             .then(function (snap1) {
+        //             //                 let pinfo = snap1.val();
+        //             //                 let fw_id = pinfo.field_worker_id;
+        //             //                 if (fw_id === selectedFieldworker) {
+        //             //                     mpuid.push(uuid);
+        //             //                     console.log("Matched and filtered UUID: ", uuid);
+        //             //                 }
+        //             //             });
+        //             //     }
+        //             // }
+        //         });
+        // }
+
+
+
+        window.onload = function () {
+            //var daterangearray = ["All","Day","Week","Custom"];
+            // var date = document.getElementById("daterange");
+            // for(var i=0;i < daterangearray.length;i++)
+            // {
+            //   date.options[date.options.length] = new Option(daterangearray[i],daterangearray[i]);
+            // }
+            // var start = document.getElementById("start");
+            // var stop = document.getElementById("stop");
+            //  if(date.value == "Day")
+            //   {
+            //     start.value = new Date().getFullYear() + "-" + (new Date().getMonth()+1) + "-" + new Date().getDate();
+            //     stop.value = new Date().getFullYear() + "-" + (new Date().getMonth()+1) + "-" + new Date().getDate();
+            //     date.disabled=true;
+            //     start.disabled=true;
+            //     stop.disabled=true;
+            //     fetchdata(fieldworker.value,panchayat.value,village.value,"Day")
+            //   }
+            // if (date.value == "Custom") {
+            //     start.value = "2023-11-21";
+            //     stop.value = "2023-11-21";
+            //     start.disabled = true;
+            //     stop.disabled = true;
+            //     date.disabled = false;
+            //     fetchdata(fieldworker.value, panchayat.value, village.value, "Custom")
+            // }
+            // if(date.value == "All")
+            // {
+            //  start.value = "2023-10-31";
+            //  stop.value =  new Date().getFullYear() + "-" + (new Date().getMonth()+1) + "-" + new Date().getDate();
+            //  start.disabled = true;
+            //  stop.disabled = true;
+            //  date.disabled=false;
+            //  fetchdata(fieldworker.value,panchayat.value,village.value,"Custom")
+            // }
+            // date.onchange = function () {
+            //     console.log("datechanges", date.value);
+            //     var newdate = new Date().getDate();
+            //     var mnth = new Date().getMonth() + 1;
+            //     if (mnth < 10) {
+            //         mnth = "0" + mnth;
+            //     }
+            //     else {
+            //         mnth = mnth;
+            //     }
+            //     if (date.value == "All") {
+
+            //         document.getElementById("avgplot").style.visibility = "visible";
+            //         start.value = "2023-10-31";
+
+            //         if (newdate < 10) {
+            //             newdate = "0" + new Date().getDate();
+            //         }
+            //         else {
+            //             newdate = new Date().getDate();
+            //         }
+
+            //         stop.value = "2023-11-21";//new Date().getFullYear() + "-" + mnth + "-" + newdate;
+            //         start.disabled = true;
+            //         stop.disabled = true;
+            //         avgplot();
+            //     }
+            //     if (date.value == "Custom") {
+            //         document.getElementById("avgplot").style.visibility = "collapse";
+            //         start.value = "";
+            //         stop.value = "";
+            //         start.disabled = false;
+            //         stop.disabled = false;
+            //     }
+            //     else if (date.value == "Day") {
+            //         document.getElementById("avgplot").style.visibility = "collapse";
+            //         if (newdate < 10) {
+            //             newdate = "0" + new Date().getDate();
+            //         }
+            //         else {
+            //             newdate = new Date().getDate();
+            //         }
+            //         start.value = new Date().getFullYear() + "-" + mnth + "-" + newdate;
+            //         stop.value = new Date().getFullYear() + "-" + mnth + "-" + newdate;
+            //         start.disabled = true;
+            //         stop.disabled = true;
+            //     }
+            //     else if (date.value == "Week") {
+            //         document.getElementById("avgplot").style.visibility = "collapse";
+            //         var t = new Date().getTime();
+            //         var st = t - (24 * 7 * 60 * 60 * 1000);
+            //         var startdate = new Date(st);
+            //         var enddate = new Date(t);
+            //         var mnth1 = startdate.getMonth() + 1;
+            //         var newdate;
+            //         var newenddate;
+            //         if (startdate.getDate() < 10) {
+            //             newdate = "0" + startdate.getDate();
+            //         }
+            //         else {
+            //             newdate = startdate.getDate();
+            //         }
+            //         if (enddate.getDate() < 10) {
+            //             newenddate = "0" + enddate.getDate();
+            //         }
+            //         else {
+            //             newenddate = enddate.getDate();
+            //         }
+            //         if (mnth1 < 10) {
+            //             mnth1 = "0" + mnth1;
+            //         }
+            //         else {
+            //             mnth1 = mnth1;
+            //         }
+            //         start.value = startdate.getFullYear() + "-" + mnth1 + "-" + newdate;
+            //         stop.value = enddate.getFullYear() + "-" + mnth1 + "-" + newenddate;
+            //         start.disabled = true;
+            //         stop.disabled = true;
+            //     }
+            // }
+
+        }
+
+
+        function logout() {
+            sessionStorage.removeItem('isLoggedIn');
+            sessionStorage.removeItem('role');
+            window.location.href = "login.html";
+        }
+    </script>
+
+
+
+
+</body>
+
+</html>
