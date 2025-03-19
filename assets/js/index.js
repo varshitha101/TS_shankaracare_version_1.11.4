@@ -19,16 +19,16 @@ let firebaseConfig = {
   // messagingSenderId: "684280929303",
 
   // staging
-  // appId: "1:684280929303:web:0a6c2b4be861eb83aa1052",
-  // measurementId: "G-5R8TF7ZCH4",
-  // apiKey: "AIzaSyAa7rCSqGnLb8T89YtQsCOx7LcspzH_4Y8",
-  // authDomain: "sarvarakshana-staging.firebaseapp.com",
-  // databaseURL: "https://sarvarakshana-staging-default-rtdb.firebaseio.com",
-  // projectId: "sarvarakshana-staging",
-  // storageBucket: "sarvarakshana-staging.appspot.com",
-  // messagingSenderId: "203498484262",
-  // appId: "1:203498484262:web:3b00873564b12d250a2ce7",
-  // measurementId: "G-GDEMDDZRX3"
+  appId: "1:684280929303:web:0a6c2b4be861eb83aa1052",
+  measurementId: "G-5R8TF7ZCH4",
+  apiKey: "AIzaSyAa7rCSqGnLb8T89YtQsCOx7LcspzH_4Y8",
+  authDomain: "sarvarakshana-staging.firebaseapp.com",
+  databaseURL: "https://sarvarakshana-staging-default-rtdb.firebaseio.com",
+  projectId: "sarvarakshana-staging",
+  storageBucket: "sarvarakshana-staging.appspot.com",
+  messagingSenderId: "203498484262",
+  appId: "1:203498484262:web:3b00873564b12d250a2ce7",
+  measurementId: "G-GDEMDDZRX3"
 
   // deployment
   // apiKey: "AIzaSyAFXlXxezJPDcw8qcjm45rqbu9Drl-3YDk",
@@ -50,14 +50,14 @@ let firebaseConfig = {
   // "measurementId": "G-E9G48X6P80"
 
   // devolopment
-  apiKey: "AIzaSyDxwWanrz_T-FQICF89Vl6HGKS7TBixrek",
-  authDomain: "sarvarakshana-development.firebaseapp.com",
-  databaseURL: "https://sarvarakshana-development-default-rtdb.firebaseio.com",
-  projectId: "sarvarakshana-development",
-  storageBucket: "sarvarakshana-development.appspot.com",
-  messagingSenderId: "345813046788",
-  appId: "1:345813046788:web:a43b5531f81f21c8e90751",
-  measurementId: "G-D9PJ9QT6C7"
+  // apiKey: "AIzaSyDxwWanrz_T-FQICF89Vl6HGKS7TBixrek",
+  // authDomain: "sarvarakshana-development.firebaseapp.com",
+  // databaseURL: "https://sarvarakshana-development-default-rtdb.firebaseio.com",
+  // projectId: "sarvarakshana-development",
+  // storageBucket: "sarvarakshana-development.appspot.com",
+  // messagingSenderId: "345813046788",
+  // appId: "1:345813046788:web:a43b5531f81f21c8e90751",
+  // measurementId: "G-D9PJ9QT6C7"
 };
 
 /**
