@@ -19,16 +19,16 @@ let firebaseConfig = {
   // messagingSenderId: "684280929303",
 
   // staging
-  // appId: "1:684280929303:web:0a6c2b4be861eb83aa1052",
-  // measurementId: "G-5R8TF7ZCH4",
-  // apiKey: "AIzaSyAa7rCSqGnLb8T89YtQsCOx7LcspzH_4Y8",
-  // authDomain: "sarvarakshana-staging.firebaseapp.com",
-  // databaseURL: "https://sarvarakshana-staging-default-rtdb.firebaseio.com",
-  // projectId: "sarvarakshana-staging",
-  // storageBucket: "sarvarakshana-staging.appspot.com",
-  // messagingSenderId: "203498484262",
-  // appId: "1:203498484262:web:3b00873564b12d250a2ce7",
-  // measurementId: "G-GDEMDDZRX3"
+  appId: "1:684280929303:web:0a6c2b4be861eb83aa1052",
+  measurementId: "G-5R8TF7ZCH4",
+  apiKey: "AIzaSyAa7rCSqGnLb8T89YtQsCOx7LcspzH_4Y8",
+  authDomain: "sarvarakshana-staging.firebaseapp.com",
+  databaseURL: "https://sarvarakshana-staging-default-rtdb.firebaseio.com",
+  projectId: "sarvarakshana-staging",
+  storageBucket: "sarvarakshana-staging.appspot.com",
+  messagingSenderId: "203498484262",
+  appId: "1:203498484262:web:3b00873564b12d250a2ce7",
+  measurementId: "G-GDEMDDZRX3"
 
   // deployment
   // apiKey: "AIzaSyAFXlXxezJPDcw8qcjm45rqbu9Drl-3YDk",
@@ -50,14 +50,14 @@ let firebaseConfig = {
   // "measurementId": "G-E9G48X6P80"
 
   // devolopment
-  apiKey: "AIzaSyDxwWanrz_T-FQICF89Vl6HGKS7TBixrek",
-  authDomain: "sarvarakshana-development.firebaseapp.com",
-  databaseURL: "https://sarvarakshana-development-default-rtdb.firebaseio.com",
-  projectId: "sarvarakshana-development",
-  storageBucket: "sarvarakshana-development.appspot.com",
-  messagingSenderId: "345813046788",
-  appId: "1:345813046788:web:a43b5531f81f21c8e90751",
-  measurementId: "G-D9PJ9QT6C7"
+  // apiKey: "AIzaSyDxwWanrz_T-FQICF89Vl6HGKS7TBixrek",
+  // authDomain: "sarvarakshana-development.firebaseapp.com",
+  // databaseURL: "https://sarvarakshana-development-default-rtdb.firebaseio.com",
+  // projectId: "sarvarakshana-development",
+  // storageBucket: "sarvarakshana-development.appspot.com",
+  // messagingSenderId: "345813046788",
+  // appId: "1:345813046788:web:a43b5531f81f21c8e90751",
+  // measurementId: "G-D9PJ9QT6C7"
 };
 
 /**
@@ -563,7 +563,7 @@ async function fetchdata(fwid, panchyatid, vid, date) {
   form3obj = [];
   locationobj = [];
   scrhis = [];
-  console.log("before fetchdata", new Date().getTime())
+  // console.log("before fetchdata", new Date().getTime())
   document.getElementById("loading").style.display = 'block';
   document.getElementById("daterange").disabled = true;
   document.getElementById("start").disabled = true;
@@ -571,72 +571,72 @@ async function fetchdata(fwid, panchyatid, vid, date) {
 
   //console.log("in index",fwid,panchyatid,vid,date);
   var parray = [];
-  console.log("before retrieve form1 obj", new Date().getTime())
+  // console.log("before retrieve form1 obj", new Date().getTime())
   var form1 = fb.database().ref("Form_1")
   await form1.once("value").then(snap => {
     if (snap.val() != null) {
-      console.log("after retrieve form1 obj", new Date().getTime())
-      console.log("before save form1 obj", new Date().getTime())
+      // console.log("after retrieve form1 obj", new Date().getTime())
+      // console.log("before save form1 obj", new Date().getTime())
       form1obj.push(snap.val());
-      console.log("after save form1 obj", new Date().getTime(),)
+      // console.log("after save form1 obj", new Date().getTime(),)
     }
   })
 
   //console.log("after retrieve form1 obj",new Date().getTime())
-  console.log("before retrieve form2 obj", new Date().getTime())
+  // console.log("before retrieve form2 obj", new Date().getTime())
   var form2 = fb.database().ref("Form_2")
   await form2.once("value").then(snap => {
     if (snap.val() != null) {
-      console.log("after retrieve form2 obj", new Date().getTime())
-      console.log("before form2 push obj", new Date().getTime())
+      // console.log("after retrieve form2 obj", new Date().getTime())
+      // console.log("before form2 push obj", new Date().getTime())
       form2obj.push(snap.val());
-      console.log("after form2 push obj", new Date().getTime())
+      // console.log("after form2 push obj", new Date().getTime())
     }
   })
   // console.log("after retrieve form2 obj",new Date().getTime())
-  console.log("before retrieve form3 obj", new Date().getTime())
+  // console.log("before retrieve form3 obj", new Date().getTime())
   var form3 = fb.database().ref("Form_3")
   await form3.once("value").then(snap => {
     if (snap.val() != null) {
-      console.log("after retrieve form3 obj", new Date().getTime())
-      console.log("before save form3 obj", new Date().getTime())
+      // console.log("after retrieve form3 obj", new Date().getTime())
+      // console.log("before save form3 obj", new Date().getTime())
       form3obj.push(snap.val());
-      console.log("after save form3 obj", new Date().getTime())
+      // console.log("after save form3 obj", new Date().getTime())
     }
   })
   //console.log("after retrieve form3 obj",new Date().getTime())
-  console.log("before retrieve location obj", new Date().getTime())
+  // console.log("before retrieve location obj", new Date().getTime())
   var location = fb.database().ref("Location")
   await location.once("value").then(snap => {
     if (snap.val() != null) {
-      console.log("after retrieve location obj", new Date().getTime())
-      console.log("before save location obj", new Date().getTime())
+      // console.log("after retrieve location obj", new Date().getTime())
+      // console.log("before save location obj", new Date().getTime())
       locationobj.push(snap.val());
-      console.log("after save location obj", new Date().getTime())
+      // console.log("after save location obj", new Date().getTime())
     }
   })
 
-  console.log("before retrieve scrhis obj", new Date().getTime())
+  // console.log("before retrieve scrhis obj", new Date().getTime())
   var screening_history = fb.database().ref("screening_history")
   await screening_history.once("value").then(snap => {
     if (snap.val() != null) {
-      console.log("after retrieve scrhis obj", new Date().getTime())
-      console.log("before scrhis push obj", new Date().getTime())
+      // console.log("after retrieve scrhis obj", new Date().getTime())
+      // console.log("before scrhis push obj", new Date().getTime())
       scrhis.push(snap.val());
-      console.log("after scrhis push obj", new Date().getTime())
+      // console.log("after scrhis push obj", new Date().getTime())
     }
   })
   // console.log("after scr his",new Date().getTime())
-  console.log("before retrieve patients", new Date().getTime())
+  // console.log("before retrieve patients", new Date().getTime())
   var patients = fb.database().ref("patients")
   await patients.once("value").then(snap => {
     if (snap.val() != null) {
-      console.log("after retrieve patients", new Date().getTime())
-      console.log("before save patients", new Date().getTime())
+      // console.log("after retrieve patients", new Date().getTime())
+      // console.log("before save patients", new Date().getTime())
       object.push(snap.val());
-      console.log("after save patients", new Date().getTime())
+      // console.log("after save patients", new Date().getTime())
       //console.log("after retrieve patients",object)
-      console.log("before filtering patients", new Date().getTime())
+      // console.log("before filtering patients", new Date().getTime())
       snap.forEach((data) => {
         var newstartDate;
         var newenddate;
@@ -704,7 +704,7 @@ async function fetchdata(fwid, panchyatid, vid, date) {
 
         }
       })
-      console.log("after filtering patients", new Date().getTime(), parray.length)
+      // console.log("after filtering patients", new Date().getTime(), parray.length)
       // console.log("after loop patients", new Date().getTime())
       if (parray.length > 0) {
         findtotalpopulation(parray);
@@ -734,7 +734,7 @@ async function fetchdata(fwid, panchyatid, vid, date) {
       }
     }
   })
-  console.log("after fetchdata", new Date().getTime())
+  // console.log("after fetchdata", new Date().getTime())
 }
 
 /**
@@ -744,7 +744,7 @@ async function fetchdata(fwid, panchyatid, vid, date) {
  * @returns male and female array
  */
 async function findmalefemale(parray) {
-  console.log("before retrieve gender", new Date().getTime())
+  // console.log("before retrieve gender", new Date().getTime())
   var marray = 0;
   var farrray = 0;
   var pid;
@@ -795,7 +795,7 @@ async function findmalefemale(parray) {
  * @param {Array} parray filtered list of ids
  * @returns total population,comorbidities and habits
  */
-console.log("before findtotalpopulation", new Date().getTime())
+// console.log("before findtotalpopulation", new Date().getTime())
 async function findtotalpopulation(parray) {
   // console.log("in find population", new Date().getTime())
   var patientsurveyed = 0;
@@ -836,7 +836,7 @@ async function findtotalpopulation(parray) {
   valuesarr = Array.from(map.values());
 
   // console.log("in find population before loop", new Date().getTime())
-  console.log("before comorbidities and habits form push", new Date().getTime(), parray.length)
+  // console.log("before comorbidities and habits form push", new Date().getTime(), parray.length)
   for (var i = 0; i < parray.length; i++) {
     var parsedJson1;
     var obj1;
@@ -845,7 +845,7 @@ async function findtotalpopulation(parray) {
       //  let length = recursiveBS(keysarr, parray[i], 0, keysarr.length - 1); 
       let length = binarySearch(keysarr, parray[i])
       {
-        console.log("in habit ids", length, keysarr[length]);
+        // console.log("in habit ids", length, keysarr[length]);
         patientsurveyed = patientsurveyed + 1;
         let value = valuesarr[length];
         //let value = valuesarr[j];
@@ -935,7 +935,7 @@ async function findtotalpopulation(parray) {
   photocapture(tobaccoid);
   photocaptureinperson(tobaccoid);
 }
-console.log("after findtotalpopulation", new Date().getTime())
+// console.log("after findtotalpopulation", new Date().getTime())
 
 /**
  * Binary Search
@@ -953,13 +953,13 @@ function binarySearch(arr, target) {
     let currentString = arr[mid];//.substring(0, 3);
 
     if (currentString === target) {
-      console.log("currentstr", mid);
+      // console.log("currentstr", mid);
       return mid; // Found the target
     } else if (currentString < target) {
-      console.log("lessthan", currentString, target, low, mid);
+      // console.log("lessthan", currentString, target, low, mid);
       low = mid + 1;
     } else {
-      console.log(">", currentString, target, low, mid);
+      // console.log(">", currentString, target, low, mid);
       high = mid - 1;
     }
   }
@@ -973,7 +973,7 @@ function binarySearch(arr, target) {
  * @param {Array} tobacco list of ids who tobacco usage is yes or not now
  * @returns percentage of photos reviewed Remotely
  */
-console.log("before photocapture", new Date().getTime())
+// console.log("before photocapture", new Date().getTime())
 async function photocapture(tobacco) {
   var totalphotos = 0;
   var tp = 0;
@@ -982,7 +982,7 @@ async function photocapture(tobacco) {
   var photoreview = [];
 
   var abnormal = 0;
-  console.log("before photocapture", new Date().getTime())
+  // console.log("before photocapture", new Date().getTime())
   var parsedJson = JSON.stringify(form2obj[0]);
   var obj = JSON.parse(parsedJson)
   const map = new Map(Object.entries(obj));
@@ -1005,7 +1005,7 @@ async function photocapture(tobacco) {
       //}
       for (var j = 0; j < photoreview[0][1].photos_review.length; j++) {
         if (photoreview[0][1].photos_review[j].includes("123")) {
-          console.log("123");
+          // console.log("123");
           //normalper = normalper + 1;
         }
         else if (photoreview[0][1].photos_review[j].includes("Normal")) {
@@ -1021,7 +1021,7 @@ async function photocapture(tobacco) {
 
     }
     else {
-      console.log("No data");
+      // console.log("No data");
     }
 
 
@@ -1047,7 +1047,7 @@ async function photocapture(tobacco) {
  * @param {Array} tobacco list of ids who tobacco usage is yes or not now
  * @returns percentage of photos reviewed Inperson
  */
-console.log("before photocaptureinperson", new Date().getTime())
+// console.log("before photocaptureinperson", new Date().getTime())
 async function photocaptureinperson(tobacco) {
   var totalphotos = 0;
   var tp = 0;
@@ -1076,7 +1076,7 @@ async function photocaptureinperson(tobacco) {
 
         //  console.log("photoreview dataset",photoreview[0][1].photos_review,photoreview.length);
         if (photoreview[0][1].photos_review[j].includes("123")) {
-          console.log("123");
+          // console.log("123");
           //normalper = normalper + 1;
         }
         else if (photoreview[0][1].photos_review[j].includes("Normal")) {
@@ -1115,9 +1115,9 @@ async function photocaptureinperson(tobacco) {
  * @param {Array} tobaccoyes list of ids who use tobacco
  * @returns minimum time, maximum time,average time and standard deviation
  */
-console.log("before findtimestatistics", new Date().getTime())
+// console.log("before findtimestatistics", new Date().getTime())
 async function findtimestatistics(notobacco, tobaccoyes) {
-  console.log("before timestatistics", new Date().getTime())
+  // console.log("before timestatistics", new Date().getTime())
   var timetakennotobacco = [];
   var patientabsent = [];
   var patientwthnotobacco = [];
@@ -1366,7 +1366,7 @@ async function findtimestatistics(notobacco, tobaccoyes) {
  * @param {Array} numbersArr timestamp array to find the Standard deviation 
  * @returns Standard deviation
  */
-console.log("after findtimestatistics", new Date().getTime())
+// console.log("after findtimestatistics", new Date().getTime())
 function getStandardDeviation(numbersArr) {
   // CALCULATE AVERAGE
   var total = 0;
@@ -1384,7 +1384,7 @@ function getStandardDeviation(numbersArr) {
 
   return SDresult;
 }
-console.log("before plotscreeninghistory", new Date().getTime())
+// console.log("before plotscreeninghistory", new Date().getTime())
 //screening history
 
 /**
@@ -1545,7 +1545,7 @@ function plotscreeninghistory(minnt, maxnt, avgnt, minta, maxta, avgta, minty, m
   //console.log("chart",option);
   option && myChart.setOption(option);
 }
-console.log("after plotscreeninghistory", new Date().getTime())
+// console.log("after plotscreeninghistory", new Date().getTime())
 //console.log("before reviewSummary",new Date().getTime())
 /**
  * Function to get the percentage of remotely reviewed ids
@@ -1563,7 +1563,7 @@ async function reviewSummary(parray) {
   var followup = 0;
   var fuid = [];
   var shrcc = 0;
-  console.log("before review summary", new Date().getTime())
+  // console.log("before review summary", new Date().getTime())
   var parsedJson = JSON.stringify(form2obj[0]);
   var obj = JSON.parse(parsedJson)
   const map1 = new Map(Object.entries(obj));
@@ -1643,7 +1643,7 @@ async function reviewSummary(parray) {
   //  console.log("fuppercentage",followup);
   reviewedpercentage = Math.round((patientreviewed / totalpatients) * 100);
   var rp = document.getElementById("rp");
-  console.log("after reviewSummary", new Date().getTime())
+  // console.log("after reviewSummary", new Date().getTime())
   recommendPercentage(biopsyperc, tcc, laserper, shrcc, nointervention);
   reviewPercentage(reviewedpercentage);
   // rp.textContent = reviewedpercentage
@@ -1652,7 +1652,7 @@ async function reviewSummary(parray) {
 }
 
 
-console.log("before inpersonSummary1", new Date().getTime())
+// console.log("before inpersonSummary1", new Date().getTime())
 
 async function inpersonSummary1(parray) {
   var patientreviewed = 0;
@@ -1672,7 +1672,7 @@ async function inpersonSummary1(parray) {
   }
   //console.log("nextscr",nextscreening,"hos",hospital,"nointer",nointervention,"localproc",localprocedure);
   followupeffective = Math.round((followupeffective / parray.length) * 100);
-  console.log("after inpersonSummary1", new Date().getTime())
+  // console.log("after inpersonSummary1", new Date().getTime())
   //isp.textContent = reviewedpercentage 
   //console.log("followupeffective",followupeffective);
 
@@ -1693,7 +1693,7 @@ async function inpersonSummary(parray) {
   var localprocedure = 0;
   var nointervention = 0;
   var hospital = 0;
-  console.log("before inperson summary", new Date().getTime())
+  // console.log("before inperson summary", new Date().getTime())
   var parsedJson = JSON.stringify(form3obj[0]);
   var obj = JSON.parse(parsedJson)
   const map1 = new Map(Object.entries(obj));
@@ -1761,7 +1761,7 @@ async function inpersonSummary(parray) {
   hospital = Math.round((hospital / patientreviewed) * 100);
   nointervention = Math.round((nointervention / patientreviewed) * 100);
   localprocedure = Math.round((localprocedure / patientreviewed) * 100);
-  console.log("after inpersonSummary", new Date().getTime())
+  // console.log("after inpersonSummary", new Date().getTime())
   inpersonrecommendPercentage(nextscreening, hospital, nointervention, localprocedure);
   reviewedpercentage = Math.round((patientreviewed / totalpatients) * 100);
   var isp = document.getElementById("isp");
@@ -1781,7 +1781,7 @@ async function inpersonSummary(parray) {
  * @returns percentage for ages below 30, above 30, above 40, above 50, above 60, above 70 years
  */
 async function agegroupstatistics(parray) {
-  console.log("before agegroupstatistics", new Date().getTime())
+  // console.log("before agegroupstatistics", new Date().getTime())
   var below30per = 0;
   var above30per = 0;
   var above40per = 0;
@@ -1846,12 +1846,12 @@ async function agegroupstatistics(parray) {
   above50per = Math.round((above50per / parray.length) * 100);
   above60per = Math.round((above60per / parray.length) * 100);
   above70per = Math.round((above70per / parray.length) * 100);
-  console.log("after retrieve age", new Date().getTime())
+  // console.log("after retrieve age", new Date().getTime())
   agegroupgraph(below30per, above30per, above40per, above50per, above60per, above70per);
   // console.log(below30per,above30per,above50per,above60per,above70per);
 
 }
-console.log("after agegroupstatistics", new Date().getTime())
+// console.log("after agegroupstatistics", new Date().getTime())
 
 
 /**
@@ -1859,7 +1859,7 @@ console.log("after agegroupstatistics", new Date().getTime())
  * @param {Array} parray array of filtered ids
  * @returns location
  */
-console.log("before location", new Date().getTime())
+// console.log("before location", new Date().getTime())
 async function findlocation(parray) {
   var locations = [];
   var i = 0;
@@ -1926,12 +1926,12 @@ async function findlocation(parray) {
 
 
   }
-  console.log("after retrieve location", new Date().getTime())
+  // console.log("after retrieve location", new Date().getTime())
   //console.log("locations",locations,timestamp);
   // initMap(locations, timestamp)
   //
 }
-console.log("after location", new Date().getTime())
+// console.log("after location", new Date().getTime())
 
 
 
@@ -2356,7 +2356,7 @@ async function fetchAndMatchPatientData(selectedFieldworker, selectedPanchayat, 
   // exportPatientsData();
   // exportForm_3_Data()
   // exportTCCFOLLOW();
-
+  // exportTCCPenFollowUpData();
   let upids;
   let fetchPromises = [];
   let p1 = [];
@@ -2423,7 +2423,7 @@ async function fetchAndMatchPatientData(selectedFieldworker, selectedPanchayat, 
                               "uuid": puuid,
                               "village": villageId,
                               "fw_id": fwid, // Add fw_id to p1
-                              "gen":gndr
+                              "gen": gndr
                             });
                           }
                           if (findp2) {
@@ -2431,7 +2431,7 @@ async function fetchAndMatchPatientData(selectedFieldworker, selectedPanchayat, 
                               "uuid": puuid,
                               "village": villageId,
                               "fw_id": fwid, // Add fw_id to p2
-                              "gen":gndr
+                              "gen": gndr
                             });
                           }
 
@@ -2474,13 +2474,21 @@ async function fetchAndMatchPatientData(selectedFieldworker, selectedPanchayat, 
             Status = false;
             Eligibility = false;
             HabitSummary = false;
-
+            if (data.length===0) {
+              showToast("No Data found", "error");
+              setTimeout(() => {
+                document.getElementById("loading").style.display = 'none';
+              }, 1000);
+            }
+            else {
             surveySection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
             ScreeningSection(selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage);
             tccSection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+            mvdfetchdata(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
             // phaseSegregation(data, selectedFieldworker, selectedPanchayat, selectedVillage);
             processPatientData(p1, p2, data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
             timer_fun();
+            }
             const section = document.getElementById('surveyPhases');
 
             // Show the section if selectedPhase is 'All', otherwise hide it
@@ -2514,13 +2522,7 @@ async function fetchAndMatchPatientData(selectedFieldworker, selectedPanchayat, 
       upids.once('value', function (snapshot) {
         const puuid = snapshot.val();
         console.log("upids", puuid)
-        if (!puuid) {
-          showToast("No Data found", "error");
-          setTimeout(() => {
-            document.getElementById("loading").style.display = 'none';
-          }, 1000);
-        }
-        else {
+        
           Object.keys(puuid).forEach(uuid => {
             // console.log("Test pass 2",panchayatId,villageId,uuid);
             const form1 = fb.database().ref().child("Form_1").child(panchayatId).child(villageId).child(uuid);
@@ -2576,7 +2578,7 @@ async function fetchAndMatchPatientData(selectedFieldworker, selectedPanchayat, 
                           "uuid": uuid,
                           "village": villageId,
                           "fw_id": fwid,
-                          "gen":gndr
+                          "gen": gndr
                         });
 
                       }
@@ -2585,7 +2587,7 @@ async function fetchAndMatchPatientData(selectedFieldworker, selectedPanchayat, 
                           "uuid": uuid,
                           "village": villageId,
                           "fw_id": fwid,
-                          "gen":gndr
+                          "gen": gndr
                         });
                       }
 
@@ -2628,14 +2630,22 @@ async function fetchAndMatchPatientData(selectedFieldworker, selectedPanchayat, 
               Status = false;
               Eligibility = false;
               HabitSummary = false;
-
+              console.log("data", data);
+              if (data.length===0) {
+                showToast("No Data found", "error");
+                setTimeout(() => {
+                  document.getElementById("loading").style.display = 'none';
+                }, 1000);
+              }
+              else {
               surveySection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-
+              mvdfetchdata(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
               ScreeningSection(selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage);
               tccSection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
               // phaseSegregation(data, selectedFieldworker, selectedPanchayat, selectedVillage);
               processPatientData(p1, p2, data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
               timer_fun();
+              }
               const section = document.getElementById('surveyPhases');
 
               // Show the section if selectedPhase is 'All', otherwise hide it
@@ -2657,7 +2667,7 @@ async function fetchAndMatchPatientData(selectedFieldworker, selectedPanchayat, 
             .catch((error) => {
               console.error("Error in processing data:", error);
             });
-        }
+        
 
       });
     }
@@ -2736,16 +2746,16 @@ async function fetchPATIENTData(selectedFieldworker, selectedPanchayat, selected
                               "uuid": puuid,
                               "village": villageId,
                               "fw_id": fwid,
-                              "gen":gndr
+                              "gen": gndr
                             });
-    
+
                           }
                           if (findp2) {
                             p2.push({
                               "uuid": puuid,
                               "village": villageId,
                               "fw_id": fwid,
-                              "gen":gndr
+                              "gen": gndr
                             });
                           }
 
@@ -2788,9 +2798,15 @@ async function fetchPATIENTData(selectedFieldworker, selectedPanchayat, selected
             Status = false;
             Eligibility = false;
             HabitSummary = false;
-
+            if (data.length===0) {
+              showToast("No Data found", "error");
+              setTimeout(() => {
+                document.getElementById("loading").style.display = 'none';
+              }, 1000);
+            }
+            else {
             surveySection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-
+            }
             timer_fun1();
 
 
@@ -2815,13 +2831,13 @@ async function fetchPATIENTData(selectedFieldworker, selectedPanchayat, selected
       upids.once('value', function (snapshot) {
         const puuid = snapshot.val();
         // console.log("upids",puuid)
-        if (!puuid) {
-          showToast("No Data found", "error");
-          setTimeout(() => {
-            document.getElementById("loading").style.display = 'none';
-          }, 1000);
-        }
-        else {
+        // if (!puuid) {
+        //   showToast("No Data found", "error");
+        //   setTimeout(() => {
+        //     document.getElementById("loading").style.display = 'none';
+        //   }, 1000);
+        // }
+        // else {
           Object.keys(puuid).forEach(uuid => {
             // console.log("Test pass 2",panchayatId,villageId,uuid);
             const form1 = fb.database().ref().child("Form_1").child(panchayatId).child(villageId).child(uuid);
@@ -2877,7 +2893,7 @@ async function fetchPATIENTData(selectedFieldworker, selectedPanchayat, selected
                           "uuid": uuid,
                           "village": villageId,
                           "fw_id": fwid,
-                          "gen":gndr
+                          "gen": gndr
                         });
 
                       }
@@ -2886,7 +2902,7 @@ async function fetchPATIENTData(selectedFieldworker, selectedPanchayat, selected
                           "uuid": uuid,
                           "village": villageId,
                           "fw_id": fwid,
-                          "gen":gndr
+                          "gen": gndr
                         });
                       }
 
@@ -2926,9 +2942,15 @@ async function fetchPATIENTData(selectedFieldworker, selectedPanchayat, selected
               Status = false;
               Eligibility = false;
               HabitSummary = false;
-
+              if (data.length===0) {
+                showToast("No Data found", "error");
+                setTimeout(() => {
+                  document.getElementById("loading").style.display = 'none';
+                }, 1000);
+              }
+              else {
               surveySection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-
+              }
               timer_fun1();
 
 
@@ -2944,13 +2966,14 @@ async function fetchPATIENTData(selectedFieldworker, selectedPanchayat, selected
             .catch((error) => {
               console.error("Error in processing data:", error);
             });
-        }
+        // }
       });
     }
   }
 }
 
 async function fetchDoctorScreening(selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
+  // MVDform();
 
   let upids;
 
@@ -3022,16 +3045,16 @@ async function fetchDoctorScreening(selectedFieldworker, selectedPanchayat, sele
                               "uuid": puuid,
                               "village": villageId,
                               "fw_id": fwid,
-                              "gen":gndr
+                              "gen": gndr
                             });
-    
+
                           }
                           if (findp2) {
                             p2.push({
                               "uuid": puuid,
                               "village": villageId,
                               "fw_id": fwid,
-                              "gen":gndr
+                              "gen": gndr
                             });
                           }
 
@@ -3074,12 +3097,18 @@ async function fetchDoctorScreening(selectedFieldworker, selectedPanchayat, sele
             Status = false;
             Eligibility = false;
             HabitSummary = false;
-
+            if (data.length===0) {
+              showToast("No Data found", "error");
+              setTimeout(() => {
+                document.getElementById("loading").style.display = 'none';
+              }, 1000);
+            }
+            else {
             surveySection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
             ScreeningSection(selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage);
-
+            mvdfetchdata(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
             timer_fun2();
-
+            }
 
             const surveyChart = document.getElementById("survey_chart");
             if (selectedPhase === "All" || selectedPhase === "1") {
@@ -3101,13 +3130,13 @@ async function fetchDoctorScreening(selectedFieldworker, selectedPanchayat, sele
       upids.once('value', function (snapshot) {
         const puuid = snapshot.val();
         // console.log("upids",puuid)
-        if (!puuid) {
-          showToast("No Data found", "error");
-          setTimeout(() => {
-            document.getElementById("loading").style.display = 'none';
-          }, 1000);
-        }
-        else {
+        // if (!puuid) {
+        //   showToast("No Data found", "error");
+        //   setTimeout(() => {
+        //     document.getElementById("loading").style.display = 'none';
+        //   }, 1000);
+        // }
+        // else {
           Object.keys(puuid).forEach(uuid => {
             // console.log("Test pass 2",panchayatId,villageId,uuid);
             const form1 = fb.database().ref().child("Form_1").child(panchayatId).child(villageId).child(uuid);
@@ -3163,7 +3192,7 @@ async function fetchDoctorScreening(selectedFieldworker, selectedPanchayat, sele
                           "uuid": uuid,
                           "village": villageId,
                           "fw_id": fwid,
-                          "gen":gndr
+                          "gen": gndr
                         });
 
                       }
@@ -3172,7 +3201,7 @@ async function fetchDoctorScreening(selectedFieldworker, selectedPanchayat, sele
                           "uuid": uuid,
                           "village": villageId,
                           "fw_id": fwid,
-                          "gen":gndr
+                          "gen": gndr
                         });
                       }
 
@@ -3212,10 +3241,17 @@ async function fetchDoctorScreening(selectedFieldworker, selectedPanchayat, sele
               Status = false;
               Eligibility = false;
               HabitSummary = false;
-
+              if (data.length===0) {
+                showToast("No Data found", "error");
+                setTimeout(() => {
+                  document.getElementById("loading").style.display = 'none';
+                }, 1000);
+              }
+              else {
               surveySection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
               ScreeningSection(selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage);
-
+              mvdfetchdata(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+              }
               timer_fun2();
 
 
@@ -3230,7 +3266,7 @@ async function fetchDoctorScreening(selectedFieldworker, selectedPanchayat, sele
             .catch((error) => {
               console.error("Error in processing data:", error);
             });
-        }
+        // }
       });
     }
   }
@@ -3238,6 +3274,7 @@ async function fetchDoctorScreening(selectedFieldworker, selectedPanchayat, sele
 }
 
 async function fetchTccScreening(selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
+  // exportTCCFOLLOW();
 
   let upids;
   let fetchPromises = [];
@@ -3307,7 +3344,7 @@ async function fetchTccScreening(selectedFieldworker, selectedPanchayat, selecte
                               "uuid": puuid,
                               "village": villageId,
                               "fw_id": fwid, // Add fw_id to p1
-                              "gen":gndr
+                              "gen": gndr
                             });
                           }
                           if (findp2) {
@@ -3315,7 +3352,7 @@ async function fetchTccScreening(selectedFieldworker, selectedPanchayat, selecte
                               "uuid": puuid,
                               "village": villageId,
                               "fw_id": fwid, // Add fw_id to p2
-                              "gen":gndr
+                              "gen": gndr
                             });
                           }
 
@@ -3359,9 +3396,15 @@ async function fetchTccScreening(selectedFieldworker, selectedPanchayat, selecte
             Eligibility = false;
             HabitSummary = false;
 
-
+            if (data.length===0) {
+              showToast("No Data found", "error");
+              setTimeout(() => {
+                document.getElementById("loading").style.display = 'none';
+              }, 1000);
+            }
+            else {
             tccSection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-
+            }
             timer_fun3();
 
 
@@ -3379,13 +3422,13 @@ async function fetchTccScreening(selectedFieldworker, selectedPanchayat, selecte
       upids.once('value', function (snapshot) {
         const puuid = snapshot.val();
         console.log("upids", puuid)
-        if (!puuid) {
-          showToast("No Data found", "error");
-          setTimeout(() => {
-            document.getElementById("loading").style.display = 'none';
-          }, 1000);
-        }
-        else {
+        // if (!puuid) {
+        //   showToast("No Data found", "error");
+        //   setTimeout(() => {
+        //     document.getElementById("loading").style.display = 'none';
+        //   }, 1000);
+        // }
+        // else {
           Object.keys(puuid).forEach(uuid => {
             // console.log("Test pass 2",panchayatId,villageId,uuid);
             const form1 = fb.database().ref().child("Form_1").child(panchayatId).child(villageId).child(uuid);
@@ -3441,7 +3484,7 @@ async function fetchTccScreening(selectedFieldworker, selectedPanchayat, selecte
                           "uuid": uuid,
                           "village": villageId,
                           "fw_id": fwid, // Add fw_id to p1
-                          "gen":gndr
+                          "gen": gndr
                         });
                       }
                       if (findp2) {
@@ -3449,7 +3492,7 @@ async function fetchTccScreening(selectedFieldworker, selectedPanchayat, selecte
                           "uuid": uuid,
                           "village": villageId,
                           "fw_id": fwid, // Add fw_id to p2
-                          "gen":gndr
+                          "gen": gndr
                         });
                       }
 
@@ -3490,18 +3533,24 @@ async function fetchTccScreening(selectedFieldworker, selectedPanchayat, selecte
               Eligibility = false;
               HabitSummary = false;
 
-
+              if (data.length===0) {
+                showToast("No Data found", "error");
+                setTimeout(() => {
+                  document.getElementById("loading").style.display = 'none';
+                }, 1000);
+              }
+              else {
               tccSection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-
+              
               timer_fun3();
-
+              }
 
 
             })
             .catch((error) => {
               console.error("Error in processing data:", error);
             });
-        }
+        // }
       });
     }
 
@@ -3523,6 +3572,7 @@ async function surveySection(data, selectedFieldworker, selectedPanchayat, selec
   countHabitSummary(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
   fetchAdditionalMapInfo(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
   countTCC_Survey(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+
 }
 
 async function screeningfetchdata(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
@@ -3753,6 +3803,231 @@ async function screeningfetchdata(data, selectedFieldworker, selectedPanchayat, 
 
 }
 
+async function mvdfetchdata(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
+  let upids;
+  let fetchPromises = [];
+  let p1 = [];
+  let p2 = [];
+  let pall = [];
+
+  if (selectedVillage === "All") {
+    upids = fb.database().ref().child('U_pchyat');
+    upids.once('value', function (snapshot) {
+      snapshot.forEach(function (childSnapshot) {
+        const panchayatId = childSnapshot.key;
+
+        if (panchayatId.length === 2 && panchayatId != 99) {
+          childSnapshot.forEach(function (villageSnapshot) {
+            villageSnapshot.forEach(function (uuidSnapshot) {
+              const villageId = villageSnapshot.key;
+              const puuid = uuidSnapshot.key;
+
+              const form3 = fb.database().ref().child("manual_vital_data").child(panchayatId).child(villageId).child(puuid);
+              const pref = fb.database().ref().child("patients1").child(panchayatId).child(villageId).child(puuid);
+
+              const promise = form3.once("value").then(function (snap) {
+                let form3Data = snap.val();
+                if (form3Data) {
+                  let maxPhase1Timestamp = null;
+                  let maxPhase2Timestamp = null;
+                  let maxTimestamp = null;
+
+                  let findp1 = false, findp2 = false, findall = false;
+
+                  return pref.once("value").then(function (snap) {
+                    let patientData = snap.val();
+                    if (patientData) {
+                      const fwid = patientData.fw_id; // Fetch fw_id
+                      const gen = patientData.gndr; // Fetch fw_id
+
+                      Object.keys(form3Data).forEach(timestamp => {
+                        let year = new Date(Number(timestamp) * 1000).getFullYear();
+
+                        if (timestamp <= stTime) {
+                          if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
+                            maxPhase1Timestamp = timestamp;
+                            findp1 = true;
+                          }
+                        }
+                        if (timestamp >= stTime) {
+                          if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
+                            maxPhase2Timestamp = timestamp;
+                            findp2 = true;
+                          }
+                        }
+                        if (timestamp <= stTime || timestamp >= stTime) {
+                          if (!maxTimestamp || Number(timestamp) > Number(maxTimestamp)) {
+                            maxTimestamp = timestamp;
+                            findall = true;
+                          }
+                        }
+                      });
+
+                      if (findp1) {
+                        p1.push({
+                          "uuid": puuid,
+                          "village": villageId,
+                          "fw_id": fwid,
+                          "gen": gen
+                        });
+                      }
+                      if (findp2) {
+                        p2.push({
+                          "uuid": puuid,
+                          "village": villageId,
+                          "fw_id": fwid,
+                          "gen": gen
+                        });
+                      }
+
+                      pall = p1.concat(p2);
+                    }
+                  });
+                }
+              }).catch((error) => {
+                console.error("Error fetching patient data for UUID:", puuid, error);
+              });
+              fetchPromises.push(promise); // Add each promise to the array
+            });
+          });
+        }
+      });
+
+      // Wait for all promises to complete before logging the results
+      Promise.all(fetchPromises)
+        .then(() => {
+          // console.log("p1 - :", p1);
+          // console.log("p2 - :", p2);
+          // console.log("pall - :", pall);
+
+          var data_loc = [];
+          if (selectedPhase === "1") {
+            data_loc = p1;
+          }
+          if (selectedPhase === "2") {
+            data_loc = p2;
+          }
+          if (selectedPhase === "All") {
+            data_loc = pall;
+          }
+          newScreening(data_loc, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+        })
+        .catch((error) => {
+          console.error("Error in processing data:", error);
+        });
+    });
+  }
+  else if (selectedVillage !== "All") {
+    upids = fb.database().ref().child('U_pchyat').child(selectedPanchayat).child(selectedVillage)
+    let panchayatId = selectedPanchayat;
+    let villageId = selectedVillage;
+    upids.once('value', function (snapshot) {
+      const puuid = snapshot.val();
+      // console.log("upids",puuid)
+      if (!puuid) {
+        showToast("No Data found", "error");
+        setTimeout(() => {
+          document.getElementById("loading").style.display = 'none';
+        }, 1000);
+      }
+      else {
+        Object.keys(puuid).forEach(uuid => {
+          const form3 = fb.database().ref().child("manual_vital_data").child(panchayatId).child(villageId).child(uuid);
+          const pref = fb.database().ref().child("patients1").child(panchayatId).child(villageId).child(uuid);
+
+          const promise = form3.once("value").then(function (snap) {
+            let form3Data = snap.val();
+            if (form3Data) {
+              let maxPhase1Timestamp = null;
+              let maxPhase2Timestamp = null;
+              let maxTimestamp = null;
+
+              let findp1 = false, findp2 = false, findall = false;
+
+              return pref.once("value").then(function (snap) {
+                let patientData = snap.val();
+                if (patientData) {
+                  const fwid = patientData.fw_id; // Fetch fw_id
+                  const gen = patientData.gndr; // Fetch fw_id
+
+                  Object.keys(form3Data).forEach(timestamp => {
+                    let year = new Date(Number(timestamp) * 1000).getFullYear();
+
+                    if (timestamp <= stTime) {
+                      if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
+                        maxPhase1Timestamp = timestamp;
+                        findp1 = true;
+                      }
+                    }
+                    if (timestamp >= stTime) {
+                      if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
+                        maxPhase2Timestamp = timestamp;
+                        findp2 = true;
+                      }
+                    }
+                    if (timestamp <= stTime || timestamp >= stTime) {
+                      if (!maxTimestamp || Number(timestamp) > Number(maxTimestamp)) {
+                        maxTimestamp = timestamp;
+                        findall = true;
+                      }
+                    }
+                  });
+
+                  if (findp1) {
+                    p1.push({
+                      "uuid": uuid,
+                      "village": villageId,
+                      "fw_id": fwid, // Add fw_id to p1
+                      "gen": gen
+                    });
+                  }
+                  if (findp2) {
+                    p2.push({
+                      "uuid": uuid,
+                      "village": villageId,
+                      "fw_id": fwid,
+                      "gen": gen
+                    });
+                  }
+
+                  pall = p1.concat(p2);
+                }
+              });
+            }
+          }).catch((error) => {
+            console.error("Error fetching patient data for UUID:", puuid, error);
+          });
+          fetchPromises.push(promise); // Add each promise to the array
+        })
+        Promise.all(fetchPromises)
+          .then(() => {
+            // console.log("p1 - :", p1);
+            // console.log("p2 - :", p2);
+            // console.log("pall - :", pall);
+
+            var data_loc = [];
+            if (selectedPhase === "1") {
+              data_loc = p1;
+            }
+            if (selectedPhase === "2") {
+              data_loc = p2;
+            }
+            if (selectedPhase === "All") {
+              data_loc = pall;
+            }
+
+            newScreening(data_loc, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+          })
+          .catch((error) => {
+            console.error("Error in processing data:", error);
+          });
+
+      }
+    })
+  }
+
+}
+
 async function ScreeningSection(selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage) {
 
   let upids;
@@ -3863,7 +4138,7 @@ async function ScreeningSection(selectedPhase, selectedFieldworker, selectedPanc
           if (selectedPhase === "All") {
             data = pall;
           }
-          newScreening(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+          // newScreening(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
           remoteScreening(selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage)
           // remoteScreening(phaseUUIDs, selectedPanchayat, selectedVillage);
           inPresonDocScreening(data, selectedFieldworker, selectedPanchayat, selectedVillage);
@@ -3903,113 +4178,113 @@ async function ScreeningSection(selectedPhase, selectedFieldworker, selectedPanc
       else {
         Object.keys(puuid).forEach(uuid => {
           const form3 = fb.database().ref().child("Form_3").child(panchayatId).child(villageId).child(uuid);
-              const pref = fb.database().ref().child("patients1").child(panchayatId).child(villageId).child(uuid);
+          const pref = fb.database().ref().child("patients1").child(panchayatId).child(villageId).child(uuid);
 
-              const promise = form3.once("value").then(function (snap) {
-                let form3Data = snap.val();
-                if (form3Data) {
-                  let maxPhase1Timestamp = null;
-                  let maxPhase2Timestamp = null;
-                  let maxTimestamp = null;
+          const promise = form3.once("value").then(function (snap) {
+            let form3Data = snap.val();
+            if (form3Data) {
+              let maxPhase1Timestamp = null;
+              let maxPhase2Timestamp = null;
+              let maxTimestamp = null;
 
-                  let findp1 = false, findp2 = false, findall = false;
+              let findp1 = false, findp2 = false, findall = false;
 
-                  return pref.once("value").then(function (snap) {
-                    let patientData = snap.val();
-                    if (patientData) {
-                      const fwid = patientData.fw_id; // Fetch fw_id
-                      const gen =  patientData.gndr;
-                      Object.keys(form3Data).forEach(timestamp => {
-                        let year = new Date(Number(timestamp) * 1000).getFullYear();
+              return pref.once("value").then(function (snap) {
+                let patientData = snap.val();
+                if (patientData) {
+                  const fwid = patientData.fw_id; // Fetch fw_id
+                  const gen = patientData.gndr;
+                  Object.keys(form3Data).forEach(timestamp => {
+                    let year = new Date(Number(timestamp) * 1000).getFullYear();
 
-                        if (timestamp <= stTime) {
-                          if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
-                            maxPhase1Timestamp = timestamp;
-                            findp1 = true;
-                          }
-                        }
-                        if (timestamp >= stTime) {
-                          if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
-                            maxPhase2Timestamp = timestamp;
-                            findp2 = true;
-                          }
-                        }
-                        if (timestamp <= stTime || timestamp >= stTime) {
-                          if (!maxTimestamp || Number(timestamp) > Number(maxTimestamp)) {
-                            maxTimestamp = timestamp;
-                            findall = true;
-                          }
-                        }
-                      });
-                      // console.log("Test pass 5 - ", uuid, " ", maxPhase2Timestamp);
-
-                      if (findp1) {
-                        p1.push({
-                          "uuid": uuid,
-                          "village": villageId,
-                          "fw_id": fwid, // Add fw_id to p1
-                          "gen": gen
-                        });
+                    if (timestamp <= stTime) {
+                      if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
+                        maxPhase1Timestamp = timestamp;
+                        findp1 = true;
                       }
-                      if (findp2) {
-                        p2.push({
-                          "uuid": uuid,
-                          "village": villageId,
-                          "fw_id": fwid, // Add fw_id to p2
-                          "gen": gen
-                        });
+                    }
+                    if (timestamp >= stTime) {
+                      if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
+                        maxPhase2Timestamp = timestamp;
+                        findp2 = true;
                       }
-
-                      pall = p1.concat(p2);
+                    }
+                    if (timestamp <= stTime || timestamp >= stTime) {
+                      if (!maxTimestamp || Number(timestamp) > Number(maxTimestamp)) {
+                        maxTimestamp = timestamp;
+                        findall = true;
+                      }
                     }
                   });
-                }
-              }).catch((error) => {
-                console.error("Error fetching patient data for UUID:", uuid, error);
-              });
+                  // console.log("Test pass 5 - ", uuid, " ", maxPhase2Timestamp);
 
-              fetchPromises.push(promise); // Add each promise to the array
+                  if (findp1) {
+                    p1.push({
+                      "uuid": uuid,
+                      "village": villageId,
+                      "fw_id": fwid, // Add fw_id to p1
+                      "gen": gen
+                    });
+                  }
+                  if (findp2) {
+                    p2.push({
+                      "uuid": uuid,
+                      "village": villageId,
+                      "fw_id": fwid, // Add fw_id to p2
+                      "gen": gen
+                    });
+                  }
+
+                  pall = p1.concat(p2);
+                }
+              });
+            }
+          }).catch((error) => {
+            console.error("Error fetching patient data for UUID:", uuid, error);
+          });
+
+          fetchPromises.push(promise); // Add each promise to the array
         })
 
         Promise.all(fetchPromises)
-        .then(() => {
-          console.log("p1 - screening :", p1);
-          console.log("p2 - screening:", p2);
-          console.log("pall - screening:", pall);
+          .then(() => {
+            console.log("p1 - screening :", p1);
+            console.log("p2 - screening:", p2);
+            console.log("pall - screening:", pall);
 
-          var data = [];
-          if (selectedPhase === "1") {
-            data = p1;
-          }
-          if (selectedPhase === "2") {
-            data = p2;
-          }
-          if (selectedPhase === "All") {
-            data = pall;
-          }
-          newScreening(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-          remoteScreening(selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage)
-          // remoteScreening(phaseUUIDs, selectedPanchayat, selectedVillage);
-          inPresonDocScreening(data, selectedFieldworker, selectedPanchayat, selectedVillage);
+            var data = [];
+            if (selectedPhase === "1") {
+              data = p1;
+            }
+            if (selectedPhase === "2") {
+              data = p2;
+            }
+            if (selectedPhase === "All") {
+              data = pall;
+            }
+            // newScreening(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+            remoteScreening(selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage)
+            // remoteScreening(phaseUUIDs, selectedPanchayat, selectedVillage);
+            inPresonDocScreening(data, selectedFieldworker, selectedPanchayat, selectedVillage);
 
-          DoctorRecommendations(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-          // DoctorRecommendations(phase1UUIDs, phase2UUIDs, selectedPhase, selectedPanchayat, selectedVillage);
-          reScreening(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
+            DoctorRecommendations(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+            // DoctorRecommendations(phase1UUIDs, phase2UUIDs, selectedPhase, selectedPanchayat, selectedVillage);
+            reScreening(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
 
-          ScrTobaccoConsumption(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+            ScrTobaccoConsumption(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
 
-          oralScreeningData(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-          // oralScreeningData(phase1UUIDs, phase2UUIDs, selectedPhase, selectedPanchayat, selectedVillage);
-          brScreeningData(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-          // brScreeningData(phase1UUIDs, phase2UUIDs, selectedPhase, selectedPanchayat, selectedVillage);
-          cervicalScreeningData(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-          // cervicalScreeningData(phase1UUIDs, phase2UUIDs, selectedPhase, selectedPanchayat, selectedVillage);
-          aggregateScreeningData(p1, p2, selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage);
-        })
-        .catch((error) => {
-          console.error("Error in processing data:", error);
-        });
-      
+            oralScreeningData(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+            // oralScreeningData(phase1UUIDs, phase2UUIDs, selectedPhase, selectedPanchayat, selectedVillage);
+            brScreeningData(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+            // brScreeningData(phase1UUIDs, phase2UUIDs, selectedPhase, selectedPanchayat, selectedVillage);
+            cervicalScreeningData(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+            // cervicalScreeningData(phase1UUIDs, phase2UUIDs, selectedPhase, selectedPanchayat, selectedVillage);
+            aggregateScreeningData(p1, p2, selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage);
+          })
+          .catch((error) => {
+            console.error("Error in processing data:", error);
+          });
+
       }
     });
   }
@@ -4051,14 +4326,140 @@ async function tccSection(data, selectedFieldworker, selectedPanchayat, selected
 
 
   // Ensure the village is specified
-  if (selectedVillage !== "All") {
+  if (selectedVillage === "All") {
+
+    upids = fb.database().ref().child('U_pchyat');
+    upids.once('value', function (snapshot) {
+      snapshot.forEach(function (childSnapshot) {
+        const panchayatId = childSnapshot.key;
+
+        if (panchayatId.length === 2 && panchayatId !== 99) {
+          childSnapshot.forEach(function (villageSnapshot) {
+            villageSnapshot.forEach(function (uuidSnapshot) {
+              const villageId = villageSnapshot.key;
+              const puuid = uuidSnapshot.key;
+
+              const tccRef = fb.database().ref().child("tcc_form").child(panchayatId).child(villageId).child(puuid);
+              const pref = fb.database().ref().child("patients1").child(panchayatId).child(villageId).child(puuid);
+
+              const promise = tccRef.once("value").then(function (snap) {
+                let tccformData = snap.val();
+                if (tccformData) {
+                  let maxPhase1Timestamp = null;
+                  let maxPhase2Timestamp = null;
+                  let maxTimestamp = null;
+
+                  let findp1 = false, findp2 = false, findall = false;
+
+                  return pref.once("value").then(function (snap) {
+                    let patientData = snap.val();
+                    if (patientData) {
+                      const fwid = patientData.fw_id; // Fetch fw_id
+                      const gndr = patientData.gndr;
+                      Object.keys(tccformData).forEach(timestamp => {
+                        let year = new Date(Number(timestamp) * 1000).getFullYear();
+
+                        if (timestamp <= stTime) {
+                          if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
+                            maxPhase1Timestamp = timestamp;
+                            findp1 = true;
+                          }
+                        }
+                        if (timestamp >= stTime) {
+                          if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
+                            maxPhase2Timestamp = timestamp;
+                            findp2 = true;
+                          }
+                        }
+                        if (timestamp <= stTime || timestamp >= stTime) {
+                          if (!maxTimestamp || Number(timestamp) > Number(maxTimestamp)) {
+                            maxTimestamp = timestamp;
+                            findall = true;
+                          }
+                        }
+                      });
+
+                      if (findp1) {
+                        p1.push({
+                          "uuid": puuid,
+                          "village": villageId,
+                          "fw_id": fwid,
+                          "gen": gndr
+                        });
+                      }
+
+                      // Add to p2 if a Phase 2 record is found
+                      if (findp2) {
+                        p2.push({
+                          "uuid": puuid,
+                          "village": villageId,
+                          "fw_id": fwid,
+                          "gen": gndr
+                        });
+                      }
+
+                      pall = p1.concat(p2);
+                    }
+                  });
+
+                }
+              }).catch((error) => {
+                console.error("Error fetching patient data for UUID:", puuid, error);
+              });
+
+              fetchPromises.push(promise); // Add each promise to the array
+            });
+          });
+        }
+      });
+
+      // Wait for all promises to complete before logging the results
+      Promise.all(fetchPromises)
+        .then(() => {
+          console.log("p1 - :", p1);
+          console.log("p2 - :", p2);
+          console.log("pall - :", pall);
+
+          var data = [];
+          if (selectedPhase === "1") {
+            data = p1;
+
+          }
+          if (selectedPhase === "2") {
+            data = p2;
+          }
+          if (selectedPhase === "All") {
+            data = pall;
+
+          }
+
+          console.log("pall - :", data);
+          countTCCGenders(data, selectedFieldworker, selectedPanchayat, selectedVillage);
+          // countTobaccoConsumptions(data, selectedFieldworker, selectedPanchayat, selectedVillage);
+          countTobaccoConsumptions(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+          // TccFollowup(data, selectedFieldworker, selectedPanchayat, selectedVillage);
+          TccFollowup(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+          // TccbatcFollowup(data, selectedFieldworker, selectedPanchayat, selectedVillage);
+          TccbatcFollowup(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
+          //pendingTccFOLLOW(p1, p2, p3);
+          pendingTccFOLLOW(p1, p2, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
+
+          tccSmokeCount(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+          tccSmokeLessCount(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+        })
+        .catch((error) => {
+          console.error("Error in processing data:", error);
+        });
+    });
+  }
+  else if (selectedVillage !== "All") {
     Object.keys(uniqueDataU).forEach(nuuid => {
       let uuid = uniqueDataU[nuuid].uuid;
       let villageId = uniqueDataU[nuuid].village;
       let panchayatId = String(villageId).slice(0, 2); // Extract panchayatId from villageId
       console.log("villageId: ", villageId, " panchayatId: ", panchayatId);
 
-      const tccRef = fb.database().ref().child("tcc_form").child(uuid);
+      const tccRef = fb.database().ref().child("tcc_form").child(panchayatId).child(villageId).child(uuid);
       const pref = fb.database().ref().child("patients1").child(panchayatId).child(villageId).child(uuid);
 
       // Create a promise for each patient to fetch data
@@ -4171,132 +4572,7 @@ async function tccSection(data, selectedFieldworker, selectedPanchayat, selected
       });
   }
 
-  else if (selectedVillage === "All") {
 
-    upids = fb.database().ref().child('U_pchyat');
-    upids.once('value', function (snapshot) {
-      snapshot.forEach(function (childSnapshot) {
-        const panchayatId = childSnapshot.key;
-
-        if (panchayatId.length === 2 && panchayatId !== 99) {
-          childSnapshot.forEach(function (villageSnapshot) {
-            villageSnapshot.forEach(function (uuidSnapshot) {
-              const villageId = villageSnapshot.key;
-              const puuid = uuidSnapshot.key;
-
-              const tccRef = fb.database().ref().child("tcc_form").child(puuid);
-              const pref = fb.database().ref().child("patients1").child(panchayatId).child(villageId).child(puuid);
-
-              const promise = tccRef.once("value").then(function (snap) {
-                let tccformData = snap.val();
-                if (tccformData) {
-                  let maxPhase1Timestamp = null;
-                  let maxPhase2Timestamp = null;
-                  let maxTimestamp = null;
-
-                  let findp1 = false, findp2 = false, findall = false;
-
-                  return pref.once("value").then(function (snap) {
-                    let patientData = snap.val();
-                    if (patientData) {
-                      const fwid = patientData.fw_id; // Fetch fw_id
-                      const gndr = patientData.gndr;
-                      Object.keys(tccformData).forEach(timestamp => {
-                        let year = new Date(Number(timestamp) * 1000).getFullYear();
-
-                        if (timestamp <= stTime) {
-                          if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
-                            maxPhase1Timestamp = timestamp;
-                            findp1 = true;
-                          }
-                        }
-                        if (timestamp >= stTime) {
-                          if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
-                            maxPhase2Timestamp = timestamp;
-                            findp2 = true;
-                          }
-                        }
-                        if (timestamp <= stTime || timestamp >= stTime) {
-                          if (!maxTimestamp || Number(timestamp) > Number(maxTimestamp)) {
-                            maxTimestamp = timestamp;
-                            findall = true;
-                          }
-                        }
-                      });
-
-                      if (findp1) {
-                        p1.push({
-                          "uuid": puuid,
-                          "village": villageId,
-                          "fw_id": fwid,
-                          "gen": gndr
-                        });
-                      }
-    
-                      // Add to p2 if a Phase 2 record is found
-                      if (findp2) {
-                        p2.push({
-                          "uuid": puuid,
-                          "village": villageId,
-                          "fw_id": fwid,
-                          "gen": gndr
-                        });
-                      }
-
-                      pall = p1.concat(p2);
-                    }
-                  });
-
-                }
-              }).catch((error) => {
-                console.error("Error fetching patient data for UUID:", puuid, error);
-              });
-
-              fetchPromises.push(promise); // Add each promise to the array
-            });
-          });
-        }
-      });
-
-      // Wait for all promises to complete before logging the results
-      Promise.all(fetchPromises)
-        .then(() => {
-          console.log("p1 - :", p1);
-          console.log("p2 - :", p2);
-          console.log("pall - :", pall);
-
-          var data = [];
-          if (selectedPhase === "1") {
-            data = p1;
-
-          }
-          if (selectedPhase === "2") {
-            data = p2;
-          }
-          if (selectedPhase === "All") {
-            data = pall;
-
-          }
-
-          console.log("pall - :", data);
-          countTCCGenders(data, selectedFieldworker, selectedPanchayat, selectedVillage);
-          // countTobaccoConsumptions(data, selectedFieldworker, selectedPanchayat, selectedVillage);
-          countTobaccoConsumptions(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-          // TccFollowup(data, selectedFieldworker, selectedPanchayat, selectedVillage);
-          TccFollowup(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-          // TccbatcFollowup(data, selectedFieldworker, selectedPanchayat, selectedVillage);
-          TccbatcFollowup(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
-          //pendingTccFOLLOW(p1, p2, p3);
-          pendingTccFOLLOW(p1, p2, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
-
-          tccSmokeCount(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-          tccSmokeLessCount(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-        })
-        .catch((error) => {
-          console.error("Error in processing data:", error);
-        });
-    });
-  }
 
 
 }
@@ -4526,38 +4802,38 @@ async function countMaleAndFemale(data, selectedFieldworker, selectedPanchayat, 
 
     //       let gender = patientData.gndr;
 
-          const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+    const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
     //       // console.log(result);
 
-          if (result) {
-            if (gender === "Male" || gender === "M" || gender === "m") {
-              maleCount++;
-            } else if (gender === "Female" || gender === "F" || gender === "f") {
-              femaleCount++;
-            }
-          }
+    if (result) {
+      if (gender === "Male" || gender === "M" || gender === "m") {
+        maleCount++;
+      } else if (gender === "Female" || gender === "F" || gender === "f") {
+        femaleCount++;
+      }
+    }
 
-          // console.log("maleCount gender status in survey", maleCount);
-          // console.log("femaleCount gender status in survey", femaleCount);
+    // console.log("maleCount gender status in survey", maleCount);
+    // console.log("femaleCount gender status in survey", femaleCount);
 
-          let surveyCount = maleCount + femaleCount;
-          document.getElementById("ts").innerHTML = surveyCount;
+    let surveyCount = maleCount + femaleCount;
+    document.getElementById("ts").innerHTML = surveyCount;
 
-          const timestamp = Date.now();
-          counter_check.push(timestamp);
+    const timestamp = Date.now();
+    counter_check.push(timestamp);
 
-        // }
-        // else {
-        //   // console.log("Null UUID:", item.uuids);
-        // }
+    // }
+    // else {
+    //   // console.log("Null UUID:", item.uuids);
+    // }
 
-      // })
-      // .catch((error) => {
-      //   console.error("Error fetching patient data for UUID:", item.uuids, error);
-      // });
+    // })
+    // .catch((error) => {
+    //   console.error("Error fetching patient data for UUID:", item.uuids, error);
+    // });
 
   })
-  
+
   fetchPromises.push(promise); // Add each promise to the array
 
   Promise.all(fetchPromises)
@@ -4967,16 +5243,18 @@ async function CountEligibility(data, selectedFieldworker, selectedPanchayat, se
 }
 
 async function fetchAdditionalMapInfo(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
-  var mapInfo = fb.database().ref().child("additional_info");
+
+  // var mapInfo = fb.database().ref().child("additional_info");
   const locations = [];
   // Make sure `removeDuplicateUUIDs` is working correctly before using it
   const uniqueData = removeDuplicateUUIDs(data);
-
   let fetchPromises = uniqueData.map(item => {
     const villageId = item.village;
     const panchayatId = villageId.substring(0, 2);
     var uuid = item.uuid;
     var fwid = item.fw_id;
+    var mapInfo = fb.database().ref().child("additional_info").child(panchayatId).child(villageId);
+
     var pref = fb.database().ref().child("patients1").child(panchayatId).child(villageId);
 
     return mapInfo.child(uuid).once("value")
@@ -5455,6 +5733,7 @@ async function countRegistrationsAndRescreenings(data, selectedFieldworker, sele
                 else if (selectedPhase === "All") {
                   if (maxPhase1Timestamp) {
                     let lastTimestampYear = new Date(Number(maxPhase1Timestamp) * 1000).getFullYear();
+                    timestamp = Math.max(maxPhase1Timestamp, maxPhase2Timestamp);
 
                     if (timestamp <= stTime) {
                       resurveyCount++;
@@ -5957,73 +6236,146 @@ async function newScreening(data, selectedFieldworker, selectedPanchayat, select
   let fetchPromises = [];
   let infoExist = false;
   let MVD = []
-  data.forEach((item) => {
-    const villageId = item.village;
-    const panchayatId = villageId.substring(0, 2);
-    const uuid = item.uuid;
-    let fwid = item.fw_id;
+  if (selectedVillage == "All") {
+    data.forEach((item) => {
+      const villageId = item.village;
+      const panchayatId = villageId.substring(0, 2);
+      const uuid = item.uuid;
+      let fwid = item.fw_id;
 
-    MVD = fb.database().ref().child("manual_vital_data");
-    const pref = fb.database().ref().child("patients1").child(panchayatId).child(villageId);
+      MVD = fb.database().ref().child("manual_vital_data");
+      const pref = fb.database().ref().child("patients1").child(panchayatId).child(villageId);
 
-    const MVDPromise = MVD.child(uuid).once("value")
-      .then(function (snap) {
-        let MVDData = snap.val();
+      const MVDPromise = MVD.child(uuid).once("value")
+        .then(function (snap) {
+          let MVDData = snap.val();
 
-        infoExist = false;
-        if (MVDData) {
-          infoExist = true;
-        }
-        if (infoExist) {
-          return pref.child(uuid).once("value")
-            .then(function (snap) {
-              let pinfo = snap.val();
-              const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+          infoExist = false;
+          if (MVDData) {
+            infoExist = true;
+          }
+          if (infoExist) {
+            return pref.child(uuid).once("value")
+              .then(function (snap) {
+                let pinfo = snap.val();
+                const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
 
-              if (result) {
-                const gender = pinfo.gndr?.toLowerCase();
-                if (gender === 'male' || gender === 'm') {
+                if (result) {
+                  const gender = pinfo.gndr?.toLowerCase();
+                  if (gender === 'male' || gender === 'm') {
 
-                  maleCount++;
-                  // const pName = pinfo.name;
-                  // const pinfoid = pinfo.pid;
-                  // console.log("patient MVD info: ", pinfoid)
-                  // console.log("uuid of inpersonScreening", uuid)
-                } else if (gender === 'female' || gender === 'f') {
-                  femaleCount++;
-                  // console.log("uuid of inpersonScreening", uuid)
-                  // const pName = pinfo.name;
-                  // const pinfoid = pinfo.pid;
-                  // console.log("patient MVD info: ", pinfoid)
+                    maleCount++;
+                    // const pName = pinfo.name;
+                    // const pinfoid = pinfo.pid;
+                    // console.log("patient MVD info: ", pinfoid)
+                    // console.log("uuid of inpersonScreening", uuid)
+                  } else if (gender === 'female' || gender === 'f') {
+                    femaleCount++;
+                    // console.log("uuid of inpersonScreening", uuid)
+                    // const pName = pinfo.name;
+                    // const pinfoid = pinfo.pid;
+                    // console.log("patient MVD info: ", pinfoid)
+                  }
                 }
-              }
-            });
-        }
+              });
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching data for UUID:", uuid, error);
+        });
+
+      fetchPromises.push(MVDPromise);
+    });
+
+    Promise.all(fetchPromises)
+      .then(() => {
+        console.log("maleCount:", maleCount);
+        console.log("femaleCount:", femaleCount);
+        const totalGenderCount = maleCount + femaleCount;
+        document.getElementById("nrg").innerText = totalGenderCount;
+        nRegGenderChart(maleCount, femaleCount);
+
+        //BP and GRBS
+        bpFunction(data, MVD, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
+        GRBS(data, MVD, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
+        nRData = true;
       })
       .catch((error) => {
-        console.error("Error fetching data for UUID:", uuid, error);
+        console.error("Error in completing fetch operations:", error);
       });
+  }
+  else if (selectedVillage !== "All") {
 
-    fetchPromises.push(MVDPromise);
-  });
 
-  Promise.all(fetchPromises)
-    .then(() => {
-      console.log("maleCount:", maleCount);
-      console.log("femaleCount:", femaleCount);
-      const totalGenderCount = maleCount + femaleCount;
-      document.getElementById("nrg").innerText = totalGenderCount;
-      nRegGenderChart(maleCount, femaleCount);
+    data.forEach((item) => {
+      const villageId = item.village;
+      const panchayatId = villageId.substring(0, 2);
+      const uuid = item.uuid;
+      let fwid = item.fw_id;
 
-      //BP and GRBS
-      bpFunction(data, MVD, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
-      GRBS(data, MVD, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
-      nRData = true;
-    })
-    .catch((error) => {
-      console.error("Error in completing fetch operations:", error);
+      MVD = fb.database().ref().child("manual_vital_data").child(panchayatId).child(villageId);
+      const pref = fb.database().ref().child("patients1").child(panchayatId).child(villageId);
+
+      const MVDPromise = MVD.child(uuid).once("value")
+        .then(function (snap) {
+          let MVDData = snap.val();
+
+          infoExist = false;
+          if (MVDData) {
+            infoExist = true;
+          }
+          if (infoExist) {
+            return pref.child(uuid).once("value")
+              .then(function (snap) {
+                let pinfo = snap.val();
+                const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+
+                if (result) {
+                  const gender = pinfo.gndr?.toLowerCase();
+                  if (gender === 'male' || gender === 'm') {
+
+                    maleCount++;
+                    // const pName = pinfo.name;
+                    // const pinfoid = pinfo.pid;
+                    // console.log("patient MVD info: ", pinfoid)
+                    // console.log("uuid of inpersonScreening", uuid)
+                  } else if (gender === 'female' || gender === 'f') {
+                    femaleCount++;
+                    // console.log("uuid of inpersonScreening", uuid)
+                    // const pName = pinfo.name;
+                    // const pinfoid = pinfo.pid;
+                    // console.log("patient MVD info: ", pinfoid)
+                  }
+                }
+              });
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching data for UUID:", uuid, error);
+        });
+
+      fetchPromises.push(MVDPromise);
     });
+
+    Promise.all(fetchPromises)
+      .then(() => {
+        console.log("maleCount:", maleCount);
+        console.log("femaleCount:", femaleCount);
+        const totalGenderCount = maleCount + femaleCount;
+        document.getElementById("nrg").innerText = totalGenderCount;
+        nRegGenderChart(maleCount, femaleCount);
+
+        //BP and GRBS
+        bpFunction(data, MVD, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
+        GRBS(data, MVD, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
+        nRData = true;
+      })
+      .catch((error) => {
+        console.error("Error in completing fetch operations:", error);
+      });
+  }
 }
+
 
 async function bpFunction(data, MVD, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
   let lower = 0;
@@ -6034,14 +6386,14 @@ async function bpFunction(data, MVD, selectedFieldworker, selectedPanchayat, sel
   let fetchPromises = [];
 
   let MVDData = {};
-  await MVD.once("value")
-    .then(function (snap) {
-      MVDData = snap.val();
-      console.log("MVD data:", Object.keys(MVDData).length);
-    })
-    .catch((error) => {
-      console.error("Error fetching MVD data:", error);
-    });
+  // await MVD.once("value")
+  //   .then(function (snap) {
+  //     MVDData = snap.val();
+  //     console.log("MVD data:", Object.keys(MVDData).length);
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error fetching MVD data:", error);
+  //   });
 
   data.forEach((item) => {
     const villageId = item.village;
@@ -6282,14 +6634,14 @@ async function GRBS(data, MVD, selectedFieldworker, selectedPanchayat, selectedV
   let fetchPromises = [];
 
   let MVDData = {};
-  await MVD.once("value")
-    .then(function (snap) {
-      MVDData = snap.val();
-      console.log("MVD data:", Object.keys(MVDData).length);
-    })
-    .catch((error) => {
-      console.error("Error fetching MVD data:", error);
-    });
+  // await MVD.once("value")
+  //   .then(function (snap) {
+  //     MVDData = snap.val();
+  //     console.log("MVD data:", Object.keys(MVDData).length);
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error fetching MVD data:", error);
+  //   });
 
   data.forEach((item) => {
     const villageId = item.village;
@@ -6388,8 +6740,6 @@ async function GRBS(data, MVD, selectedFieldworker, selectedPanchayat, selectedV
       console.error("Error completing fetch operations:", error);
     });
 }
-
-
 
 
 async function remoteScreening(selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage) {
@@ -6654,27 +7004,27 @@ async function inPresonDocScreening(data, selectedFieldworker, selectedPanchayat
           // return pref.child(uuid).once("value")
           //   .then(function (snap) {
           //     let pinfo = snap.val();
-              const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+          const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
 
-              if (result) {
-                // const gender = pinfo.gndr?.toLowerCase();
-                if (gender === 'male' || gender === 'm') {
-                  maleCount++;
-                  // console.log("uuid of inpersonScreening", uuid)
-                  // const pName = pinfo.name;
-                  // const pinfoid = pinfo.pid;
-                  // console.log("patient Inperson info: ", " Name: ", pName, " UUID: ", uuid, " pid ", pinfoid)
+          if (result) {
+            // const gender = pinfo.gndr?.toLowerCase();
+            if (gender === 'male' || gender === 'm') {
+              maleCount++;
+              // console.log("uuid of inpersonScreening", uuid)
+              // const pName = pinfo.name;
+              // const pinfoid = pinfo.pid;
+              // console.log("patient Inperson info: ", " Name: ", pName, " UUID: ", uuid, " pid ", pinfoid)
 
-                } else if (gender === 'female' || gender === 'f') {
-                  femaleCount++;
-                  // console.log("uuid of inpersonScreening", uuid)
-                  // const pName = pinfo.name;
-                  // const pinfoid = pinfo.pid;
-                  // console.log("patient Inperson info: ", " Name: ", pName, " UUID: ", uuid, " pid ", pinfoid)
+            } else if (gender === 'female' || gender === 'f') {
+              femaleCount++;
+              // console.log("uuid of inpersonScreening", uuid)
+              // const pName = pinfo.name;
+              // const pinfoid = pinfo.pid;
+              // console.log("patient Inperson info: ", " Name: ", pName, " UUID: ", uuid, " pid ", pinfoid)
 
-                }
-              }
-            // });
+            }
+          }
+          // });
         }
       })
       .catch((error) => {
@@ -6908,13 +7258,13 @@ async function reScreening(data, selectedFieldworker, selectedPanchayat, selecte
                     let timestamp1 = maxPhase1Timestamp;
 
                     // const phaseMatch = patientId.match(/\/(\d)\//);
-                    if ( result) {
-                      if(timestamp1 && timestamp){
+                    if (result) {
+                      if (timestamp1 && timestamp) {
                         rescreening++;
-                      } 
-                      else{
+                      }
+                      else {
                         nRescreening++;
-                        console.log("rescreening Count:",uuid)
+                        console.log("rescreening Count:", uuid)
                       }
                     }
                     else {
@@ -6946,7 +7296,7 @@ async function reScreening(data, selectedFieldworker, selectedPanchayat, selecte
                         const phase = phaseMatch[1];
                         if (phase === "1") {
                           rescreening++;
-                          
+
                         } else {
                           nRescreening++;
                         }
@@ -8520,35 +8870,35 @@ async function countTCCGenders(data, selectedFieldworker, selectedPanchayat, sel
     //     let patientData = snap.val();
     //     if (patientData) {
     //       let gender = patientData.gndr;
-          const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
-          // console.log(result);
-          if (result) {
-            if (gender === "Male" || gender === "M" || gender === "m") {
-              maleCount++;
-            } else if (gender === "Female" || gender === "F" || gender === "f") {
-              femaleCount++;
-            }
-            // console.log("Gender Info: ", uuid);
-          }
+    const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+    // console.log(result);
+    if (result) {
+      if (gender === "Male" || gender === "M" || gender === "m") {
+        maleCount++;
+      } else if (gender === "Female" || gender === "F" || gender === "f") {
+        femaleCount++;
+      }
+      console.log("Gender Info: ", uuid);
+    }
 
-          // console.log("maleCount gender status in survey", maleCount);
-          // console.log("femaleCount gender status in survey", femaleCount);
+    // console.log("maleCount gender status in survey", maleCount);
+    // console.log("femaleCount gender status in survey", femaleCount);
 
-          let surveyCount = maleCount + femaleCount;
-          // document.getElementById("ts").innerHTML = surveyCount;
+    let surveyCount = maleCount + femaleCount;
+    // document.getElementById("ts").innerHTML = surveyCount;
 
-          const timestamp = Date.now();
-          counter_check.push(timestamp);
+    const timestamp = Date.now();
+    counter_check.push(timestamp);
 
-      //   }
-      //   else {
-      //     // console.log("Null UUID:", item.uuids);
-      //   }
+    //   }
+    //   else {
+    //     // console.log("Null UUID:", item.uuids);
+    //   }
 
-      // })
-      // .catch((error) => {
-      //   console.error("Error fetching patient data for UUID:", item.uuids, error);
-      // });
+    // })
+    // .catch((error) => {
+    //   console.error("Error fetching patient data for UUID:", item.uuids, error);
+    // });
 
   })
   fetchPromises.push(promise); // Add each promise to the array
@@ -8593,6 +8943,7 @@ async function countTobaccoConsumptions(data, selectedFieldworker, selectedPanch
     const panchayatId = villageId.substring(0, 2);
     const uuid = item.uuid;
     const fwid = item.fw_id;
+    const tccRef = fb.database().ref().child("tcc_form").child(panchayatId).child(villageId);
 
     // Fetch data from tccRef
     return tccRef.child(uuid).once("value")
@@ -8848,7 +9199,7 @@ async function tccSmokeCount(data, selectedFieldworker, selectedPanchayat, selec
     var uuid = item.uuid;
     var fwid = item.fw_id;
     // console.log("UUid ", uuid + " Village ", villageId + " Panchayat ", panchayatId);
-    const tccRef = fb.database().ref().child("tcc_form");
+    const tccRef = fb.database().ref().child("tcc_form").child(panchayatId).child(villageId);
     const promise = tccRef.child(uuid).once("value")
       .then(function (snap) {
         let tccData = snap.val();
@@ -9038,7 +9389,7 @@ async function tccSmokeLessCount(data, selectedFieldworker, selectedPanchayat, s
     var uuid = item.uuid;
     var fwid = item.fw_id;
     // console.log("UUid ", uuid + " Village ", villageId + " Panchayat ", panchayatId);
-    const tccRef = fb.database().ref().child("tcc_form");
+    const tccRef = fb.database().ref().child("tcc_form").child(panchayatId).child(villageId);
     const promise = tccRef.child(uuid).once("value")
       .then(function (snap) {
         let tccData = snap.val();
@@ -9050,9 +9401,9 @@ async function tccSmokeLessCount(data, selectedFieldworker, selectedPanchayat, s
         let maxPhase2Timestamp = null;
         let maxTimestamp = null;
         let p1 = false, p2 = false, pall = false;
-
+        // console.log("uuid Of tcc form", tccRef[uuid]);
         Object.keys(tccData).forEach(timestamp => {
-          let year = new Date(Number(timestamp) * 1000).getFullYear();
+          // console.log("uuid Of tcc form 1", uuid);
           if (timestamp <= stTime) {
             p1 = true;
             if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
@@ -9071,6 +9422,7 @@ async function tccSmokeLessCount(data, selectedFieldworker, selectedPanchayat, s
         if (selectedPhase === "1") {
           if (tccData) {
             if (maxPhase1Timestamp) {
+              // console.log("uuid Of tcc form 2", uuid);
               const lastRecord = tccData[maxPhase1Timestamp];
               let hd = lastRecord.hd;
 
@@ -9101,6 +9453,7 @@ async function tccSmokeLessCount(data, selectedFieldworker, selectedPanchayat, s
         if (selectedPhase === "2") {
           if (tccData) {
             if (maxPhase2Timestamp) {
+              // console.log("uuid Of tcc form 2", uuid);
               const lastRecord = tccData[maxPhase2Timestamp];
               let hd = lastRecord.hd;
 
@@ -9132,6 +9485,7 @@ async function tccSmokeLessCount(data, selectedFieldworker, selectedPanchayat, s
         if (selectedPhase === "All") {
           if (tccData) {
             if (maxPhase1Timestamp) {
+              // console.log("uuid Of tcc form 2", uuid);
               const lastRecord = tccData[maxPhase1Timestamp];
               let hd = lastRecord.hd;
 
@@ -9330,62 +9684,105 @@ async function tccSmokeLessCount(data, selectedFieldworker, selectedPanchayat, s
 // }
 
 async function TccFollowup(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
-
-  const tccFollows = fb.database().ref().child("tcc_form_followup");
   const followUpKeys = ['afu', 'bfu', 'cfu', 'dfu', 'efu', 'ffu', 'gfu'];
-  const followUpData = {};
-  followUpKeys.forEach(key => followUpData[key] = []);
-  const fetchFollowUpPromises = data.map(item =>
-    tccFollows.child(item.uuid).once("value")
-      .then(snapshot => {
-        const uuid = item.uuid;
-        if (snapshot.exists()) {
-          const data_val = snapshot.val();
-          followUpKeys.forEach(key => {
-            if (data_val[key]) {
-              followUpData[key].push({ uuid, data: data_val[key] });
-            }
-          });
-        }
-      })
-      .catch(error => {
-        console.error(`Error fetching TCC data for UUID: ${uuid}`, error);
-      })
-  );
-  // console.log("followUpData", followUpData)
+  let followUpData = {};
+  let tccFollows = []
+  let fetchFollowUpPromises = []
+
+  data.map(item => {
+    const villageId = item.village;
+    const panchayatId = villageId.substring(0, 2);
+    var uuid = item.uuid;
+    var fwid = item.fw_id;
+    tccFollows = fb.database().ref().child("tcc_form_followup").child(panchayatId).child(villageId);
+    followUpKeys.forEach(key => followUpData[key] = []);
+
+    fetchFollowUpPromises = data.map(item =>
+      tccFollows.child(item.uuid).once("value")
+        .then(snapshot => {
+          const uuid = item.uuid;
+          if (snapshot.exists()) {
+            const data_val = snapshot.val();
+            followUpKeys.forEach(key => {
+              if (data_val[key] && !followUpData[key].some(entry => entry.uuid === uuid)) {
+                followUpData[key].push({ uuid, data: data_val[key] });
+              }
+            });
+          }
+        })
+        .catch(error => {
+          console.error(`Error fetching TCC data for UUID: ${uuid}`, error);
+        })
+    );
+  })
+
+
+
+  console.log("followUpData", followUpData)
+  // console.log("followUpKeys", followUpKeys);
   await Promise.all(fetchFollowUpPromises);
 
   followUpKeys.forEach((key, index) => {
+    // console.log("followUpData", followUpData)
+
     const followUpArray = followUpData[key];
-    const phaseUUIDsFiltered = followUpArray.map(entry => {
-      let maxPhase1Timestamp = null;
-      let maxPhase2Timestamp = null;
-      Object.keys(entry.data).forEach(timestamp => {
-        const year = new Date(Number(timestamp) * 1000).getFullYear();
-        if (timestamp <= stTime) {
-          if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
-            maxPhase1Timestamp = timestamp;
+    console.log("followUpArray", followUpArray)
+    var FT = 0;
+    if (key === "afu") {
+      FT = 1 * 86400;
+    }
+    if (key === "bfu") {
+      FT = 86400 * 27;
+    }
+    if (key === "cfu") {
+      FT = 86400 * 47;
+    }
+    if (key === "dfu") {
+      FT = 86400 * 67;
+    }
+    if (key === "efu") {
+      FT = 86400 * 97;
+    }
+    if (key === "ffu") {
+      FT = 86400 * 157;
+    }
+    if (key === "gfu") {
+      FT = 86400 * 217;
+    }
+
+    if (followUpArray !== undefined) {
+      followUpArray.map(entry => {
+        let maxPhase1Timestamp = null;
+        let maxPhase2Timestamp = null;
+        Object.keys(entry.data).forEach(timestamp => {
+          const year = new Date(Number(timestamp) * 1000).getFullYear();
+          if (timestamp <= (stTime + FT)) {
+            if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
+              maxPhase1Timestamp = timestamp;
+            }
           }
-        }
-        if (timestamp >= stTime) {
-          if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
-            maxPhase2Timestamp = timestamp;
+          if (timestamp >= (stTime + FT)) {
+            if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
+              maxPhase2Timestamp = timestamp;
+            }
           }
-        }
-      });
-      if (selectedPhase === '1' && maxPhase1Timestamp) return entry.uuid;
-      if (selectedPhase === '2' && maxPhase2Timestamp) return entry.uuid;
-      if (selectedPhase === 'All') return entry.uuid;
-    }).filter(Boolean);
+        });
+        if (selectedPhase === '1' && maxPhase1Timestamp) return entry.uuid;
+        if (selectedPhase === '2' && maxPhase2Timestamp) return entry.uuid;
+        if (selectedPhase === 'All') return entry.uuid;
+      }).filter(Boolean);
+    }
 
     let maleCount = 0;
     let femaleCount = 0;
-    const fetchGenderPromises = data.map(item => {
+    const uniqueData = removeDuplicateUUIDs(data);
+
+    const fetchGenderPromises = uniqueData.map(item => {
       const villageId = item.village;
       const panchayatId = villageId.substring(0, 2);
       var uuid = item.uuid;
       var fwid = item.fw_id;
-      
+
       var patientsRef = fb.database().ref().child("patients1").child(panchayatId).child(villageId);
       return patientsRef.child(uuid).once("value")
         .then(patientSnap => {
@@ -9407,7 +9804,6 @@ async function TccFollowup(data, selectedFieldworker, selectedPanchayat, selecte
                 // console.log("UUid in followup", uuid)
 
               }
-              // console.log("Gender Info: ", uuid);
 
             }
           }
@@ -9427,8 +9823,8 @@ async function TccFollowup(data, selectedFieldworker, selectedPanchayat, selecte
         // console.log(`Calling chart function: ${chartFunction}`);
         window[chartFunction](maleCount, femaleCount);
         TccFoll = true;
-        console.log("male count:", maleCount);
-        console.log("female count:", femaleCount);
+        // console.log("male count:", maleCount);
+        // console.log("female count:", femaleCount);
 
         tccArray.push({
           [`follow-${index + 1}`]: {
@@ -9717,74 +10113,78 @@ async function TccFollowup(data, selectedFieldworker, selectedPanchayat, selecte
 
 
 
-
-
 async function TccbatcFollowup(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
-  const tccFollows = fb.database().ref().child("tcc_form_followup");
   const followUpKeys = ['afu', 'bfu', 'cfu', 'dfu', 'efu', 'ffu', 'gfu'];
   const followUpData = {};
   let batcwuuid = {};
   let fetchPromises = [];
+  let fetchFollowUpPromises = [];
 
-
-
+  // Initialize arrays for each follow-up key
   followUpKeys.forEach(key => {
     followUpData[key] = [];
     batcwuuid[key] = [];
   });
 
-  // Fetch the follow-up data for each UUID
-  const fetchFollowUpPromises = data.map(item =>
-    tccFollows.child(item.uuid).once("value")
-      .then(snapshot => {
-        const uuid = item.uuid;
-        // console.log("UUid in the tcc Form", uuid)
+  // Fetch follow-up data for each item in data array
+  for (let item of data) {
+    const villageId = item.village;
+    const panchayatId = villageId.substring(0, 2);
+    const uuid = item.uuid;
+
+    const tccFollows = fb.database().ref().child("tcc_form_followup").child(panchayatId).child(villageId);
+
+    // Accumulate fetch promises
+    fetchFollowUpPromises.push(
+      tccFollows.child(uuid).once("value").then(snapshot => {
         if (snapshot.exists()) {
           const data_val = snapshot.val();
           followUpKeys.forEach(key => {
-            if (data_val[key]) {
+            if (data_val[key] && !followUpData[key].some(entry => entry.uuid === uuid)) {
               followUpData[key].push({ uuid, data: data_val[key] });
             }
           });
         }
+      }).catch(error => {
+        console.error(`Error fetching TCC data for UUID: ${uuid}`, error);
       })
-      .catch(error => {
-        console.error(`Error fetching TCC data for UUID: ${item.uuid}`, error);
-      })
-  );
+    );
+  }
 
+  // Wait for all follow-up data fetches to complete
   await Promise.all(fetchFollowUpPromises);
 
-
-  console.log("followUpData", followUpData)
-  console.log("followUpData data ", data)
-
-  followUpKeys.forEach((key, index) => { // Using 'key' here
+  // Process fetched follow-up data for each follow-up key
+  followUpKeys.forEach((key, index) => {
     const followUpArray = followUpData[key];
     let available = 0;
     let nonavailable = 0;
-    const uuidArray = [];
+    let uuidArray = [];
+    let agree = 0;
+    let nonagree = 0;
+    let noChange = 0;
+    let reduced = 0;
+    let stopped = 0;
+    let relapse = 0;
+    let na = 0;
+    const uniqueData = removeDuplicateUUIDs(data);
 
-    const fetchTccPromises = data.map(item => {
+    uniqueData.forEach(item => {
       const villageId = item.village;
       const panchayatId = villageId.substring(0, 2);
       const uuid = item.uuid;
       const fwid = item.fw_id;
 
-
       const uuidExistsInFollowUp = followUpArray.some(entry => entry.uuid === uuid);
-      // console.log(" compare check " + (patientData && uuidExistsInFollowUp));
 
       if (uuidExistsInFollowUp) {
         followUpArray.forEach(entry => {
           if (entry.uuid === uuid) {
             let maxPhase1Timestamp = null;
             let maxPhase2Timestamp = null;
-            let maxTimestamp = null;
-            let p1 = false, p2 = false, pall = false;
+            let p1 = false, p2 = false;
 
             Object.keys(entry.data).forEach(timestamp => {
-              const year = new Date(Number(timestamp) * 1000).getFullYear();
               if (timestamp <= stTime) {
                 p1 = true;
                 if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
@@ -9797,95 +10197,231 @@ async function TccbatcFollowup(data, selectedFieldworker, selectedPanchayat, sel
                   maxPhase2Timestamp = timestamp;
                 }
               }
-
             });
 
             const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
-            if ((result && maxPhase1Timestamp && p1) || (result && maxPhase2Timestamp && p2) || (result && maxTimestamp && pall)) {
 
-              var timestamps;
+            if (result && ((maxPhase1Timestamp && p1) || (maxPhase2Timestamp && p2))) {
+              let timestamps;
               if (selectedPhase === "1") {
-                timestamps = maxPhase1Timestamp
+                timestamps = maxPhase1Timestamp;
+              } else if (selectedPhase === "2") {
+                timestamps = maxPhase2Timestamp;
+              } else if (selectedPhase === "All") {
+                timestamps = maxPhase1Timestamp || maxPhase2Timestamp;
+              }
+              // console.log("entry.data[timestamps]", entry.data[timestamps]);
+              if (timestamps) {
                 if (entry.data[timestamps]?.batc === "y" || entry.data[timestamps]?.catc === "y") {
                   available++;
-                  uuidArray.push(uuid);
-                } else {
-                  nonavailable++;
-
-                }
-              }
-              if (selectedPhase === "2") {
-                timestamps = maxPhase2Timestamp
-                if (entry.data[timestamps]?.batc === "y" || entry.data[timestamps]?.catc === "y") {
-                  available++;
-                  uuidArray.push(uuid);
-                } else {
-                  nonavailable++;
-                }
-              }
-              if (selectedPhase === "All") {
-                if (maxPhase1Timestamp) {
-                  timestamps = maxPhase1Timestamp
-                  if (entry.data[timestamps]?.batc === "y" || entry.data[timestamps]?.catc === "y") {
-                    available++;
-                    uuidArray.push(uuid);
+                  if (entry.data[timestamps]?.bwsth === "y" || entry.data[timestamps]?.dwsth === "y") {
+                    agree++;
+                    if (entry.data[timestamps]?.amse === "bsts1" || entry.data[timestamps]?.dsts === "bsts1" || entry.data[timestamps]?.bsts === "bsts1") {
+                      noChange++;
+                    } else if (entry.data[timestamps]?.amse === "bsts2" || entry.data[timestamps]?.dsts === "bsts2" || entry.data[timestamps]?.bsts === "bsts2") {
+                      reduced++;
+                    } else if (entry.data[timestamps]?.amse === "bsts3" || entry.data[timestamps]?.dsts === "bsts3" || entry.data[timestamps]?.bsts === "bsts3") {
+                      stopped++;
+                    } else if (entry.data[timestamps]?.amse === "bsts4" || entry.data[timestamps]?.dsts === "bsts4" || entry.data[timestamps]?.bsts === "bsts4") {
+                      relapse++;
+                    } else {
+                      na++;
+                    }
                   } else {
-                    nonavailable++;
+                    nonagree++;
                   }
-                }
-                if (maxPhase2Timestamp) {
-                  timestamps = maxPhase2Timestamp
-                  if (entry.data[timestamps]?.batc === "y" || entry.data[timestamps]?.catc === "y") {
-                    available++;
-                    uuidArray.push(uuid);
-                  } else {
-                    nonavailable++;
-                  }
+                } else if (entry.data[timestamps]?.batc === "n" || entry.data[timestamps]?.catc === "n") {
+                  nonavailable++;
                 }
               }
-
             }
           }
         });
       }
-
     });
+
     batcwuuid[key] = uuidArray;
-    // console.log("batcwuuid: ", batcwuuid)
 
-    fetchPromises.push(Promise.all(fetchTccPromises).then(() => {
-      // Store the counts in localStorage with keys specific to each follow-up
-      localStorage.setItem(`${key}_available_count`, available);
-      localStorage.setItem(`${key}_nonavailable_count`, nonavailable);
+    fetchPromises.push(
+      Promise.resolve().then(() => {
+        // Increment the counts for each follow-up key
 
-      // Retrieve the counts from localStorage and parse them as integers
-      const avl = parseInt(localStorage.getItem(`${key}_available_count`), 10) || 0;
-      const nonavl = parseInt(localStorage.getItem(`${key}_nonavailable_count`), 10) || 0;
+        const totalCount = available + nonavailable;
+        document.getElementById(`BA_${index + 1}`).innerText = totalCount;
 
-      // console.log(`BATC ${key.toUpperCase()} - Available count: ${avl}, Non-Available count: ${nonavl}`);
-      const totalCount = avl + nonavl;
-      document.getElementById(`BA_${index + 1}`).innerText = totalCount;
-      const chartFunction = `tccBA0${index + 1}Chart`;
-      window[chartFunction](avl, nonavl);
-      TccbwsthFollowup(batcwuuid, selectedPhase);
-      Tccbatc = true
-      tccArray.push({
-        [`BA-${index + 1}`]: {
-          "available": avl,
-          "nonavailable": nonavl
-        }
-      });
-    }));
+        const totalCount_agree = agree + nonagree;
+        document.getElementById(`BW_${index + 1}`).innerText = totalCount_agree;
+
+        const totalCountSts = noChange + reduced + stopped + relapse + na;
+        document.getElementById(`RS_${index + 1}`).innerText = totalCountSts;
+
+        const chartFunction1 = `tccBA0${index + 1}Chart`;
+        window[chartFunction1](available, nonavailable);
+
+        const chartFunction2 = `tccBW0${index + 1}Chart`;
+        window[chartFunction2](agree, nonagree);
+
+        const chartFunction3 = `tccRS0${index + 1}Chart`;
+        window[chartFunction3](noChange, reduced, stopped, relapse, na);
+
+        tccArray.push({
+          [`BA-${index + 1}`]: {
+            "available": available,
+            "nonavailable": nonavailable
+          }
+        });
+      })
+    );
   });
 
-
+  // Wait for all fetch promises to complete
+  await Promise.all(fetchPromises);
+  Tccbatc = true;
 }
 
+
+
+// async function TccbatcFollowup(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
+//   const followUpKeys = ['afu', 'bfu', 'cfu', 'dfu', 'efu', 'ffu', 'gfu'];
+//   const followUpData = {};
+//   let batcwuuid = {};
+//   let fetchPromises = [];
+//   let fetchFollowUpPromises = [];
+
+//   // Initialize arrays for each follow-up key
+//   followUpKeys.forEach(key => {
+//     followUpData[key] = [];
+//     batcwuuid[key] = [];
+//   });
+
+//   // Fetch follow-up data for each item in data array
+//   for (let item of data) {
+//     const villageId = item.village;
+//     const panchayatId = villageId.substring(0, 2);
+//     const uuid = item.uuid;
+
+//     const tccFollows = fb.database().ref().child("tcc_form_followup").child(panchayatId).child(villageId);
+
+//     // Accumulate fetch promises
+//     fetchFollowUpPromises.push(
+//       tccFollows.child(uuid).once("value").then(snapshot => {
+//         if (snapshot.exists()) {
+//           const data_val = snapshot.val();
+//           followUpKeys.forEach(key => {
+//             if (data_val[key] && !followUpData[key].some(entry => entry.uuid === uuid)) {
+//               followUpData[key].push({ uuid, data: data_val[key] });
+//             }
+//           });
+//         }
+//       }).catch(error => {
+//         console.error(`Error fetching TCC data for UUID: ${uuid}`, error);
+//       })
+//     );
+//   }
+
+//   // Wait for all follow-up data fetches to complete
+//   await Promise.all(fetchFollowUpPromises);
+
+//   // Process fetched follow-up data for each follow-up key
+//   followUpKeys.forEach((key, index) => {
+//     const followUpArray = followUpData[key];
+//     let available = 0;
+//     let nonavailable = 0;
+//     let uuidArray = [];
+
+//     data.forEach(item => {
+//       const villageId = item.village;
+//       const panchayatId = villageId.substring(0, 2);
+//       const uuid = item.uuid;
+//       const fwid = item.fw_id;
+
+//       const uuidExistsInFollowUp = followUpArray.some(entry => entry.uuid === uuid);
+
+//       if (uuidExistsInFollowUp) {
+//         followUpArray.forEach(entry => {
+//           if (entry.uuid === uuid) {
+//             let maxPhase1Timestamp = null;
+//             let maxPhase2Timestamp = null;
+//             let p1 = false, p2 = false;
+
+//             Object.keys(entry.data).forEach(timestamp => {
+//               if (timestamp <= stTime) {
+//                 p1 = true;
+//                 if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
+//                   maxPhase1Timestamp = timestamp;
+//                 }
+//               }
+//               if (timestamp >= stTime) {
+//                 p2 = true;
+//                 if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
+//                   maxPhase2Timestamp = timestamp;
+//                 }
+//               }
+//             });
+
+//             const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+
+//             if (result && ((maxPhase1Timestamp && p1) || (maxPhase2Timestamp && p2))) {
+//               let timestamps;
+//               if (selectedPhase === "1") {
+//                 timestamps = maxPhase1Timestamp;
+//               } else if (selectedPhase === "2") {
+//                 timestamps = maxPhase2Timestamp;
+//               } else if (selectedPhase === "All") {
+//                 timestamps = maxPhase1Timestamp || maxPhase2Timestamp;
+//               }
+
+//               if (timestamps) {
+//                 if (entry.data[timestamps]?.batc === "y" || entry.data[timestamps]?.catc === "y") {
+//                   available++;
+//                   uuidArray.push(uuid);
+//                 } else {
+//                   nonavailable++;
+//                 }
+//               }
+//             }
+//           }
+//         });
+//       }
+//     });
+
+//     batcwuuid[key] = uuidArray;
+//     // console.log("batcwuuid", batcwuuid);
+
+//     fetchPromises.push(
+//       Promise.resolve().then(() => {
+//         localStorage.setItem(`${key}_available_count`, available);
+//         localStorage.setItem(`${key}_nonavailable_count`, nonavailable);
+
+//         const avl = parseInt(localStorage.getItem(`${key}_available_count`), 10) || 0;
+//         const nonavl = parseInt(localStorage.getItem(`${key}_nonavailable_count`), 10) || 0;
+//         const totalCount = avl + nonavl;
+
+//         document.getElementById(`BA_${index + 1}`).innerText = totalCount;
+//         const chartFunction = `tccBA0${index + 1}Chart`;
+//         window[chartFunction](avl, nonavl);
+
+//         TccbwsthFollowup(data, batcwuuid, selectedPhase);
+
+//         tccArray.push({
+//           [`BA-${index + 1}`]: {
+//             "available": avl,
+//             "nonavailable": nonavl
+//           }
+//         });
+//       })
+//     );
+//   });
+
+//   // Wait for all fetch promises to complete
+//   await Promise.all(fetchPromises);
+//   Tccbatc = true;
+// }
+
 async function pendingTccFOLLOW(p1, p2, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
-  const pendingFollowups = fb.database().ref().child("tcc_followup_pending");
   const followUpKeys = ['fu_1', 'fu_2', 'fu_3', 'fu_4', 'fu_5', 'fu_6', 'fu_7'];
-console.log("p1 ARRAY OF DATA ",p1)
-console.log("p2 ARRAY OF DATA ",p2)
+  // console.log("p1 ARRAY OF DATA ", p1)
+  // console.log("p2 ARRAY OF DATA ", p2)
 
   let fetchPromises = [];
 
@@ -9898,89 +10434,222 @@ console.log("p2 ARRAY OF DATA ",p2)
     fu_6: { phase1: 0, phase2: 0 },
     fu_7: { phase1: 0, phase2: 0 },
   };
+  if (selectedVillage === "All") {
 
-  pendingFollowups.once('value').then(snapshot => {
-    const followUpData = snapshot.val();
-    const currentDate = Date.now();
+    const pendingFollowups = fb.database().ref().child("tcc_followup_pending");
+    pendingFollowups.once('value').then(snapshot => {
+      const followUpData = snapshot.val();
+      const currentDate = Date.now();
 
-    followUpKeys.forEach(fuKey => {
-      const followUp = followUpData[fuKey];
+      followUpKeys.forEach(fuKey => {
+        const followUp = followUpData[fuKey];
+        // console.log("followUpData panchayat", followUp)
 
-      if (followUp) {
-        const promise1 = p1.forEach(item => {
-          const villageId = item.village;
-          const panchayatId = villageId.substring(0, 2);
-          const uuid = item.uuid;
-          const fwid = item.fw_id;
+        if (followUp) {
+          const promise1 = p1.forEach(item => {
+            const puuid = item.uuid;
+            const fwid = item.fw_id;
+            let villageId = item.village;
+            const panchayatId = villageId.substring(0, 2);
+            Object.keys(followUp).forEach(key => {
+              const followUpData = followUp[key];
+              // console.log("followUpData panchayat 1", followUpData)
 
-          if (followUp[uuid] && followUp[uuid].due_dt) {
-            const dueDate = new Date(followUp[uuid].due_dt.split("/").reverse().join("-")).getTime();
+              Object.keys(followUpData).forEach(key => {
+                const villageSnapshot = followUpData[key];
+                // console.log("followUpData panchayat 2", villageSnapshot)
 
-            if (dueDate < currentDate) {
-              const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
-              if (result) {
-                followUpCounts[fuKey].phase1 += 1;
-                console.log("Follow Up uuid: ",uuid," fuKey ",fuKey, " Phase1 " ,villageId)
-              }
-            }
-          }
-        });
-        fetchPromises.push(promise1);
+                Object.keys(villageSnapshot).forEach(uuid => {
+                  const uuidSnapshot = villageSnapshot[uuid];
 
-        const promise2 = p2.forEach(item => {
-          const villageId = item.village;
-          const panchayatId = villageId.substring(0, 2);
-          const uuid = item.uuid;
-          const fwid = item.fw_id;
+                  // console.log("followUpData panchayat 3", uuidSnapshot)
+                  if (puuid === uuid) {
+                    if (uuidSnapshot && uuidSnapshot.due_dt) {
+                      const dueDate = new Date(uuidSnapshot.due_dt.split("/").reverse().join("-")).getTime();
+                      // console.log("followUpData panchayat 4", dueDate, currentDate)
+                      if (dueDate < currentDate) {
+                        const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+                        // console.log("followUpData panchayat 5", result)
+                        if (result) {
+                          followUpCounts[fuKey].phase1 += 1;
+                          // console.log("Follow Up uuid: ", uuid, " fuKey ", fuKey, " Phase1 ", villageId);
+                        }
+                      }
+                    }
+                  }
+                });
+              });
+            });
+          });
+          fetchPromises.push(promise1);
 
-          if (followUp[uuid] && followUp[uuid].due_dt) {
-            const dueDate = new Date(followUp[uuid].due_dt.split("/").reverse().join("-")).getTime();
+          const promise2 = p2.forEach(item => {
+            const puuid = item.uuid;
+            const fwid = item.fw_id;
+            let villageId = item.village;
+            const panchayatId = villageId.substring(0, 2);
+            Object.keys(followUp).forEach(key => {
+              const followUpData = followUp[key];
+              // console.log("followUpData panchayat 1", followUpData)
 
-            if (dueDate < currentDate) {
-              const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
-              if (result) {
-                followUpCounts[fuKey].phase2 += 1;
-                console.log("Follow Up uuid: ",uuid," fuKey ",fuKey, " Phase2 ", villageId)
-              }
-            }
-          }
-        });
-        fetchPromises.push(promise2);
+              Object.keys(followUpData).forEach(key => {
+                const villageSnapshot = followUpData[key];
+                // console.log("followUpData panchayat 2", villageSnapshot)
+
+                Object.keys(villageSnapshot).forEach(uuid => {
+                  const uuidSnapshot = villageSnapshot[uuid];
+
+                  // console.log("followUpData panchayat 3", uuidSnapshot)
+                  if (puuid === uuid) {
+                    if (uuidSnapshot && uuidSnapshot.due_dt) {
+                      const dueDate = new Date(uuidSnapshot.due_dt.split("/").reverse().join("-")).getTime();
+                      // console.log("followUpData panchayat 4", dueDate, currentDate)
+                      if (dueDate < currentDate) {
+                        const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+                        // console.log("followUpData panchayat 5", result)
+                        if (result) {
+                          followUpCounts[fuKey].phase2 += 1;
+                          // console.log("Follow Up uuid: ", uuid, " fuKey ", fuKey, " Phase2 ", villageId);
+                        }
+                      }
+                    }
+                  }
+                });
+              });
+            });
+          });
+          fetchPromises.push(promise2);
+        }
+      });
+
+      // Wait for all promises to resolve before accessing the followUpCounts
+      return Promise.all(fetchPromises);
+    }).then(() => {
+      const fu_1_phase1_Count = followUpCounts['fu_1'].phase1;
+      // console.log("Result in pending FollowUp:", fu_1_phase1_Count);
+
+      const fu_1_phase2_Count = followUpCounts['fu_1'].phase2;
+      const fu_2_phase1_Count = followUpCounts['fu_2'].phase1;
+      const fu_2_phase2_Count = followUpCounts['fu_2'].phase2;
+      const fu_3_phase1_Count = followUpCounts['fu_3'].phase1;
+      const fu_3_phase2_Count = followUpCounts['fu_3'].phase2;
+
+      const fu_4_phase1_Count = followUpCounts['fu_4'].phase1;
+      const fu_4_phase2_Count = followUpCounts['fu_4'].phase2;
+      const fu_5_phase1_Count = followUpCounts['fu_5'].phase1;
+      const fu_5_phase2_Count = followUpCounts['fu_5'].phase2;
+      const fu_6_phase1_Count = followUpCounts['fu_6'].phase1;
+      const fu_6_phase2_Count = followUpCounts['fu_6'].phase2;
+      const fu_7_phase1_Count = followUpCounts['fu_7'].phase1;
+      const fu_7_phase2_Count = followUpCounts['fu_7'].phase2;
+
+      if (selectedPhase === '1') {
+        tccPendingFollowUpP1Chart(fu_1_phase1_Count, fu_2_phase1_Count, fu_3_phase1_Count, fu_4_phase1_Count, fu_5_phase1_Count, fu_6_phase1_Count, fu_7_phase1_Count);
+      } else if (selectedPhase === '2') {
+        tccPendingFollowUpP2Chart(fu_1_phase2_Count, fu_2_phase2_Count, fu_3_phase2_Count, fu_4_phase2_Count, fu_5_phase2_Count, fu_6_phase2_Count, fu_7_phase2_Count);
+      } else if (selectedPhase === 'All') {
+        tccPendingFollowUpChart(fu_1_phase1_Count, fu_1_phase2_Count, fu_2_phase1_Count, fu_2_phase2_Count, fu_3_phase1_Count, fu_3_phase2_Count, fu_4_phase1_Count, fu_4_phase2_Count, fu_5_phase1_Count, fu_5_phase2_Count, fu_6_phase1_Count, fu_6_phase2_Count, fu_7_phase1_Count, fu_7_phase2_Count);
       }
+
+      pendingTcc = true;
+
+    }).catch(error => {
+      console.error('Error fetching follow-up data:', error);
     });
+  }
 
-    // Wait for all promises to resolve before accessing the followUpCounts
-    return Promise.all(fetchPromises);
-  }).then(() => {
-    const fu_1_phase1_Count = followUpCounts['fu_1'].phase1;
-    const fu_1_phase2_Count = followUpCounts['fu_1'].phase2;
-    const fu_2_phase1_Count = followUpCounts['fu_2'].phase1;
-    const fu_2_phase2_Count = followUpCounts['fu_2'].phase2;
-    const fu_3_phase1_Count = followUpCounts['fu_3'].phase1;
-    const fu_3_phase2_Count = followUpCounts['fu_3'].phase2;
-    console.log("Result in pending FollowUp:", fu_3_phase2_Count);
+  if (selectedVillage !== "All") {
 
-    const fu_4_phase1_Count = followUpCounts['fu_4'].phase1;
-    const fu_4_phase2_Count = followUpCounts['fu_4'].phase2;
-    const fu_5_phase1_Count = followUpCounts['fu_5'].phase1;
-    const fu_5_phase2_Count = followUpCounts['fu_5'].phase2;
-    const fu_6_phase1_Count = followUpCounts['fu_6'].phase1;
-    const fu_6_phase2_Count = followUpCounts['fu_6'].phase2;
-    const fu_7_phase1_Count = followUpCounts['fu_7'].phase1;
-    const fu_7_phase2_Count = followUpCounts['fu_7'].phase2;
+    const pendingFollowups = fb.database().ref().child("tcc_followup_pending");
+    pendingFollowups.once('value').then(snapshot => {
+      const followUpData = snapshot.val();
+      const currentDate = Date.now();
 
-    if (selectedPhase === '1') {
-      tccPendingFollowUpP1Chart(fu_1_phase1_Count, fu_2_phase1_Count, fu_3_phase1_Count, fu_4_phase1_Count, fu_5_phase1_Count, fu_6_phase1_Count, fu_7_phase1_Count);
-    } else if (selectedPhase === '2') {
-      tccPendingFollowUpP2Chart(fu_1_phase2_Count, fu_2_phase2_Count, fu_3_phase2_Count, fu_4_phase2_Count, fu_5_phase2_Count, fu_6_phase2_Count, fu_7_phase2_Count);
-    } else if (selectedPhase === 'All') {
-      tccPendingFollowUpChart(fu_1_phase1_Count, fu_1_phase2_Count, fu_2_phase1_Count, fu_2_phase2_Count, fu_3_phase1_Count, fu_3_phase2_Count, fu_4_phase1_Count, fu_4_phase2_Count, fu_5_phase1_Count, fu_5_phase2_Count, fu_6_phase1_Count, fu_6_phase2_Count, fu_7_phase1_Count, fu_7_phase2_Count);
-    }
+      followUpKeys.forEach(fuKey => {
+        const followUp = followUpData[fuKey];
 
-    pendingTcc = true;
-  }).catch(error => {
-    console.error('Error fetching follow-up data:', error);
-  });
+        if (followUp) {
+          const promise1 = p1.forEach(item => {
+            const villageId = item.village;
+            const panchayatId = villageId.substring(0, 2);
+            const uuid = item.uuid;
+            const fwid = item.fw_id;
+            // console.log("UUid in the tcc Follow", followUp)
+
+            if (selectedPhase === '1' || selectedPhase === 'All') {
+              if (followUp[panchayatId][villageId][uuid] && followUp[panchayatId][villageId][uuid].due_dt) {
+                const dueDate = new Date(followUp[panchayatId][villageId][uuid].due_dt.split("/").reverse().join("-")).getTime();
+
+                if (dueDate < currentDate) {
+                  const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+                  if (result) {
+                    followUpCounts[fuKey].phase1 += 1;
+                    // console.log("Follow Up uuid: ", uuid, " fuKey ", fuKey, " Phase1 ", villageId)
+                  }
+                }
+              }
+            }
+          });
+          fetchPromises.push(promise1);
+
+          const promise2 = p2.forEach(item => {
+            const villageId = item.village;
+            const panchayatId = villageId.substring(0, 2);
+            const uuid = item.uuid;
+            const fwid = item.fw_id;
+            // console.log("UUid in the tcc Follow", followUp)
+            if (selectedPhase === '2' || selectedPhase === 'All') {
+              if (followUp[panchayatId][villageId][uuid] && followUp[panchayatId][villageId][uuid].due_dt) {
+                const dueDate = new Date(followUp[panchayatId][villageId][uuid].due_dt.split("/").reverse().join("-")).getTime();
+
+                if (dueDate < currentDate) {
+                  const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+                  if (result) {
+                    followUpCounts[fuKey].phase2 += 1;
+                    // console.log("Follow Up uuid: ", uuid, " fuKey ", fuKey, " Phase2 ", villageId)
+                  }
+                }
+              }
+            }
+          });
+          fetchPromises.push(promise2);
+        }
+      });
+
+      // Wait for all promises to resolve before accessing the followUpCounts
+      return Promise.all(fetchPromises);
+    }).then(() => {
+      const fu_1_phase1_Count = followUpCounts['fu_1'].phase1;
+      const fu_1_phase2_Count = followUpCounts['fu_1'].phase2;
+      const fu_2_phase1_Count = followUpCounts['fu_2'].phase1;
+      const fu_2_phase2_Count = followUpCounts['fu_2'].phase2;
+      const fu_3_phase1_Count = followUpCounts['fu_3'].phase1;
+      const fu_3_phase2_Count = followUpCounts['fu_3'].phase2;
+      // console.log("Result in pending FollowUp:", fu_3_phase2_Count);
+
+      const fu_4_phase1_Count = followUpCounts['fu_4'].phase1;
+      const fu_4_phase2_Count = followUpCounts['fu_4'].phase2;
+      const fu_5_phase1_Count = followUpCounts['fu_5'].phase1;
+      const fu_5_phase2_Count = followUpCounts['fu_5'].phase2;
+      const fu_6_phase1_Count = followUpCounts['fu_6'].phase1;
+      const fu_6_phase2_Count = followUpCounts['fu_6'].phase2;
+      const fu_7_phase1_Count = followUpCounts['fu_7'].phase1;
+      const fu_7_phase2_Count = followUpCounts['fu_7'].phase2;
+
+      if (selectedPhase === '1') {
+        tccPendingFollowUpP1Chart(fu_1_phase1_Count, fu_2_phase1_Count, fu_3_phase1_Count, fu_4_phase1_Count, fu_5_phase1_Count, fu_6_phase1_Count, fu_7_phase1_Count);
+      } else if (selectedPhase === '2') {
+        tccPendingFollowUpP2Chart(fu_1_phase2_Count, fu_2_phase2_Count, fu_3_phase2_Count, fu_4_phase2_Count, fu_5_phase2_Count, fu_6_phase2_Count, fu_7_phase2_Count);
+      } else if (selectedPhase === 'All') {
+        tccPendingFollowUpChart(fu_1_phase1_Count, fu_1_phase2_Count, fu_2_phase1_Count, fu_2_phase2_Count, fu_3_phase1_Count, fu_3_phase2_Count, fu_4_phase1_Count, fu_4_phase2_Count, fu_5_phase1_Count, fu_5_phase2_Count, fu_6_phase1_Count, fu_6_phase2_Count, fu_7_phase1_Count, fu_7_phase2_Count);
+      }
+
+      pendingTcc = true;
+
+    }).catch(error => {
+      console.error('Error fetching follow-up data:', error);
+    });
+  }
 }
 
 
@@ -10362,7 +11031,7 @@ function timer_fun() {
     console.log("Timer is running", counter_check.length);
 
     //    let fun = (ScreeningStatus && RegistrationsAndRescreenings && MaleAndFemale && Status && Eligibility && HabitSummary && FilteredData && remoteSrc && PresonScr && DoctorRec && oralScr && brScr && cervi && aggregateScr && TCCGen && TobaccoCons && tccsrc && TccFoll && Tccbatc && Tccbwsth && pendingTcc && abnormalC);
-    let fun = (ScreeningStatus && RegistrationsAndRescreenings && MaleAndFemale && Status && Eligibility && HabitSummary);
+    let fun = (ScreeningStatus && RegistrationsAndRescreenings && MaleAndFemale && Status && Eligibility && HabitSummary && nRData && TCCGen && TobaccoCons && TccFoll && Tccbatc);
 
     console.log("fun: ", fun)
     // fun= (S1 && S2 && )
@@ -10419,7 +11088,7 @@ function timer_fun2() {
     // If not triggered, stop the loop by clearing the interval
     // console.log("Timer is running", counter_check.length);
 
-    let fun = (ScreeningStatus && RegistrationsAndRescreenings && MaleAndFemale && Status && Eligibility && HabitSummary && remoteSrc && PresonScr && DoctorRec && nRData && oralScr && brScr && cervi && aggregateScr && abnormalC);
+    let fun = (ScreeningStatus && RegistrationsAndRescreenings && MaleAndFemale && Status && Eligibility && HabitSummary && nRData && remoteSrc && PresonScr && DoctorRec && nRData && oralScr && brScr && cervi && aggregateScr && abnormalC);
     console.log("fun: ", fun)
     // fun= (S1 && S2 && )
     if (fun) {
@@ -10442,7 +11111,7 @@ function timer_fun3() {
   var checkSensorTriggerInterval = setInterval(() => {
     // console.log("Timer is running", counter_check.length);
 
-    let fun = (TCCGen && TobaccoCons && TccFoll && Tccbatc && Tccbwsth && TccResult && pendingTcc);
+    let fun = (TCCGen && TobaccoCons && TccFoll && Tccbatc && pendingTcc);
     console.log("fun: ", fun)
     // fun= (S1 && S2 && )
     if (fun) {
@@ -10589,7 +11258,7 @@ function populateData(array) {
 
 
 
-console.log("Tcc Array: ", tccArray)
+// console.log("Tcc Array: ", tccArray)
 
 
 var tccFollows = fb.database().ref().child("tcc_form_followup");
@@ -10615,7 +11284,6 @@ async function tccFollow() {
 }
 
 
-
 function tccFormFollow() {
   var tccFormFollow = fb.database().ref().child("tcc_form_followup");
 
@@ -10636,86 +11304,99 @@ function tccFormFollow() {
 let previ = "1";
 let fArray = [];
 
-let arrWSpeak = {};
 
-async function TccbwsthFollowup(batcwuuid, selectedPhase) {
+async function TccbwsthFollowup(data, batcwuuid, selectedPhase) {
   const tccFollows = fb.database().ref().child("tcc_form_followup");
   const followUpKeys = ['afu', 'bfu', 'cfu', 'dfu', 'efu', 'ffu', 'gfu'];
   const followUpData = {};
+  const fetchFollowUpPromises = [];
+  const arrWSpeak = {};
+  const tccArray = [];
 
-  // console.log("batcwuuid", batcwuuid);
+  // Initialize followUpData for each follow-up key
   followUpKeys.forEach(key => followUpData[key] = {});
 
-  const fetchFollowUpPromises = Object.keys(batcwuuid).map(key => {
-    const uuids = batcwuuid[key];
-    // console.log("UUIDS of the Speaker", uuids)
-    return Promise.all(uuids.map(uuid => {
-      return tccFollows.child(uuid).once("value")
-        .then(snapshot => {
-          if (snapshot.exists()) {
-            const data = snapshot.val();
+  // Loop through the data and accumulate promises to fetch follow-up data
+  for (let item of data) {
+    const villageId = item.village;
+    const panchayatId = villageId.substring(0, 2);
+    const uuid = item.uuid;
 
-            if (followUpKeys.includes(key)) {
-              if (data[key]) {
-                followUpData[key][uuid] = data[key];
-                // console.log(" key = ", key + "uuid = ", uuid);
+    const tccFollowsRef = tccFollows.child(panchayatId).child(villageId);
+
+    // Iterate over batcwuuid keys to fetch UUIDs' follow-up data
+    Object.keys(batcwuuid).forEach(key => {
+      const uuids = batcwuuid[key];
+
+      uuids.forEach(uuid => {
+        fetchFollowUpPromises.push(
+          tccFollowsRef.child(uuid).once("value")
+            .then(snapshot => {
+              if (snapshot.exists()) {
+                const data = snapshot.val();
+
+                if (followUpKeys.includes(key)) {
+                  if (data[key]) {
+                    followUpData[key][uuid] = data[key];
+                  }
+                }
               }
-            }
-          }
-        })
-        .catch(error => {
-          console.error(`Error fetching TCC data for UUID: ${uuid}`, error);
-        });
-    }));
-  });
+            })
+            .catch(error => {
+              console.error(`Error fetching TCC data for UUID: ${uuid}`, error);
+            })
+        );
+      });
+    });
+  }
+  // console.log("followUpData", followUpData)
 
-  // console.log("FollowUp data in bwsth:", followUpData);
+  // Wait for all promises to complete
   await Promise.all(fetchFollowUpPromises);
 
-  const followUpArray = [];
+  // Process the follow-up data after all fetches are complete
   followUpKeys.forEach((key, index) => {
-    const followUpEntries = followUpData[key];
+    const followUpEntries = followUpData[key] || {};
 
-    const phaseUUIDsFiltered = Object.keys(followUpEntries).map(uuid => {
+    // Filter UUIDs based on the selected phase
+    const phaseUUIDsFiltered = Object.keys(followUpEntries).filter(uuid => {
       const entryData = followUpEntries[uuid];
       let maxPhase1Timestamp = null;
       let maxPhase2Timestamp = null;
 
+      // Find the latest timestamp for Phase 1 and Phase 2
       Object.keys(entryData).forEach(timestamp => {
-        const year = new Date(Number(timestamp) * 1000).getFullYear();
         if (timestamp <= stTime) {
           if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
             maxPhase1Timestamp = timestamp;
           }
-        }
-        if (timestamp >= stTime) {
+        } else {
           if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
             maxPhase2Timestamp = timestamp;
           }
         }
       });
 
-      if (selectedPhase === '1' && maxPhase1Timestamp) return uuid;
-      if (selectedPhase === '2' && maxPhase2Timestamp) return uuid;
-      if (selectedPhase === 'All') return uuid;
-    }).filter(Boolean);
+      // Return UUID based on selectedPhase filter
+      if (selectedPhase === '1' && maxPhase1Timestamp) return true;
+      if (selectedPhase === '2' && maxPhase2Timestamp) return true;
+      if (selectedPhase === 'All') return true;
+      return false;
+    });
 
     let agree = 0;
     let nonagree = 0;
-
-    let matchedUUIDs = phaseUUIDsFiltered;
-
     const uuidArray = [];
 
-    matchedUUIDs.forEach(uuid => {
+    // Analyze the filtered UUIDs for agreement
+    phaseUUIDsFiltered.forEach(uuid => {
       const entryData = followUpEntries[uuid];
       const timestamps = Object.keys(entryData);
       const lastTimestamp = timestamps.reduce((latest, current) => {
         return Number(current) > Number(latest) ? current : latest;
       }, timestamps[0]);
 
-      if (entryData[lastTimestamp].bwsth === "y" || entryData[lastTimestamp].dwsth === "y") {
-        // console.log("Key:", key + "uuid:", uuid);
+      if (entryData[lastTimestamp]?.bwsth === "y" || entryData[lastTimestamp]?.dwsth === "y") {
         agree++;
         uuidArray.push(uuid);
       } else {
@@ -10724,12 +11405,20 @@ async function TccbwsthFollowup(batcwuuid, selectedPhase) {
     });
 
     const totalCount = agree + nonagree;
-    document.getElementById(`BW_${index + 1}`).innerText = totalCount;
-    const chartFunction = `tccBW0${index + 1}Chart`;
-    window[chartFunction](agree, nonagree);
 
+    // Update the total count in the UI
+    document.getElementById(`BW_${index + 1}`).innerText = totalCount;
+
+    // Call the respective chart function for this follow-up key
+    const chartFunction = `tccBW0${index + 1}Chart`;
+    if (typeof window[chartFunction] === 'function') {
+      window[chartFunction](agree, nonagree);
+    }
+
+    // Store UUIDs that agreed for this follow-up
     arrWSpeak[key] = uuidArray;
 
+    // Store the results in tccArray for further processing
     tccArray.push({
       [`BWS-${index + 1}`]: {
         "Agreed": agree,
@@ -10737,93 +11426,112 @@ async function TccbwsthFollowup(batcwuuid, selectedPhase) {
       }
     });
   });
-  TccResultFollowup(arrWSpeak, selectedPhase);
-  Tccbwsth = true;
-  // console.log("arrWSpeak", arrWSpeak);
 
+  // Pass the result to TccResultFollowup for further processing
+  TccResultFollowup(data, arrWSpeak, selectedPhase);
+  Tccbwsth = true;  // Mark the process as complete
 }
+
+
+
+
 
 let i = 0;
 
-async function TccResultFollowup(arrWSpeak, selectedPhase) {
-  const tccFollows = fb.database().ref().child("tcc_form_followup");
+async function TccResultFollowup(data, arrWSpeak, selectedPhase) {
+
   const followUpKeys = ['afu', 'bfu', 'cfu', 'dfu', 'efu', 'ffu', 'gfu'];
   const followUpData = {};
+  const fetchFollowUpPromises = [];
 
+  const tccArray = [];
+  // console.log("arrWSpeak", arrWSpeak)
 
-  // console.log("arrWSpeak", arrWSpeak);
-
+  // Initialize followUpData for each follow-up key
   followUpKeys.forEach(key => followUpData[key] = {});
 
-  const fetchFollowUpPromises = Object.keys(arrWSpeak).map(key => {
-    const uuids = arrWSpeak[key];
-    // console.log("UUIDS of the Speaker", uuids)
-    return Promise.all(uuids.map(uuid => {
-      return tccFollows.child(uuid).once("value")
-        .then(snapshot => {
-          if (snapshot.exists()) {
-            const data = snapshot.val();
+  // Loop through the data to accumulate promises for fetching follow-up data
+  for (let item of data) {
+    const villageId = item.village;
+    const panchayatId = villageId.substring(0, 2);
 
-            if (followUpKeys.includes(key)) {
-              if (data[key]) {
-                followUpData[key][uuid] = data[key];
-                // console.log(" key = ", key + "uuid = ", uuid);
 
+    const tccFollowsRef = fb.database().ref().child("tcc_form_followup").child(panchayatId).child(villageId);
+
+    // Iterate over arrWSpeak keys to fetch UUIDs' follow-up data
+    Object.keys(arrWSpeak).forEach(key => {
+      const uuids = arrWSpeak[key];
+
+      uuids.forEach(uuid => {
+        fetchFollowUpPromises.push(
+          tccFollowsRef.child(uuid).once("value")
+            .then(snapshot => {
+              if (snapshot.exists()) {
+                const data = snapshot.val();
+
+                if (followUpKeys.includes(key)) {
+                  if (data[key]) {
+                    followUpData[key][uuid] = data[key];
+                  }
+                }
               }
-            }
-          }
-        })
-        .catch(error => {
-          console.error(`Error fetching TCC data for UUID: ${uuid}`, error);
-        });
+            })
+            .catch(error => {
+              console.error(`Error fetching TCC data for UUID: ${uuid}`, error);
+            })
+        );
+      });
+    });
+  }
+  // console.log("followUpData", followUpData)
 
-    }));
-  });
-
+  // Wait for all promises to complete
   await Promise.all(fetchFollowUpPromises);
 
-  // console.log("followUpData", followUpData);
-
+  // Process the fetched follow-up data after all fetches are complete
   followUpKeys.forEach((key, index) => {
-    const followUpEntries = followUpData[key];
+    const followUpEntries = followUpData[key] || {};
 
-    const phaseUUIDsFiltered = Object.keys(followUpEntries).map(uuid => {
+    // Filter UUIDs based on the selected phase
+    const phaseUUIDsFiltered = Object.keys(followUpEntries).filter(uuid => {
       const entryData = followUpEntries[uuid];
       let maxPhase1Timestamp = null;
       let maxPhase2Timestamp = null;
 
+      // Find the latest timestamp for Phase 1 and Phase 2
       Object.keys(entryData).forEach(timestamp => {
-        const year = new Date(Number(timestamp) * 1000).getFullYear();
         if (timestamp <= stTime) {
           if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
             maxPhase1Timestamp = timestamp;
           }
-        }
-        if (timestamp >= stTime) {
+        } else if (timestamp >= stTime) {
           if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
             maxPhase2Timestamp = timestamp;
           }
         }
       });
 
-      if (selectedPhase === '1' && maxPhase1Timestamp) return uuid;
-      if (selectedPhase === '2' && maxPhase2Timestamp) return uuid;
-      if (selectedPhase === 'All') return uuid;
-    }).filter(Boolean);
+      // Return UUID based on selectedPhase filter
+      if (selectedPhase === '1' && maxPhase1Timestamp) return true;
+      if (selectedPhase === '2' && maxPhase2Timestamp) return true;
+      if (selectedPhase === 'All') return true;
+      return false;
+    });
 
+    // Counters for the follow-up categories
     let noChange = 0;
     let reduced = 0;
     let stopped = 0;
     let relapse = 0;
     let na = 0;
 
+    // Analyze the filtered UUIDs for status changes
     phaseUUIDsFiltered.forEach(uuid => {
       const entryData = followUpEntries[uuid];
       const timestamps = Object.keys(entryData);
       const lastTimestamp = timestamps.reduce((latest, current) => {
         return Number(current) > Number(latest) ? current : latest;
       }, timestamps[0]);
-
       const lastEntryData = entryData[lastTimestamp];
       if (lastEntryData.amse === "bsts1" || lastEntryData.dsts === "bsts1" || lastEntryData.bsts === "bsts1") {
         noChange++;
@@ -10840,12 +11548,19 @@ async function TccResultFollowup(arrWSpeak, selectedPhase) {
 
     const totalCount = noChange + reduced + stopped + relapse + na;
 
+    // Update the total count in the UI
     document.getElementById(`RS_${index + 1}`).innerText = totalCount;
 
+    // Call the respective chart function for this follow-up key
     const chartFunction = `tccRS0${index + 1}Chart`;
-    window[chartFunction](noChange, reduced, stopped, relapse, na);
+    if (typeof window[chartFunction] === 'function') {
+      window[chartFunction](noChange, reduced, stopped, relapse, na);
+    }
 
-    TccResult = true;
+
+
+
+    // Store results for reporting
     tccArray.push({
       [`status-${index + 1}`]: {
         "noChange": noChange,
@@ -10856,7 +11571,13 @@ async function TccResultFollowup(arrWSpeak, selectedPhase) {
       }
     });
   });
+
+
+
+  TccResult = true;  // Mark the process as complete
 }
+
+
 
 function exportPendingTCCFOLLOW() {
   var tccFollows = fb.database().ref().child("tcc_followup_pending");
@@ -10940,9 +11661,9 @@ function generateExcelData() {
                 for (let i = 0; i < excelData.length; i++) {
                   if (patientData && patientData.village_name === excelData[i].Village) {
                     if (patientData.village_name === "Paapathimmenahalli") {
-                      console.log('follow up key', index, +"Pending uuids", uuid);
+                      // console.log('follow up key', index, +"Pending uuids", uuid);
                     }
-                    console.log("Village", patientData.village_name)
+                    // console.log("Village", patientData.village_name)
                     excelData[i][followUpKey] += 1;
                   }
                 }
@@ -10956,7 +11677,7 @@ function generateExcelData() {
     });
 
     Promise.all(followUpPromises).then(() => {
-      console.log("Excel Data: ", excelData);
+      // console.log("Excel Data: ", excelData);
 
       // Create a new workbook
       var wb = XLSX.utils.book_new();
@@ -11039,8 +11760,10 @@ async function processPatientData(p1, p2, data, selectedFieldworker, selectedPan
 
   var p2String = JSON.parse(scp2);
 
-  console.log("Screening Count in Comp", p1String)
-  console.log("Screening Count in Comp", p2String)
+
+
+  // console.log("Screening Count in Comp", p1String)
+  // console.log("Screening Count in Comp", p2String)
 
 
   // Create promises for fetching form3Data and patientData
@@ -11210,8 +11933,8 @@ async function processPatientData(p1, p2, data, selectedFieldworker, selectedPan
   p1.forEach(item => checkTobaccoUse(item.uuid, 1));
   p2.forEach(item => checkTobaccoUse(item.uuid, 2));
 
-  phase1FormCount = p1String.filter(item => form3Data && form3Data.hasOwnProperty(item.uuid)).length;
-  phase2FormCount = p2String.filter(item => form3Data && form3Data.hasOwnProperty(item.uuid)).length;
+  phase1FormCount = countUUIDs(p1, form3Data);
+  phase2FormCount = countUUIDs(p2, form3Data);
 
   phase1surveyCount = countUUIDs(p1, form1Data);
   phase2surveyCount = countUUIDs(p2, form1Data);
