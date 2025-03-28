@@ -442,12 +442,12 @@ function initialize() {
           awid1.fw_id = "All";
         }
 
-        if (!awid1.name.startsWith("FW_")) {
-          fwid.push(awid1.fw_id);
-          fwname.push(awid1.name);
-        }
-        // fwid.push(awid1.fw_id);
-        // fwname.push(awid1.name);
+        // if (!awid1.name.startsWith("FW_")) {
+        //   fwid.push(awid1.fw_id);
+        //   fwname.push(awid1.name);
+        // }
+        fwid.push(awid1.fw_id);
+        fwname.push(awid1.name);
       });
 
       var list = document.getElementById("fieldworker");
