@@ -2059,6 +2059,8 @@ async function initMap(locations = []) {
       });
 
       if (!isNaN(latlocation) && !isNaN(lnglocation)) {
+        // console.log("pid ", patients_id, "location lat: ", latlocation, " location lng: ", lnglocation)
+
         let existingMarker = markers.find(marker => {
           const markerPos = marker.position;
           return Math.abs(markerPos.lat - latlocation) < 0.00000001 && Math.abs(markerPos.lng - lnglocation) < 0.00000001;
@@ -2453,9 +2455,9 @@ async function fetchAndMatchPatientData(selectedFieldworker, selectedPanchayat, 
         // Wait for all promises to complete before logging the results
         Promise.all(fetchPromises)
           .then(() => {
-            console.log("p1 - :", p1);
-            console.log("p2 - :", p2);
-            console.log("pall - :", pall);
+            // console.log("p1 - :", p1);
+            // console.log("p2 - :", p2);
+            // console.log("pall - :", pall);
 
             var data = [];
             if (selectedPhase === "1") {
@@ -2474,20 +2476,21 @@ async function fetchAndMatchPatientData(selectedFieldworker, selectedPanchayat, 
             Status = false;
             Eligibility = false;
             HabitSummary = false;
-            if (data.length===0) {
+            if (data.length === 0) {
               showToast("No Data found", "error");
               setTimeout(() => {
                 document.getElementById("loading").style.display = 'none';
               }, 1000);
             }
             else {
-            surveySection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-            ScreeningSection(selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage);
-            tccSection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-            mvdfetchdata(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
-            // phaseSegregation(data, selectedFieldworker, selectedPanchayat, selectedVillage);
-            processPatientData(p1, p2, data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
-            timer_fun();
+              surveySection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+              ScreeningSection(selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage);
+              tccSection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+              mvdfetchdata(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+              remoteScreening(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+              // phaseSegregation(data, selectedFieldworker, selectedPanchayat, selectedVillage);
+              processPatientData(p1, p2, data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
+              timer_fun();
             }
             const section = document.getElementById('surveyPhases');
 
@@ -2522,7 +2525,13 @@ async function fetchAndMatchPatientData(selectedFieldworker, selectedPanchayat, 
       upids.once('value', function (snapshot) {
         const puuid = snapshot.val();
         console.log("upids", puuid)
-        
+        if (!puuid) {
+          showToast("No Data found", "error");
+          setTimeout(() => {
+            document.getElementById("loading").style.display = 'none';
+          }, 1000);
+        }
+        else {
           Object.keys(puuid).forEach(uuid => {
             // console.log("Test pass 2",panchayatId,villageId,uuid);
             const form1 = fb.database().ref().child("Form_1").child(panchayatId).child(villageId).child(uuid);
@@ -2609,9 +2618,9 @@ async function fetchAndMatchPatientData(selectedFieldworker, selectedPanchayat, 
           // Wait for all promises to complete before logging the results
           Promise.all(fetchPromises)
             .then(() => {
-              console.log("p1 - :", p1);
-              console.log("p2 - :", p2);
-              console.log("pall - :", pall);
+              // console.log("p1 - :", p1);
+              // console.log("p2 - :", p2);
+              // console.log("pall - :", pall);
 
               var data = [];
               if (selectedPhase === "1") {
@@ -2631,20 +2640,21 @@ async function fetchAndMatchPatientData(selectedFieldworker, selectedPanchayat, 
               Eligibility = false;
               HabitSummary = false;
               console.log("data", data);
-              if (data.length===0) {
+              if (data.length === 0) {
                 showToast("No Data found", "error");
                 setTimeout(() => {
                   document.getElementById("loading").style.display = 'none';
                 }, 1000);
               }
               else {
-              surveySection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-              mvdfetchdata(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
-              ScreeningSection(selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage);
-              tccSection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-              // phaseSegregation(data, selectedFieldworker, selectedPanchayat, selectedVillage);
-              processPatientData(p1, p2, data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
-              timer_fun();
+                surveySection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+                mvdfetchdata(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
+                ScreeningSection(selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage);
+                tccSection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+                remoteScreening(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+                // phaseSegregation(data, selectedFieldworker, selectedPanchayat, selectedVillage);
+                processPatientData(p1, p2, data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
+                timer_fun();
               }
               const section = document.getElementById('surveyPhases');
 
@@ -2667,8 +2677,8 @@ async function fetchAndMatchPatientData(selectedFieldworker, selectedPanchayat, 
             .catch((error) => {
               console.error("Error in processing data:", error);
             });
-        
 
+        }
       });
     }
   }
@@ -2777,9 +2787,9 @@ async function fetchPATIENTData(selectedFieldworker, selectedPanchayat, selected
         // Wait for all promises to complete before logging the results
         Promise.all(fetchPromises)
           .then(() => {
-            console.log("p1 - :", p1);
-            console.log("p2 - :", p2);
-            console.log("pall - :", pall);
+            // console.log("p1 - :", p1);
+            // console.log("p2 - :", p2);
+            // console.log("pall - :", pall);
 
             var data = [];
             if (selectedPhase === "1") {
@@ -2798,14 +2808,14 @@ async function fetchPATIENTData(selectedFieldworker, selectedPanchayat, selected
             Status = false;
             Eligibility = false;
             HabitSummary = false;
-            if (data.length===0) {
+            if (data.length === 0) {
               showToast("No Data found", "error");
               setTimeout(() => {
                 document.getElementById("loading").style.display = 'none';
               }, 1000);
             }
             else {
-            surveySection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+              surveySection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
             }
             timer_fun1();
 
@@ -2830,14 +2840,14 @@ async function fetchPATIENTData(selectedFieldworker, selectedPanchayat, selected
       let villageId = selectedVillage;
       upids.once('value', function (snapshot) {
         const puuid = snapshot.val();
-        // console.log("upids",puuid)
-        // if (!puuid) {
-        //   showToast("No Data found", "error");
-        //   setTimeout(() => {
-        //     document.getElementById("loading").style.display = 'none';
-        //   }, 1000);
-        // }
-        // else {
+        console.log("upids", puuid)
+        if (!puuid) {
+          showToast("No Data found", "error");
+          setTimeout(() => {
+            document.getElementById("loading").style.display = 'none';
+          }, 1000);
+        }
+        else {
           Object.keys(puuid).forEach(uuid => {
             // console.log("Test pass 2",panchayatId,villageId,uuid);
             const form1 = fb.database().ref().child("Form_1").child(panchayatId).child(villageId).child(uuid);
@@ -2921,9 +2931,9 @@ async function fetchPATIENTData(selectedFieldworker, selectedPanchayat, selected
           // Wait for all promises to complete before logging the results
           Promise.all(fetchPromises)
             .then(() => {
-              console.log("p1 - :", p1);
-              console.log("p2 - :", p2);
-              console.log("pall - :", pall);
+              // console.log("p1 - :", p1);
+              // console.log("p2 - :", p2);
+              // console.log("pall - :", pall);
 
               var data = [];
               if (selectedPhase === "1") {
@@ -2942,14 +2952,14 @@ async function fetchPATIENTData(selectedFieldworker, selectedPanchayat, selected
               Status = false;
               Eligibility = false;
               HabitSummary = false;
-              if (data.length===0) {
+              if (data.length === 0) {
                 showToast("No Data found", "error");
                 setTimeout(() => {
                   document.getElementById("loading").style.display = 'none';
                 }, 1000);
               }
               else {
-              surveySection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+                surveySection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
               }
               timer_fun1();
 
@@ -2966,7 +2976,7 @@ async function fetchPATIENTData(selectedFieldworker, selectedPanchayat, selected
             .catch((error) => {
               console.error("Error in processing data:", error);
             });
-        // }
+        }
       });
     }
   }
@@ -3076,9 +3086,9 @@ async function fetchDoctorScreening(selectedFieldworker, selectedPanchayat, sele
         // Wait for all promises to complete before logging the results
         Promise.all(fetchPromises)
           .then(() => {
-            console.log("p1 - :", p1);
-            console.log("p2 - :", p2);
-            console.log("pall - :", pall);
+            // console.log("p1 - :", p1);
+            // console.log("p2 - :", p2);
+            // console.log("pall - :", pall);
 
             var data = [];
             if (selectedPhase === "1") {
@@ -3097,17 +3107,18 @@ async function fetchDoctorScreening(selectedFieldworker, selectedPanchayat, sele
             Status = false;
             Eligibility = false;
             HabitSummary = false;
-            if (data.length===0) {
+            if (data.length === 0) {
               showToast("No Data found", "error");
               setTimeout(() => {
                 document.getElementById("loading").style.display = 'none';
               }, 1000);
             }
             else {
-            surveySection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-            ScreeningSection(selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage);
-            mvdfetchdata(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-            timer_fun2();
+              surveySection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+              ScreeningSection(selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage);
+              mvdfetchdata(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+              remoteScreening(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+              timer_fun2();
             }
 
             const surveyChart = document.getElementById("survey_chart");
@@ -3129,14 +3140,14 @@ async function fetchDoctorScreening(selectedFieldworker, selectedPanchayat, sele
       let villageId = selectedVillage;
       upids.once('value', function (snapshot) {
         const puuid = snapshot.val();
-        // console.log("upids",puuid)
-        // if (!puuid) {
-        //   showToast("No Data found", "error");
-        //   setTimeout(() => {
-        //     document.getElementById("loading").style.display = 'none';
-        //   }, 1000);
-        // }
-        // else {
+        console.log("upids", puuid)
+        if (!puuid) {
+          showToast("No Data found", "error");
+          setTimeout(() => {
+            document.getElementById("loading").style.display = 'none';
+          }, 1000);
+        }
+        else {
           Object.keys(puuid).forEach(uuid => {
             // console.log("Test pass 2",panchayatId,villageId,uuid);
             const form1 = fb.database().ref().child("Form_1").child(panchayatId).child(villageId).child(uuid);
@@ -3220,9 +3231,9 @@ async function fetchDoctorScreening(selectedFieldworker, selectedPanchayat, sele
           // Wait for all promises to complete before logging the results
           Promise.all(fetchPromises)
             .then(() => {
-              console.log("p1 - :", p1);
-              console.log("p2 - :", p2);
-              console.log("pall - :", pall);
+              // console.log("p1 - :", p1);
+              // console.log("p2 - :", p2);
+              // console.log("pall - :", pall);
 
               var data = [];
               if (selectedPhase === "1") {
@@ -3241,16 +3252,17 @@ async function fetchDoctorScreening(selectedFieldworker, selectedPanchayat, sele
               Status = false;
               Eligibility = false;
               HabitSummary = false;
-              if (data.length===0) {
+              if (data.length === 0) {
                 showToast("No Data found", "error");
                 setTimeout(() => {
                   document.getElementById("loading").style.display = 'none';
                 }, 1000);
               }
               else {
-              surveySection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-              ScreeningSection(selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage);
-              mvdfetchdata(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+                surveySection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+                ScreeningSection(selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage);
+                mvdfetchdata(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+                remoteScreening(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
               }
               timer_fun2();
 
@@ -3266,7 +3278,7 @@ async function fetchDoctorScreening(selectedFieldworker, selectedPanchayat, sele
             .catch((error) => {
               console.error("Error in processing data:", error);
             });
-        // }
+        }
       });
     }
   }
@@ -3374,9 +3386,9 @@ async function fetchTccScreening(selectedFieldworker, selectedPanchayat, selecte
         // Wait for all promises to complete before logging the results
         Promise.all(fetchPromises)
           .then(() => {
-            console.log("p1 - :", p1);
-            console.log("p2 - :", p2);
-            console.log("pall - :", pall);
+            // console.log("p1 - :", p1);
+            // console.log("p2 - :", p2);
+            // console.log("pall - :", pall);
 
             var data = [];
             if (selectedPhase === "1") {
@@ -3396,14 +3408,14 @@ async function fetchTccScreening(selectedFieldworker, selectedPanchayat, selecte
             Eligibility = false;
             HabitSummary = false;
 
-            if (data.length===0) {
+            if (data.length === 0) {
               showToast("No Data found", "error");
               setTimeout(() => {
                 document.getElementById("loading").style.display = 'none';
               }, 1000);
             }
             else {
-            tccSection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+              tccSection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
             }
             timer_fun3();
 
@@ -3422,13 +3434,13 @@ async function fetchTccScreening(selectedFieldworker, selectedPanchayat, selecte
       upids.once('value', function (snapshot) {
         const puuid = snapshot.val();
         console.log("upids", puuid)
-        // if (!puuid) {
-        //   showToast("No Data found", "error");
-        //   setTimeout(() => {
-        //     document.getElementById("loading").style.display = 'none';
-        //   }, 1000);
-        // }
-        // else {
+        if (!puuid) {
+          showToast("No Data found", "error");
+          setTimeout(() => {
+            document.getElementById("loading").style.display = 'none';
+          }, 1000);
+        }
+        else {
           Object.keys(puuid).forEach(uuid => {
             // console.log("Test pass 2",panchayatId,villageId,uuid);
             const form1 = fb.database().ref().child("Form_1").child(panchayatId).child(villageId).child(uuid);
@@ -3511,9 +3523,9 @@ async function fetchTccScreening(selectedFieldworker, selectedPanchayat, selecte
           // Wait for all promises to complete before logging the results
           Promise.all(fetchPromises)
             .then(() => {
-              console.log("p1 - :", p1);
-              console.log("p2 - :", p2);
-              console.log("pall - :", pall);
+              // console.log("p1 - :", p1);
+              // console.log("p2 - :", p2);
+              // console.log("pall - :", pall);
 
               var data = [];
               if (selectedPhase === "1") {
@@ -3533,16 +3545,16 @@ async function fetchTccScreening(selectedFieldworker, selectedPanchayat, selecte
               Eligibility = false;
               HabitSummary = false;
 
-              if (data.length===0) {
+              if (data.length === 0) {
                 showToast("No Data found", "error");
                 setTimeout(() => {
                   document.getElementById("loading").style.display = 'none';
                 }, 1000);
               }
               else {
-              tccSection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-              
-              timer_fun3();
+                tccSection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+
+                timer_fun3();
               }
 
 
@@ -3550,7 +3562,7 @@ async function fetchTccScreening(selectedFieldworker, selectedPanchayat, selecte
             .catch((error) => {
               console.error("Error in processing data:", error);
             });
-        // }
+        }
       });
     }
 
@@ -3560,7 +3572,7 @@ async function fetchTccScreening(selectedFieldworker, selectedPanchayat, selecte
 }
 
 async function surveySection(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
-  console.log("survey data: ", data)
+  // console.log("survey data: ", data)
 
   countMaleAndFemale(data, selectedFieldworker, selectedPanchayat, selectedVillage);
   countStatus(data, selectedFieldworker, selectedPanchayat, selectedVillage);
@@ -3571,7 +3583,7 @@ async function surveySection(data, selectedFieldworker, selectedPanchayat, selec
   countRegistrationsAndRescreenings(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
   countHabitSummary(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
   fetchAdditionalMapInfo(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-  countTCC_Survey(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+  // countTCC_Survey(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
 
 }
 
@@ -4036,7 +4048,7 @@ async function ScreeningSection(selectedPhase, selectedFieldworker, selectedPanc
   let p2 = [];
   let pall = [];
 
-  if (selectedPanchayat === "All" || selectedVillage === "All") {
+  if (selectedVillage === "All") {
     upids = fb.database().ref().child('U_pchyat');
     upids.once('value', function (snapshot) {
       snapshot.forEach(function (childSnapshot) {
@@ -4139,7 +4151,7 @@ async function ScreeningSection(selectedPhase, selectedFieldworker, selectedPanc
             data = pall;
           }
           // newScreening(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-          remoteScreening(selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage)
+          // remoteScreening(selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage)
           // remoteScreening(phaseUUIDs, selectedPanchayat, selectedVillage);
           inPresonDocScreening(data, selectedFieldworker, selectedPanchayat, selectedVillage);
 
@@ -4151,9 +4163,9 @@ async function ScreeningSection(selectedPhase, selectedFieldworker, selectedPanc
 
           oralScreeningData(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
           // oralScreeningData(phase1UUIDs, phase2UUIDs, selectedPhase, selectedPanchayat, selectedVillage);
-          brScreeningData(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+          // brScreeningData(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
           // brScreeningData(phase1UUIDs, phase2UUIDs, selectedPhase, selectedPanchayat, selectedVillage);
-          cervicalScreeningData(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+          // cervicalScreeningData(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
           // cervicalScreeningData(phase1UUIDs, phase2UUIDs, selectedPhase, selectedPanchayat, selectedVillage);
           aggregateScreeningData(p1, p2, selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage);
         })
@@ -4248,9 +4260,9 @@ async function ScreeningSection(selectedPhase, selectedFieldworker, selectedPanc
 
         Promise.all(fetchPromises)
           .then(() => {
-            console.log("p1 - screening :", p1);
-            console.log("p2 - screening:", p2);
-            console.log("pall - screening:", pall);
+            // console.log("p1 - screening :", p1);
+            // console.log("p2 - screening:", p2);
+            // console.log("pall - screening:", pall);
 
             var data = [];
             if (selectedPhase === "1") {
@@ -4263,7 +4275,7 @@ async function ScreeningSection(selectedPhase, selectedFieldworker, selectedPanc
               data = pall;
             }
             // newScreening(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-            remoteScreening(selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage)
+            // remoteScreening(selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage)
             // remoteScreening(phaseUUIDs, selectedPanchayat, selectedVillage);
             inPresonDocScreening(data, selectedFieldworker, selectedPanchayat, selectedVillage);
 
@@ -4275,9 +4287,9 @@ async function ScreeningSection(selectedPhase, selectedFieldworker, selectedPanc
 
             oralScreeningData(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
             // oralScreeningData(phase1UUIDs, phase2UUIDs, selectedPhase, selectedPanchayat, selectedVillage);
-            brScreeningData(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+            // brScreeningData(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
             // brScreeningData(phase1UUIDs, phase2UUIDs, selectedPhase, selectedPanchayat, selectedVillage);
-            cervicalScreeningData(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+            // cervicalScreeningData(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
             // cervicalScreeningData(phase1UUIDs, phase2UUIDs, selectedPhase, selectedPanchayat, selectedVillage);
             aggregateScreeningData(p1, p2, selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage);
           })
@@ -4296,7 +4308,7 @@ async function tccSection(data, selectedFieldworker, selectedPanchayat, selected
   let p2 = [];
   let pall = [];
 
-  console.log("survey data: ", data);
+  // console.log("survey data: ", data);
 
   let dataU = [];
   Object.keys(data).forEach(nuuid => {
@@ -4319,7 +4331,7 @@ async function tccSection(data, selectedFieldworker, selectedPanchayat, selected
     }
   });
 
-  console.log("uniqueDataU: ", uniqueDataU);
+  // console.log("uniqueDataU: ", uniqueDataU);
 
 
 
@@ -4416,9 +4428,9 @@ async function tccSection(data, selectedFieldworker, selectedPanchayat, selected
       // Wait for all promises to complete before logging the results
       Promise.all(fetchPromises)
         .then(() => {
-          console.log("p1 - :", p1);
-          console.log("p2 - :", p2);
-          console.log("pall - :", pall);
+          // console.log("p1 - :", p1);
+          // console.log("p2 - :", p2);
+          // console.log("pall - :", pall);
 
           var data = [];
           if (selectedPhase === "1") {
@@ -4433,19 +4445,19 @@ async function tccSection(data, selectedFieldworker, selectedPanchayat, selected
 
           }
 
-          console.log("pall - :", data);
+          // console.log("pall - :", data);
           countTCCGenders(data, selectedFieldworker, selectedPanchayat, selectedVillage);
           // countTobaccoConsumptions(data, selectedFieldworker, selectedPanchayat, selectedVillage);
           countTobaccoConsumptions(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
           // TccFollowup(data, selectedFieldworker, selectedPanchayat, selectedVillage);
           TccFollowup(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
           // TccbatcFollowup(data, selectedFieldworker, selectedPanchayat, selectedVillage);
-          TccbatcFollowup(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
+          // TccbatcFollowup(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
           //pendingTccFOLLOW(p1, p2, p3);
           pendingTccFOLLOW(p1, p2, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
 
-          tccSmokeCount(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-          tccSmokeLessCount(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+          // tccSmokeCount(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+          // tccSmokeLessCount(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
         })
         .catch((error) => {
           console.error("Error in processing data:", error);
@@ -4543,9 +4555,9 @@ async function tccSection(data, selectedFieldworker, selectedPanchayat, selected
     // Wait for all promises to resolve
     Promise.all(fetchPromises)
       .then(() => {
-        console.log("p1 - :", p1);
-        console.log("p2 - :", p2);
-        console.log("pall - :", pall);
+        // console.log("p1 - :", p1);
+        // console.log("p2 - :", p2);
+        // console.log("pall - :", pall);
 
         let dataToProcess = [];
         if (selectedPhase === "1") {
@@ -4562,10 +4574,10 @@ async function tccSection(data, selectedFieldworker, selectedPanchayat, selected
         countTCCGenders(dataToProcess, selectedFieldworker, selectedPanchayat, selectedVillage);
         countTobaccoConsumptions(dataToProcess, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
         TccFollowup(dataToProcess, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-        TccbatcFollowup(dataToProcess, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+        // TccbatcFollowup(dataToProcess, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
         pendingTccFOLLOW(p1, p2, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-        tccSmokeCount(dataToProcess, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
-        tccSmokeLessCount(dataToProcess, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+        // tccSmokeCount(dataToProcess, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
+        // tccSmokeLessCount(dataToProcess, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase);
       })
       .catch((error) => {
         console.error("Error in processing data:", error);
@@ -5242,146 +5254,20 @@ async function CountEligibility(data, selectedFieldworker, selectedPanchayat, se
 
 }
 
-async function fetchAdditionalMapInfo(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
-
-  // var mapInfo = fb.database().ref().child("additional_info");
-  const locations = [];
-  // Make sure `removeDuplicateUUIDs` is working correctly before using it
-  const uniqueData = removeDuplicateUUIDs(data);
-  let fetchPromises = uniqueData.map(item => {
-    const villageId = item.village;
-    const panchayatId = villageId.substring(0, 2);
-    var uuid = item.uuid;
-    var fwid = item.fw_id;
-    var mapInfo = fb.database().ref().child("additional_info").child(panchayatId).child(villageId);
-
-    var pref = fb.database().ref().child("patients1").child(panchayatId).child(villageId);
-
-    return mapInfo.child(uuid).once("value")
-      .then(snapshot => {
-        const uuidData = snapshot.val();
-        if (uuidData) {
-          let maxPhase1Timestamp = null;
-          let maxPhase2Timestamp = null;
-
-          Object.keys(uuidData).forEach(timestamp => {
-            let year = new Date(Number(timestamp) * 1000).getFullYear();
-            if (timestamp <= stTime) {
-              if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
-                maxPhase1Timestamp = timestamp;
-              }
-            }
-            if (timestamp >= stTime) {
-              if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
-                maxPhase2Timestamp = timestamp;
-              }
-            }
-          });
-
-          let phaseTimestamp = null;
-          if (selectedPhase === "1" && maxPhase1Timestamp) {
-            phaseTimestamp = maxPhase1Timestamp;
-          } else if (selectedPhase === "2" && maxPhase2Timestamp) {
-            phaseTimestamp = maxPhase2Timestamp;
-          } else if (selectedPhase === "All") {
-            phaseTimestamp = maxPhase1Timestamp || maxPhase2Timestamp;
-          }
-
-          if (phaseTimestamp) {
-            const locationUrl = uuidData[phaseTimestamp]?.location;
-
-            if (locationUrl) {
-              try {
-                const urlParams = new URLSearchParams(new URL(locationUrl).search);
-                const [latitude, longitude] = urlParams.get('saddr').split(',');
-
-                if (latitude && longitude) {
-                  return pref.child(uuid).once("value").then(patientSnapshot => {
-                    const patientData = patientSnapshot.val();
-                    const patient_ID = patientData ? patientData.pid : null;
-                    const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
-
-                    if (patient_ID && result) {
-                      locations.push({ latitude, longitude, lastTimestamp: phaseTimestamp, patient_ID });
-                    } else {
-                      console.warn(`No patient_ID found for UUID ${uuid}`);
-                    }
-                  });
-                } else {
-                  console.warn(`Invalid latitude or longitude for UUID ${uuid} at timestamp ${phaseTimestamp}`);
-                }
-              } catch (error) {
-                console.error(`Error parsing location URL for UUID ${uuid}:`, error);
-              }
-            } else {
-              console.warn(`No valid location URL found for UUID ${uuid} at timestamp ${phaseTimestamp}`);
-            }
-          }
-        } else {
-          console.warn(`No data found for UUID ${uuid}`);
-        }
-      }).catch(error => {
-        console.error("Error fetching additional info for UUID:", uuid, error);
-      });
-  });
-
-  Promise.all(fetchPromises)
-    .then(() => {
-      initMap(locations);
-      console.log("locations", locations);
-    })
-    .catch(error => {
-      console.error("Error processing additional info data:", error);
-    });
-}
-
-/**
-
- * Removes duplicate UUIDs from the given data array.
-
- *
-
- * @param {Array<Object>} data - The input array of objects with UUIDs.
-
- * @returns {Array<Object>} A new array with unique UUIDs.
-
- */
-
-function removeDuplicateUUIDs(data) {
-
-  // Create a Set to store unique UUIDs
-
-  const uniqueUUIDs = new Set();
-
-
-  // Filter the data array to include only objects with unique UUIDs
-
-  const uniqueData = data.filter((item) => {
-
-    if (!uniqueUUIDs.has(item.uuid)) {
-
-      uniqueUUIDs.add(item.uuid);
-
-      return true;
-
-    }
-
-    return false;
-
-  });
-
-
-  return uniqueData;
-
-}
-
 async function countHabitSummary(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
   let countYes = 0;
   let countNotNow = 0;
   let countAbsent = 0;
+
+  let consumption_1_Counts = 0;
+  let consumption_2_Counts = 0;
+  let consumption_3_Counts = 0;
+  let consumption_4_Counts = 0;
+  let consumption_5_Counts = 0;
+  let miscellaneousCounts = 0;
   let fetchPromises = [];
 
-  console.log("Load Data", data);
+  // console.log("Load Data", data);
   const uniqueData = removeDuplicateUUIDs(data);
 
   // console.log("All Array:", allArray);
@@ -5506,6 +5392,182 @@ async function countHabitSummary(data, selectedFieldworker, selectedPanchayat, s
             }
 
 
+            if (selectedPhase === "1") {
+              timestamp = maxPhase1Timestamp;
+              if (form1Data) {
+                const lastRecord = form1Data[timestamp];
+                let latestData = form1Data[timestamp];
+                let usage = latestData?.tif;
+                if (usage) {
+                  usage = usage.toLowerCase();
+                  if (usage === "yes" || usage === "not now" || usage === "y" || usage === "nn") {
+                    const { ttc1, ttc2, ttc3, ttc4, ttc5 } = lastRecord.ttc;
+                    const { bqt, bqwot, othr, stbc, stghpms } = lastRecord.ttc_val;
+
+                    const consumptionTypes = [
+                      ttc1 || stbc,
+                      ttc2 || stghpms,
+                      ttc3 || bqt,
+                      ttc4 || bqwot,
+                      ttc5 || othr
+                    ].filter(type => type);
+
+                    if (consumptionTypes.length > 1) {
+                      miscellaneousCounts++;
+                    } else {
+                      if (ttc1 || stbc) {
+                        consumption_1_Counts++;
+                      }
+                      if (ttc2 || stghpms) {
+                        consumption_2_Counts++;
+                      }
+                      if (ttc3 || bqt) {
+                        consumption_3_Counts++;
+                      }
+                      if (ttc4 || bqwot) {
+                        consumption_4_Counts++;
+                      }
+                      if (ttc5 || othr) {
+                        consumption_5_Counts++;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            else if (selectedPhase === "2") {
+              timestamp = maxPhase2Timestamp;
+              if (form1Data) {
+                const lastRecord = form1Data[timestamp];
+
+                let latestData = form1Data[timestamp];
+                let usage = latestData?.tif;
+                if (usage) {
+                  usage = usage.toLowerCase();
+                  if (usage === "yes" || usage === "not now" || usage === "y" || usage === "nn") {
+                    const { ttc1, ttc2, ttc3, ttc4, ttc5 } = lastRecord.ttc;
+                    const { bqt, bqwot, othr, stbc, stghpms } = lastRecord.ttc_val;
+
+                    const consumptionTypes = [
+                      ttc1 || stbc,
+                      ttc2 || stghpms,
+                      ttc3 || bqt,
+                      ttc4 || bqwot,
+                      ttc5 || othr
+                    ].filter(type => type);
+
+                    if (consumptionTypes.length > 1) {
+                      miscellaneousCounts++;
+                    } else {
+                      if (ttc1 || stbc) {
+                        consumption_1_Counts++;
+                      }
+                      if (ttc2 || stghpms) {
+                        consumption_2_Counts++;
+                      }
+                      if (ttc3 || bqt) {
+                        consumption_3_Counts++;
+                      }
+                      if (ttc4 || bqwot) {
+                        consumption_4_Counts++;
+                      }
+                      if (ttc5 || othr) {
+                        consumption_5_Counts++;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            else if (selectedPhase === "All") {
+
+              if (maxPhase1Timestamp) {
+                if (form1Data) {
+                  const lastRecord = form1Data[maxPhase1Timestamp];
+
+                  let latestData = form1Data[maxPhase1Timestamp];
+                  let usage = latestData?.tif;
+                  if (usage) {
+                    usage = usage.toLowerCase();
+                    if (usage === "yes" || usage === "not now" || usage === "y" || usage === "nn") {
+                      const { ttc1, ttc2, ttc3, ttc4, ttc5 } = lastRecord.ttc;
+                      const { bqt, bqwot, othr, stbc, stghpms } = lastRecord.ttc_val;
+
+                      const consumptionTypes = [
+                        ttc1 || stbc,
+                        ttc2 || stghpms,
+                        ttc3 || bqt,
+                        ttc4 || bqwot,
+                        ttc5 || othr
+                      ].filter(type => type);
+
+                      if (consumptionTypes.length > 1) {
+                        miscellaneousCounts++;
+                      } else {
+                        if (ttc1 || stbc) {
+                          consumption_1_Counts++;
+                        }
+                        if (ttc2 || stghpms) {
+                          consumption_2_Counts++;
+                        }
+                        if (ttc3 || bqt) {
+                          consumption_3_Counts++;
+                        }
+                        if (ttc4 || bqwot) {
+                          consumption_4_Counts++;
+                        }
+                        if (ttc5 || othr) {
+                          consumption_5_Counts++;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              if (maxPhase2Timestamp) {
+                if (form1Data) {
+                  const lastRecord = form1Data[maxPhase2Timestamp];
+
+                  let latestData = form1Data[maxPhase2Timestamp];
+                  let usage = latestData?.tif;
+                  if (usage) {
+                    usage = usage.toLowerCase();
+                    if (usage === "yes" || usage === "not now" || usage === "y" || usage === "nn") {
+                      const { ttc1, ttc2, ttc3, ttc4, ttc5 } = lastRecord.ttc;
+                      const { bqt, bqwot, othr, stbc, stghpms } = lastRecord.ttc_val;
+
+                      const consumptionTypes = [
+                        ttc1 || stbc,
+                        ttc2 || stghpms,
+                        ttc3 || bqt,
+                        ttc4 || bqwot,
+                        ttc5 || othr
+                      ].filter(type => type);
+
+                      if (consumptionTypes.length > 1) {
+                        miscellaneousCounts++;
+                      } else {
+                        if (ttc1 || stbc) {
+                          consumption_1_Counts++;
+                        }
+                        if (ttc2 || stghpms) {
+                          consumption_2_Counts++;
+                        }
+                        if (ttc3 || bqt) {
+                          consumption_3_Counts++;
+                        }
+                        if (ttc4 || bqwot) {
+                          consumption_4_Counts++;
+                        }
+                        if (ttc5 || othr) {
+                          consumption_5_Counts++;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
 
             /* if (pall && selectedPhase === "All" )  {
                orderedTimestamps.forEach(ts => {
@@ -5604,6 +5666,7 @@ async function countHabitSummary(data, selectedFieldworker, selectedPanchayat, s
       localStorage.setItem('habityes', countYes);
       localStorage.setItem('habitnotnow', countNotNow);
       localStorage.setItem('habitabsent', countAbsent);
+      TccConsChart(consumption_1_Counts, consumption_2_Counts, consumption_3_Counts, consumption_4_Counts, consumption_5_Counts, miscellaneousCounts);
 
 
     })
@@ -5612,6 +5675,256 @@ async function countHabitSummary(data, selectedFieldworker, selectedPanchayat, s
     });
 
 }
+
+async function countTCC_Survey(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
+
+  let consumption_1_Counts = 0;
+  let consumption_2_Counts = 0;
+  let consumption_3_Counts = 0;
+  let consumption_4_Counts = 0;
+  let consumption_5_Counts = 0;
+  let miscellaneousCounts = 0;
+  let fetchPromises = [];
+
+  const uniqueData = removeDuplicateUUIDs(data);
+
+  uniqueData.forEach((item) => {
+    const villageId = item.village;
+    const panchayatId = villageId.substring(0, 2);
+    var uuid = item.uuid;
+    var fwid = item.fw_id;
+
+    var form1 = fb.database().ref().child("Form_1").child(panchayatId).child(villageId);
+
+    const form1Promise = form1.child(uuid).once("value")
+      .then(function (snap) {
+        let form1Data = snap.val();
+
+        let maxPhase1Timestamp = null;
+        let maxPhase2Timestamp = null;
+        let maxTimestamp = null;
+        let p1 = false, p2 = false, pall = false;
+
+        Object.keys(form1Data).forEach(timestamp => {
+          let year = new Date(Number(timestamp) * 1000).getFullYear();
+          if (timestamp <= stTime) {
+            p1 = true;
+            if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
+              maxPhase1Timestamp = timestamp;
+
+            }
+          }
+          if (timestamp >= stTime) {
+            p2 = true;
+            if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
+              maxPhase2Timestamp = timestamp;
+
+            }
+          }
+        });
+        const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+        if ((result && maxPhase1Timestamp && p1) || (result && maxPhase2Timestamp && p2) || (result && maxTimestamp && pall)) {
+          if (selectedPhase === "1") {
+            timestamp = maxPhase1Timestamp;
+            if (form1Data) {
+              const lastRecord = form1Data[timestamp];
+              let latestData = form1Data[timestamp];
+              let usage = latestData?.tif;
+              if (usage) {
+                usage = usage.toLowerCase();
+                if (usage === "yes" || usage === "not now" || usage === "y" || usage === "nn") {
+                  const { ttc1, ttc2, ttc3, ttc4, ttc5 } = lastRecord.ttc;
+                  const { bqt, bqwot, othr, stbc, stghpms } = lastRecord.ttc_val;
+
+                  const consumptionTypes = [
+                    ttc1 || stbc,
+                    ttc2 || stghpms,
+                    ttc3 || bqt,
+                    ttc4 || bqwot,
+                    ttc5 || othr
+                  ].filter(type => type);
+
+                  if (consumptionTypes.length > 1) {
+                    miscellaneousCounts++;
+                  } else {
+                    if (ttc1 || stbc) {
+                      consumption_1_Counts++;
+                    }
+                    if (ttc2 || stghpms) {
+                      consumption_2_Counts++;
+                    }
+                    if (ttc3 || bqt) {
+                      consumption_3_Counts++;
+                    }
+                    if (ttc4 || bqwot) {
+                      consumption_4_Counts++;
+                    }
+                    if (ttc5 || othr) {
+                      consumption_5_Counts++;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          else if (selectedPhase === "2") {
+            timestamp = maxPhase2Timestamp;
+            if (form1Data) {
+              const lastRecord = form1Data[timestamp];
+
+              let latestData = form1Data[timestamp];
+              let usage = latestData?.tif;
+              if (usage) {
+                usage = usage.toLowerCase();
+                if (usage === "yes" || usage === "not now" || usage === "y" || usage === "nn") {
+                  const { ttc1, ttc2, ttc3, ttc4, ttc5 } = lastRecord.ttc;
+                  const { bqt, bqwot, othr, stbc, stghpms } = lastRecord.ttc_val;
+
+                  const consumptionTypes = [
+                    ttc1 || stbc,
+                    ttc2 || stghpms,
+                    ttc3 || bqt,
+                    ttc4 || bqwot,
+                    ttc5 || othr
+                  ].filter(type => type);
+
+                  if (consumptionTypes.length > 1) {
+                    miscellaneousCounts++;
+                  } else {
+                    if (ttc1 || stbc) {
+                      consumption_1_Counts++;
+                    }
+                    if (ttc2 || stghpms) {
+                      consumption_2_Counts++;
+                    }
+                    if (ttc3 || bqt) {
+                      consumption_3_Counts++;
+                    }
+                    if (ttc4 || bqwot) {
+                      consumption_4_Counts++;
+                    }
+                    if (ttc5 || othr) {
+                      consumption_5_Counts++;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          else if (selectedPhase === "All") {
+
+            if (maxPhase1Timestamp) {
+              if (form1Data) {
+                const lastRecord = form1Data[maxPhase1Timestamp];
+
+                let latestData = form1Data[maxPhase1Timestamp];
+                let usage = latestData?.tif;
+                if (usage) {
+                  usage = usage.toLowerCase();
+                  if (usage === "yes" || usage === "not now" || usage === "y" || usage === "nn") {
+                    const { ttc1, ttc2, ttc3, ttc4, ttc5 } = lastRecord.ttc;
+                    const { bqt, bqwot, othr, stbc, stghpms } = lastRecord.ttc_val;
+
+                    const consumptionTypes = [
+                      ttc1 || stbc,
+                      ttc2 || stghpms,
+                      ttc3 || bqt,
+                      ttc4 || bqwot,
+                      ttc5 || othr
+                    ].filter(type => type);
+
+                    if (consumptionTypes.length > 1) {
+                      miscellaneousCounts++;
+                    } else {
+                      if (ttc1 || stbc) {
+                        consumption_1_Counts++;
+                      }
+                      if (ttc2 || stghpms) {
+                        consumption_2_Counts++;
+                      }
+                      if (ttc3 || bqt) {
+                        consumption_3_Counts++;
+                      }
+                      if (ttc4 || bqwot) {
+                        consumption_4_Counts++;
+                      }
+                      if (ttc5 || othr) {
+                        consumption_5_Counts++;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            if (maxPhase2Timestamp) {
+              if (form1Data) {
+                const lastRecord = form1Data[maxPhase2Timestamp];
+
+                let latestData = form1Data[maxPhase2Timestamp];
+                let usage = latestData?.tif;
+                if (usage) {
+                  usage = usage.toLowerCase();
+                  if (usage === "yes" || usage === "not now" || usage === "y" || usage === "nn") {
+                    const { ttc1, ttc2, ttc3, ttc4, ttc5 } = lastRecord.ttc;
+                    const { bqt, bqwot, othr, stbc, stghpms } = lastRecord.ttc_val;
+
+                    const consumptionTypes = [
+                      ttc1 || stbc,
+                      ttc2 || stghpms,
+                      ttc3 || bqt,
+                      ttc4 || bqwot,
+                      ttc5 || othr
+                    ].filter(type => type);
+
+                    if (consumptionTypes.length > 1) {
+                      miscellaneousCounts++;
+                    } else {
+                      if (ttc1 || stbc) {
+                        consumption_1_Counts++;
+                      }
+                      if (ttc2 || stghpms) {
+                        consumption_2_Counts++;
+                      }
+                      if (ttc3 || bqt) {
+                        consumption_3_Counts++;
+                      }
+                      if (ttc4 || bqwot) {
+                        consumption_4_Counts++;
+                      }
+                      if (ttc5 || othr) {
+                        consumption_5_Counts++;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching patient data for UUID:", item.uuid, error);
+      });
+    fetchPromises.push(form1Promise);
+  });
+
+  Promise.all(fetchPromises)
+    .then(() => {
+      console.log("Tobacco consumption_1_Counts", consumption_1_Counts);
+      console.log("Tobacco consumption_2_Counts", consumption_2_Counts);
+      console.log("Tobacco consumption_3_Counts", consumption_3_Counts);
+      console.log("Tobacco consumption_4_Counts", consumption_4_Counts);
+      console.log("Tobacco consumption_5_Counts", consumption_5_Counts);
+      console.log("Tobacco consumption_6_Counts", miscellaneousCounts);
+
+      TccConsChart(consumption_1_Counts, consumption_2_Counts, consumption_3_Counts, consumption_4_Counts, consumption_5_Counts, miscellaneousCounts);
+      // tccSurvey = true
+    })
+    .catch(error => {
+      console.error("Error processing data:", error);
+    });
+}
+
 
 async function countRegistrationsAndRescreenings(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
   let resurveyCount = 0;
@@ -5979,253 +6292,140 @@ async function countScreeningStatus(data, data_loc, selectedFieldworker, selecte
 
 }
 
-async function countTCC_Survey(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
 
-  let consumption_1_Counts = 0;
-  let consumption_2_Counts = 0;
-  let consumption_3_Counts = 0;
-  let consumption_4_Counts = 0;
-  let consumption_5_Counts = 0;
-  let miscellaneousCounts = 0;
-  let fetchPromises = [];
 
+
+async function fetchAdditionalMapInfo(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
+
+  // var mapInfo = fb.database().ref().child("additional_info");
+  const locations = [];
+  // Make sure `removeDuplicateUUIDs` is working correctly before using it
   const uniqueData = removeDuplicateUUIDs(data);
-
-  uniqueData.forEach((item) => {
+  let fetchPromises = uniqueData.map(item => {
     const villageId = item.village;
     const panchayatId = villageId.substring(0, 2);
     var uuid = item.uuid;
     var fwid = item.fw_id;
+    var mapInfo = fb.database().ref().child("additional_info").child(panchayatId).child(villageId);
 
-    var form1 = fb.database().ref().child("Form_1").child(panchayatId).child(villageId);
+    var pref = fb.database().ref().child("patients1").child(panchayatId).child(villageId);
 
-    const form1Promise = form1.child(uuid).once("value")
-      .then(function (snap) {
-        let form1Data = snap.val();
+    return mapInfo.child(uuid).once("value")
+      .then(snapshot => {
+        const uuidData = snapshot.val();
+        if (uuidData) {
+          let maxPhase1Timestamp = null;
+          let maxPhase2Timestamp = null;
 
-        let maxPhase1Timestamp = null;
-        let maxPhase2Timestamp = null;
-        let maxTimestamp = null;
-        let p1 = false, p2 = false, pall = false;
-
-        Object.keys(form1Data).forEach(timestamp => {
-          let year = new Date(Number(timestamp) * 1000).getFullYear();
-          if (timestamp <= stTime) {
-            p1 = true;
-            if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
-              maxPhase1Timestamp = timestamp;
-
-            }
-          }
-          if (timestamp >= stTime) {
-            p2 = true;
-            if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
-              maxPhase2Timestamp = timestamp;
-
-            }
-          }
-        });
-        const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
-        if ((result && maxPhase1Timestamp && p1) || (result && maxPhase2Timestamp && p2) || (result && maxTimestamp && pall)) {
-          if (selectedPhase === "1") {
-            timestamp = maxPhase1Timestamp;
-            if (form1Data) {
-              const lastRecord = form1Data[timestamp];
-              let latestData = form1Data[timestamp];
-              let usage = latestData?.tif;
-              if (usage) {
-                usage = usage.toLowerCase();
-                if (usage === "yes" || usage === "not now" || usage === "y" || usage === "nn") {
-                  const { ttc1, ttc2, ttc3, ttc4, ttc5 } = lastRecord.ttc;
-                  const { bqt, bqwot, othr, stbc, stghpms } = lastRecord.ttc_val;
-
-                  const consumptionTypes = [
-                    ttc1 || stbc,
-                    ttc2 || stghpms,
-                    ttc3 || bqt,
-                    ttc4 || bqwot,
-                    ttc5 || othr
-                  ].filter(type => type);
-
-                  if (consumptionTypes.length > 1) {
-                    miscellaneousCounts++;
-                  } else {
-                    if (ttc1 || stbc) {
-                      consumption_1_Counts++;
-                    }
-                    if (ttc2 || stghpms) {
-                      consumption_2_Counts++;
-                    }
-                    if (ttc3 || bqt) {
-                      consumption_3_Counts++;
-                    }
-                    if (ttc4 || bqwot) {
-                      consumption_4_Counts++;
-                    }
-                    if (ttc5 || othr) {
-                      consumption_5_Counts++;
-                    }
-                  }
-                }
+          Object.keys(uuidData).forEach(timestamp => {
+            let year = new Date(Number(timestamp) * 1000).getFullYear();
+            if (timestamp <= stTime) {
+              if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
+                maxPhase1Timestamp = timestamp;
               }
             }
-          }
-          else if (selectedPhase === "2") {
-            timestamp = maxPhase2Timestamp;
-            if (form1Data) {
-              const lastRecord = form1Data[timestamp];
-
-              let latestData = form1Data[timestamp];
-              let usage = latestData?.tif;
-              if (usage) {
-                usage = usage.toLowerCase();
-                if (usage === "yes" || usage === "not now" || usage === "y" || usage === "nn") {
-                  const { ttc1, ttc2, ttc3, ttc4, ttc5 } = lastRecord.ttc;
-                  const { bqt, bqwot, othr, stbc, stghpms } = lastRecord.ttc_val;
-
-                  const consumptionTypes = [
-                    ttc1 || stbc,
-                    ttc2 || stghpms,
-                    ttc3 || bqt,
-                    ttc4 || bqwot,
-                    ttc5 || othr
-                  ].filter(type => type);
-
-                  if (consumptionTypes.length > 1) {
-                    miscellaneousCounts++;
-                  } else {
-                    if (ttc1 || stbc) {
-                      consumption_1_Counts++;
-                    }
-                    if (ttc2 || stghpms) {
-                      consumption_2_Counts++;
-                    }
-                    if (ttc3 || bqt) {
-                      consumption_3_Counts++;
-                    }
-                    if (ttc4 || bqwot) {
-                      consumption_4_Counts++;
-                    }
-                    if (ttc5 || othr) {
-                      consumption_5_Counts++;
-                    }
-                  }
-                }
+            if (timestamp >= stTime) {
+              if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
+                maxPhase2Timestamp = timestamp;
               }
             }
+          });
+
+          let phaseTimestamp = null;
+          if (selectedPhase === "1" && maxPhase1Timestamp) {
+            phaseTimestamp = maxPhase1Timestamp;
+          } else if (selectedPhase === "2" && maxPhase2Timestamp) {
+            phaseTimestamp = maxPhase2Timestamp;
+          } else if (selectedPhase === "All") {
+            phaseTimestamp = maxPhase1Timestamp || maxPhase2Timestamp;
           }
-          else if (selectedPhase === "All") {
 
-            if (maxPhase1Timestamp) {
-              if (form1Data) {
-                const lastRecord = form1Data[maxPhase1Timestamp];
+          if (phaseTimestamp) {
+            const locationUrl = uuidData[phaseTimestamp]?.location;
 
-                let latestData = form1Data[maxPhase1Timestamp];
-                let usage = latestData?.tif;
-                if (usage) {
-                  usage = usage.toLowerCase();
-                  if (usage === "yes" || usage === "not now" || usage === "y" || usage === "nn") {
-                    const { ttc1, ttc2, ttc3, ttc4, ttc5 } = lastRecord.ttc;
-                    const { bqt, bqwot, othr, stbc, stghpms } = lastRecord.ttc_val;
+            if (locationUrl) {
+              try {
+                const urlParams = new URLSearchParams(new URL(locationUrl).search);
+                const [latitude, longitude] = urlParams.get('saddr').split(',');
 
-                    const consumptionTypes = [
-                      ttc1 || stbc,
-                      ttc2 || stghpms,
-                      ttc3 || bqt,
-                      ttc4 || bqwot,
-                      ttc5 || othr
-                    ].filter(type => type);
+                if (latitude && longitude) {
+                  return pref.child(uuid).once("value").then(patientSnapshot => {
+                    const patientData = patientSnapshot.val();
+                    const patient_ID = patientData ? patientData.pid : null;
+                    const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
 
-                    if (consumptionTypes.length > 1) {
-                      miscellaneousCounts++;
+                    if (patient_ID && result) {
+                      locations.push({ latitude, longitude, lastTimestamp: phaseTimestamp, patient_ID });
                     } else {
-                      if (ttc1 || stbc) {
-                        consumption_1_Counts++;
-                      }
-                      if (ttc2 || stghpms) {
-                        consumption_2_Counts++;
-                      }
-                      if (ttc3 || bqt) {
-                        consumption_3_Counts++;
-                      }
-                      if (ttc4 || bqwot) {
-                        consumption_4_Counts++;
-                      }
-                      if (ttc5 || othr) {
-                        consumption_5_Counts++;
-                      }
+                      console.warn(`No patient_ID found for UUID ${uuid}`);
                     }
-                  }
+                  });
+                } else {
+                  console.warn(`Invalid latitude or longitude for UUID ${uuid} at timestamp ${phaseTimestamp}`);
                 }
+              } catch (error) {
+                console.error(`Error parsing location URL for UUID ${uuid}:`, error);
               }
-            }
-            if (maxPhase2Timestamp) {
-              if (form1Data) {
-                const lastRecord = form1Data[maxPhase2Timestamp];
-
-                let latestData = form1Data[maxPhase2Timestamp];
-                let usage = latestData?.tif;
-                if (usage) {
-                  usage = usage.toLowerCase();
-                  if (usage === "yes" || usage === "not now" || usage === "y" || usage === "nn") {
-                    const { ttc1, ttc2, ttc3, ttc4, ttc5 } = lastRecord.ttc;
-                    const { bqt, bqwot, othr, stbc, stghpms } = lastRecord.ttc_val;
-
-                    const consumptionTypes = [
-                      ttc1 || stbc,
-                      ttc2 || stghpms,
-                      ttc3 || bqt,
-                      ttc4 || bqwot,
-                      ttc5 || othr
-                    ].filter(type => type);
-
-                    if (consumptionTypes.length > 1) {
-                      miscellaneousCounts++;
-                    } else {
-                      if (ttc1 || stbc) {
-                        consumption_1_Counts++;
-                      }
-                      if (ttc2 || stghpms) {
-                        consumption_2_Counts++;
-                      }
-                      if (ttc3 || bqt) {
-                        consumption_3_Counts++;
-                      }
-                      if (ttc4 || bqwot) {
-                        consumption_4_Counts++;
-                      }
-                      if (ttc5 || othr) {
-                        consumption_5_Counts++;
-                      }
-                    }
-                  }
-                }
-              }
+            } else {
+              console.warn(`No valid location URL found for UUID ${uuid} at timestamp ${phaseTimestamp}`);
             }
           }
+        } else {
+          console.warn(`No data found for UUID ${uuid}`);
         }
-      })
-      .catch((error) => {
-        console.error("Error fetching patient data for UUID:", item.uuid, error);
+      }).catch(error => {
+        console.error("Error fetching additional info for UUID:", uuid, error);
       });
-    fetchPromises.push(form1Promise);
   });
 
   Promise.all(fetchPromises)
     .then(() => {
-      console.log("Tobacco consumption_1_Counts", consumption_1_Counts);
-      console.log("Tobacco consumption_2_Counts", consumption_2_Counts);
-      console.log("Tobacco consumption_3_Counts", consumption_3_Counts);
-      console.log("Tobacco consumption_4_Counts", consumption_4_Counts);
-      console.log("Tobacco consumption_5_Counts", consumption_5_Counts);
-      console.log("Tobacco consumption_6_Counts", miscellaneousCounts);
-
-      TccConsChart(consumption_1_Counts, consumption_2_Counts, consumption_3_Counts, consumption_4_Counts, consumption_5_Counts, miscellaneousCounts);
-      // tccSurvey = true
+      initMap(locations);
+      console.log("locations", locations);
     })
     .catch(error => {
-      console.error("Error processing data:", error);
+      console.error("Error processing additional info data:", error);
     });
+}
+
+/**
+
+ * Removes duplicate UUIDs from the given data array.
+
+ *
+
+ * @param {Array<Object>} data - The input array of objects with UUIDs.
+
+ * @returns {Array<Object>} A new array with unique UUIDs.
+
+ */
+
+function removeDuplicateUUIDs(data) {
+
+  // Create a Set to store unique UUIDs
+
+  const uniqueUUIDs = new Set();
+
+
+  // Filter the data array to include only objects with unique UUIDs
+
+  const uniqueData = data.filter((item) => {
+
+    if (!uniqueUUIDs.has(item.uuid)) {
+
+      uniqueUUIDs.add(item.uuid);
+
+      return true;
+
+    }
+
+    return false;
+
+  });
+
+
+  return uniqueData;
+
 }
 
 //Doctor Screening
@@ -6233,6 +6433,17 @@ async function countTCC_Survey(data, selectedFieldworker, selectedPanchayat, sel
 async function newScreening(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
   let maleCount = 0;
   let femaleCount = 0;
+
+  let lower = 0;
+  let normal = 0;
+  let elevated = 0;
+  let high1 = 0;
+  let high2 = 0;
+
+  let type1 = 0;
+  let type2 = 0;
+  let type3 = 0;
+
   let fetchPromises = [];
   let infoExist = false;
   let MVD = []
@@ -6242,9 +6453,10 @@ async function newScreening(data, selectedFieldworker, selectedPanchayat, select
       const panchayatId = villageId.substring(0, 2);
       const uuid = item.uuid;
       let fwid = item.fw_id;
+      const gender = item.gen?.toLowerCase(); // Use 'gen' field for gender
 
-      MVD = fb.database().ref().child("manual_vital_data");
-      const pref = fb.database().ref().child("patients1").child(panchayatId).child(villageId);
+      MVD = fb.database().ref().child("manual_vital_data").child(panchayatId).child(villageId);
+      // const pref = fb.database().ref().child("patients1").child(panchayatId).child(villageId);
 
       const MVDPromise = MVD.child(uuid).once("value")
         .then(function (snap) {
@@ -6255,29 +6467,256 @@ async function newScreening(data, selectedFieldworker, selectedPanchayat, select
             infoExist = true;
           }
           if (infoExist) {
-            return pref.child(uuid).once("value")
-              .then(function (snap) {
-                let pinfo = snap.val();
-                const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
 
-                if (result) {
-                  const gender = pinfo.gndr?.toLowerCase();
-                  if (gender === 'male' || gender === 'm') {
+            let maxPhase1Timestamp = null;
+            let maxPhase2Timestamp = null;
+            let maxTimestamp = null;
 
-                    maleCount++;
-                    // const pName = pinfo.name;
-                    // const pinfoid = pinfo.pid;
-                    // console.log("patient MVD info: ", pinfoid)
-                    // console.log("uuid of inpersonScreening", uuid)
-                  } else if (gender === 'female' || gender === 'f') {
-                    femaleCount++;
-                    // console.log("uuid of inpersonScreening", uuid)
-                    // const pName = pinfo.name;
-                    // const pinfoid = pinfo.pid;
-                    // console.log("patient MVD info: ", pinfoid)
+            Object.keys(MVDData).forEach(timestamp => {
+              if (timestamp <= stTime) {
+                if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
+                  maxPhase1Timestamp = timestamp;
+                }
+              }
+              if (timestamp >= stTime) {
+                if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
+                  maxPhase2Timestamp = timestamp;
+                }
+              }
+              if (maxPhase1Timestamp && maxPhase2Timestamp) {
+                maxTimestamp = Math.max(maxPhase1Timestamp, maxPhase2Timestamp);
+              }
+            });
+            // return pref.child(uuid).once("value")
+            //   .then(function (snap) {
+            //     let pinfo = snap.val();
+            const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+
+            if (result) {
+              // const gender = pinfo.gndr?.toLowerCase();
+              if (gender === 'male' || gender === 'm') {
+
+                maleCount++;
+                // const pName = pinfo.name;
+                // const pinfoid = pinfo.pid;
+                // console.log("patient MVD info: ", pinfoid)
+                // console.log("uuid of inpersonScreening", uuid)
+              }
+              else if (gender === 'female' || gender === 'f') {
+                femaleCount++;
+                // console.log("uuid of inpersonScreening", uuid)
+                // const pName = pinfo.name;
+                // const pinfoid = pinfo.pid;
+                // console.log("patient MVD info: ", pinfoid)
+              }
+
+
+              if (selectedPhase === "1" && maxPhase1Timestamp) {
+                const type = MVDData[maxPhase1Timestamp]["bp"];
+                const bpData = type.split("/");
+                let systolic = bpData[0]
+                let diastolic = bpData[1]
+                // console.log("systolic ",systolic ," diastolic ",diastolic , " uuid ",uuid)
+                if ((systolic < 90) && (diastolic < 60)) {
+                  lower++;
+                  // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                }
+                else if (((90 <= systolic) && (systolic < 120)) && ((60 <= diastolic) && (diastolic <= 80))) {
+                  normal++;
+                  // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                }
+                else if (((120 <= systolic) && (systolic <= 129)) && (diastolic <= 80)) {
+                  elevated++;
+                  // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                }
+                else if (((130 <= systolic) && (systolic <= 139)) || ((80 <= diastolic) && (diastolic <= 89))) {
+                  high1++;
+                  // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                }
+                else if ((140 <= systolic) || (90 <= diastolic)) {
+                  high2++;
+                  // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                }
+              }
+              if (selectedPhase === "2" && maxPhase2Timestamp) {
+                const type = MVDData[maxPhase2Timestamp]["bp"];
+                const bpData = type.split("/");
+                let systolic = bpData[0]
+                let diastolic = bpData[1]
+                // console.log("systolic ",systolic ," diastolic ",diastolic , " uuid ",uuid)
+                if ((systolic < 90) && (diastolic < 60)) {
+                  lower++;
+                  // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                }
+                else if (((90 <= systolic) && (systolic < 120)) && ((60 <= diastolic) && (diastolic <= 80))) {
+                  normal++;
+                  // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                }
+                else if (((120 <= systolic) && (systolic <= 129)) && (diastolic <= 80)) {
+                  elevated++;
+                  // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                }
+                else if (((130 <= systolic) && (systolic <= 139)) || ((80 <= diastolic) && (diastolic <= 89))) {
+                  high1++;
+                  // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                }
+                else if ((140 <= systolic) || (90 <= diastolic)) {
+                  high2++;
+                  // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                }
+              }
+              if (selectedPhase === "All") {
+
+                if (maxPhase1Timestamp && !maxPhase2Timestamp) {
+                  const type = MVDData[maxPhase1Timestamp]["bp"];
+                  const bpData = type.split("/");
+                  let systolic = bpData[0]
+                  let diastolic = bpData[1]
+                  // console.log("systolic ",systolic ," diastolic ",diastolic , " uuid ",uuid)
+                  if ((systolic < 90) && (diastolic < 60)) {
+                    lower++;
+                    // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                  }
+                  else if (((90 <= systolic) && (systolic < 120)) && ((60 <= diastolic) && (diastolic <= 80))) {
+                    normal++;
+                    // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                  }
+                  else if (((120 <= systolic) && (systolic <= 129)) && (diastolic <= 80)) {
+                    elevated++;
+                    // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                  }
+                  else if (((130 <= systolic) && (systolic <= 139)) || ((80 <= diastolic) && (diastolic <= 89))) {
+                    high1++;
+                    // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                  }
+                  else if ((140 <= systolic) || (90 <= diastolic)) {
+                    high2++;
+                    // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
                   }
                 }
-              });
+                if (maxPhase2Timestamp && !maxPhase1Timestamp) {
+                  const type = MVDData[maxPhase2Timestamp]["bp"];
+                  const bpData = type.split("/");
+                  let systolic = bpData[0]
+                  let diastolic = bpData[1]
+                  // console.log("systolic ",systolic ," diastolic ",diastolic , " uuid ",uuid)
+                  if ((systolic < 90) && (diastolic < 60)) {
+                    lower++;
+                    // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                  }
+                  else if (((90 <= systolic) && (systolic < 120)) && ((60 <= diastolic) && (diastolic <= 80))) {
+                    normal++;
+                    // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                  }
+                  else if (((120 <= systolic) && (systolic <= 129)) && (diastolic <= 80)) {
+                    elevated++;
+                    // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                  }
+                  else if (((130 <= systolic) && (systolic <= 139)) || ((80 <= diastolic) && (diastolic <= 89))) {
+                    high1++;
+                    // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                  }
+                  else if ((140 <= systolic) || (90 <= diastolic)) {
+                    high2++;
+                    // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                  }
+                }
+                if (maxPhase1Timestamp && maxPhase2Timestamp) {
+                  if (maxTimestamp) {
+                    const type = MVDData[maxTimestamp]["bp"];
+                    const bpData = type.split("/");
+                    let systolic = bpData[0]
+                    let diastolic = bpData[1]
+                    // console.log("systolic ",systolic ," diastolic ",diastolic , " uuid ",uuid)
+                    if ((systolic < 90) && (diastolic < 60)) {
+                      lower++;
+                      // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                    }
+                    else if (((90 <= systolic) && (systolic < 120)) && ((60 <= diastolic) && (diastolic <= 80))) {
+                      normal++;
+                      // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                    }
+                    else if (((120 <= systolic) && (systolic <= 129)) && (diastolic <= 80)) {
+                      elevated++;
+                      // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                    }
+                    else if (((130 <= systolic) && (systolic <= 139)) || ((80 <= diastolic) && (diastolic <= 89))) {
+                      high1++;
+                      // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                    }
+                    else if ((140 <= systolic) || (90 <= diastolic)) {
+                      high2++;
+                      // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                    }
+                  }
+                }
+              }
+
+              if (selectedPhase === "1" && maxPhase1Timestamp) {
+                const type = MVDData[maxPhase1Timestamp]["grbs"];
+                if (type < 70) type1++;
+                else if (type <= 140) type2++;
+                else type3++;
+              }
+              if (selectedPhase === "2" && maxPhase2Timestamp) {
+                const type = MVDData[maxPhase2Timestamp]["grbs"];
+                if (type < 70) type1++;
+                else if (type <= 140) type2++;
+                else type3++;
+              }
+              if (selectedPhase === "All") {
+                if (maxPhase1Timestamp && !maxPhase2Timestamp) {
+                  const type = MVDData[maxPhase1Timestamp]["grbs"];
+                  if (type < 70) type1++;
+                  else if (type <= 140) type2++;
+                  else type3++;
+                }
+                if (maxPhase2Timestamp && !maxPhase1Timestamp) {
+                  const type = MVDData[maxPhase2Timestamp]["grbs"];
+                  if (type < 70) type1++;
+                  else if (type <= 140) type2++;
+                  else type3++;
+                }
+                if (maxPhase1Timestamp && maxPhase2Timestamp) {
+                  if (maxTimestamp) {
+                    const type = MVDData[maxTimestamp]["grbs"];
+                    if (type < 70) type1++;
+                    else if (type <= 140) type2++;
+                    else type3++;
+                  }
+                }
+
+              }
+
+            }
+            // });
+
+
           }
         })
         .catch((error) => {
@@ -6294,11 +6733,21 @@ async function newScreening(data, selectedFieldworker, selectedPanchayat, select
         const totalGenderCount = maleCount + femaleCount;
         document.getElementById("nrg").innerText = totalGenderCount;
         nRegGenderChart(maleCount, femaleCount);
-
-        //BP and GRBS
-        bpFunction(data, MVD, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
-        GRBS(data, MVD, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
         nRData = true;
+
+        console.log("Lower", lower);
+        console.log("Normal", normal);
+        console.log("Elevated", elevated);
+        console.log("High 1", high1);
+        console.log("High 2", high2);
+        bpChart(lower, normal, elevated, high1, high2);
+        bpres = true;
+
+        console.log("grbs < 70:", type1);
+        console.log("70 <= grbs <= 140:", type2);
+        console.log("grbs > 140:", type3);
+        grbsChart(type1, type2, type3);
+        diabetic = true;
       })
       .catch((error) => {
         console.error("Error in completing fetch operations:", error);
@@ -6312,6 +6761,7 @@ async function newScreening(data, selectedFieldworker, selectedPanchayat, select
       const panchayatId = villageId.substring(0, 2);
       const uuid = item.uuid;
       let fwid = item.fw_id;
+      const gender = item.gen?.toLowerCase(); // Use 'gen' field for gender
 
       MVD = fb.database().ref().child("manual_vital_data").child(panchayatId).child(villageId);
       const pref = fb.database().ref().child("patients1").child(panchayatId).child(villageId);
@@ -6325,29 +6775,258 @@ async function newScreening(data, selectedFieldworker, selectedPanchayat, select
             infoExist = true;
           }
           if (infoExist) {
-            return pref.child(uuid).once("value")
-              .then(function (snap) {
-                let pinfo = snap.val();
-                const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
 
-                if (result) {
-                  const gender = pinfo.gndr?.toLowerCase();
-                  if (gender === 'male' || gender === 'm') {
+            let maxPhase1Timestamp = null;
+            let maxPhase2Timestamp = null;
+            let maxTimestamp = null;
 
-                    maleCount++;
-                    // const pName = pinfo.name;
-                    // const pinfoid = pinfo.pid;
-                    // console.log("patient MVD info: ", pinfoid)
-                    // console.log("uuid of inpersonScreening", uuid)
-                  } else if (gender === 'female' || gender === 'f') {
-                    femaleCount++;
-                    // console.log("uuid of inpersonScreening", uuid)
-                    // const pName = pinfo.name;
-                    // const pinfoid = pinfo.pid;
-                    // console.log("patient MVD info: ", pinfoid)
+            Object.keys(MVDData).forEach(timestamp => {
+              if (timestamp <= stTime) {
+                if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
+                  maxPhase1Timestamp = timestamp;
+                }
+              }
+              if (timestamp >= stTime) {
+                if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
+                  maxPhase2Timestamp = timestamp;
+                }
+              }
+              if (maxPhase1Timestamp && maxPhase2Timestamp) {
+                maxTimestamp = Math.max(maxPhase1Timestamp, maxPhase2Timestamp);
+              }
+            });
+            // return pref.child(uuid).once("value")
+            //   .then(function (snap) {
+            //     let pinfo = snap.val();
+            const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+
+            if (result) {
+              // const gender = pinfo.gndr?.toLowerCase();
+              if (gender === 'male' || gender === 'm') {
+
+                maleCount++;
+                // const pName = pinfo.name;
+                // const pinfoid = pinfo.pid;
+                // console.log("patient MVD info: ", pinfoid)
+                // console.log("uuid of inpersonScreening", uuid)
+              }
+              else if (gender === 'female' || gender === 'f') {
+                femaleCount++;
+                // console.log("uuid of inpersonScreening", uuid)
+                // const pName = pinfo.name;
+                // const pinfoid = pinfo.pid;
+                // console.log("patient MVD info: ", pinfoid)
+              }
+
+
+              if (selectedPhase === "1" && maxPhase1Timestamp) {
+                const type = MVDData[maxPhase1Timestamp]["bp"];
+                const bpData = type.split("/");
+                let systolic = bpData[0]
+                let diastolic = bpData[1]
+                // console.log("systolic ",systolic ," diastolic ",diastolic , " uuid ",uuid)
+                if ((systolic < 90) && (diastolic < 60)) {
+                  lower++;
+                  // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                }
+                else if (((90 <= systolic) && (systolic < 120)) && ((60 <= diastolic) && (diastolic <= 80))) {
+                  normal++;
+                  // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                }
+                else if (((120 <= systolic) && (systolic <= 129)) && (diastolic <= 80)) {
+                  elevated++;
+                  // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                }
+                else if (((130 <= systolic) && (systolic <= 139)) || ((80 <= diastolic) && (diastolic <= 89))) {
+                  high1++;
+                  // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                }
+                else if ((140 <= systolic) || (90 <= diastolic)) {
+                  high2++;
+                  // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                }
+              }
+              if (selectedPhase === "2" && maxPhase2Timestamp) {
+                const type = MVDData[maxPhase2Timestamp]["bp"];
+                const bpData = type.split("/");
+                let systolic = bpData[0]
+                let diastolic = bpData[1]
+                // console.log("systolic ",systolic ," diastolic ",diastolic , " uuid ",uuid)
+                if ((systolic < 90) && (diastolic < 60)) {
+                  lower++;
+                  // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                }
+                else if (((90 <= systolic) && (systolic < 120)) && ((60 <= diastolic) && (diastolic <= 80))) {
+                  normal++;
+                  // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                }
+                else if (((120 <= systolic) && (systolic <= 129)) && (diastolic <= 80)) {
+                  elevated++;
+                  // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                }
+                else if (((130 <= systolic) && (systolic <= 139)) || ((80 <= diastolic) && (diastolic <= 89))) {
+                  high1++;
+                  // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                }
+                else if ((140 <= systolic) || (90 <= diastolic)) {
+                  high2++;
+                  // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                }
+              }
+              if (selectedPhase === "All") {
+
+                if (maxPhase1Timestamp && !maxPhase2Timestamp) {
+                  const type = MVDData[maxPhase1Timestamp]["bp"];
+                  const bpData = type.split("/");
+                  let systolic = bpData[0]
+                  let diastolic = bpData[1]
+                  // console.log("systolic ",systolic ," diastolic ",diastolic , " uuid ",uuid)
+                  if ((systolic < 90) && (diastolic < 60)) {
+                    lower++;
+                    // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                  }
+                  else if (((90 <= systolic) && (systolic < 120)) && ((60 <= diastolic) && (diastolic <= 80))) {
+                    normal++;
+                    // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                  }
+                  else if (((120 <= systolic) && (systolic <= 129)) && (diastolic <= 80)) {
+                    elevated++;
+                    // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                  }
+                  else if (((130 <= systolic) && (systolic <= 139)) || ((80 <= diastolic) && (diastolic <= 89))) {
+                    high1++;
+                    // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                  }
+                  else if ((140 <= systolic) || (90 <= diastolic)) {
+                    high2++;
+                    // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
                   }
                 }
-              });
+                if (maxPhase2Timestamp && !maxPhase1Timestamp) {
+                  const type = MVDData[maxPhase2Timestamp]["bp"];
+                  const bpData = type.split("/");
+                  let systolic = bpData[0]
+                  let diastolic = bpData[1]
+                  // console.log("systolic ",systolic ," diastolic ",diastolic , " uuid ",uuid)
+                  if ((systolic < 90) && (diastolic < 60)) {
+                    lower++;
+                    // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                  }
+                  else if (((90 <= systolic) && (systolic < 120)) && ((60 <= diastolic) && (diastolic <= 80))) {
+                    normal++;
+                    // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                  }
+                  else if (((120 <= systolic) && (systolic <= 129)) && (diastolic <= 80)) {
+                    elevated++;
+                    // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                  }
+                  else if (((130 <= systolic) && (systolic <= 139)) || ((80 <= diastolic) && (diastolic <= 89))) {
+                    high1++;
+                    // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                  }
+                  else if ((140 <= systolic) || (90 <= diastolic)) {
+                    high2++;
+                    // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                  }
+                }
+                if (maxPhase1Timestamp && maxPhase2Timestamp) {
+                  if (maxTimestamp) {
+                    const type = MVDData[maxTimestamp]["bp"];
+                    const bpData = type.split("/");
+                    let systolic = bpData[0]
+                    let diastolic = bpData[1]
+                    // console.log("systolic ",systolic ," diastolic ",diastolic , " uuid ",uuid)
+                    if ((systolic < 90) && (diastolic < 60)) {
+                      lower++;
+                      // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                    }
+                    else if (((90 <= systolic) && (systolic < 120)) && ((60 <= diastolic) && (diastolic <= 80))) {
+                      normal++;
+                      // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                    }
+                    else if (((120 <= systolic) && (systolic <= 129)) && (diastolic <= 80)) {
+                      elevated++;
+                      // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                    }
+                    else if (((130 <= systolic) && (systolic <= 139)) || ((80 <= diastolic) && (diastolic <= 89))) {
+                      high1++;
+                      // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                    }
+                    else if ((140 <= systolic) || (90 <= diastolic)) {
+                      high2++;
+                      // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+
+                    }
+                  }
+                }
+              }
+
+
+              if (selectedPhase === "1" && maxPhase1Timestamp) {
+                const type = MVDData[maxPhase1Timestamp]["grbs"];
+                if (type < 70) type1++;
+                else if (type <= 140) type2++;
+                else type3++;
+              }
+              if (selectedPhase === "2" && maxPhase2Timestamp) {
+                const type = MVDData[maxPhase2Timestamp]["grbs"];
+                if (type < 70) type1++;
+                else if (type <= 140) type2++;
+                else type3++;
+              }
+              if (selectedPhase === "All") {
+                if (maxPhase1Timestamp && !maxPhase2Timestamp) {
+                  const type = MVDData[maxPhase1Timestamp]["grbs"];
+                  if (type < 70) type1++;
+                  else if (type <= 140) type2++;
+                  else type3++;
+                }
+                if (maxPhase2Timestamp && !maxPhase1Timestamp) {
+                  const type = MVDData[maxPhase2Timestamp]["grbs"];
+                  if (type < 70) type1++;
+                  else if (type <= 140) type2++;
+                  else type3++;
+                }
+                if (maxPhase1Timestamp && maxPhase2Timestamp) {
+                  if (maxTimestamp) {
+                    const type = MVDData[maxTimestamp]["grbs"];
+                    if (type < 70) type1++;
+                    else if (type <= 140) type2++;
+                    else type3++;
+                  }
+                }
+
+              }
+
+
+            }
+            // });
+
+
           }
         })
         .catch((error) => {
@@ -6364,11 +7043,24 @@ async function newScreening(data, selectedFieldworker, selectedPanchayat, select
         const totalGenderCount = maleCount + femaleCount;
         document.getElementById("nrg").innerText = totalGenderCount;
         nRegGenderChart(maleCount, femaleCount);
-
-        //BP and GRBS
-        bpFunction(data, MVD, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
-        GRBS(data, MVD, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
         nRData = true;
+
+        console.log("Lower", lower);
+        console.log("Normal", normal);
+        console.log("Elevated", elevated);
+        console.log("High 1", high1);
+        console.log("High 2", high2);
+        bpChart(lower, normal, elevated, high1, high2);
+        bpres = true;
+
+        console.log("grbs < 70:", type1);
+        console.log("70 <= grbs <= 140:", type2);
+        console.log("grbs > 140:", type3);
+        grbsChart(type1, type2, type3);
+        diabetic = true;
+        //BP and GRBS
+        // bpFunction(data, MVD, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
+        // GRBS(data, MVD, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase)
       })
       .catch((error) => {
         console.error("Error in completing fetch operations:", error);
@@ -6377,255 +7069,255 @@ async function newScreening(data, selectedFieldworker, selectedPanchayat, select
 }
 
 
-async function bpFunction(data, MVD, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
-  let lower = 0;
-  let normal = 0;
-  let elevated = 0;
-  let high1 = 0;
-  let high2 = 0;
-  let fetchPromises = [];
+// async function bpFunction(data, MVD, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
+//   let lower = 0;
+//   let normal = 0;
+//   let elevated = 0;
+//   let high1 = 0;
+//   let high2 = 0;
+//   let fetchPromises = [];
 
-  let MVDData = {};
-  // await MVD.once("value")
-  //   .then(function (snap) {
-  //     MVDData = snap.val();
-  //     console.log("MVD data:", Object.keys(MVDData).length);
-  //   })
-  //   .catch((error) => {
-  //     console.error("Error fetching MVD data:", error);
-  //   });
+//   let MVDData = {};
+//   // await MVD.once("value")
+//   //   .then(function (snap) {
+//   //     MVDData = snap.val();
+//   //     console.log("MVD data:", Object.keys(MVDData).length);
+//   //   })
+//   //   .catch((error) => {
+//   //     console.error("Error fetching MVD data:", error);
+//   //   });
 
-  data.forEach((item) => {
-    const villageId = item.village;
-    const panchayatId = villageId.substring(0, 2);
-    const uuid = item.uuid;
-    let fwid = item.fw_id;
-    const pref = fb.database().ref().child("patients1").child(panchayatId).child(villageId);
+//   data.forEach((item) => {
+//     const villageId = item.village;
+//     const panchayatId = villageId.substring(0, 2);
+//     const uuid = item.uuid;
+//     let fwid = item.fw_id;
+//     const pref = fb.database().ref().child("patients1").child(panchayatId).child(villageId);
 
-    const MVDPromise = MVD.child(uuid).once("value")
-      .then(function (snap) {
-        let MVDEntry = snap.val();
-        if (MVDEntry) {
-          return pref.child(uuid).once("value")
-            .then(function (snap) {
-              let pinfo = snap.val();
-              // console.log("MVD UUID", uuid)
-              if (pinfo) {
-                let maxPhase1Timestamp = null;
-                let maxPhase2Timestamp = null;
-                let maxTimestamp = null;
+//     const MVDPromise = MVD.child(uuid).once("value")
+//       .then(function (snap) {
+//         let MVDEntry = snap.val();
+//         if (MVDEntry) {
+//           return pref.child(uuid).once("value")
+//             .then(function (snap) {
+//               let pinfo = snap.val();
+//               // console.log("MVD UUID", uuid)
+//               if (pinfo) {
+//                 let maxPhase1Timestamp = null;
+//                 let maxPhase2Timestamp = null;
+//                 let maxTimestamp = null;
 
-                Object.keys(MVDEntry).forEach(timestamp => {
-                  if (timestamp <= stTime) {
-                    if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
-                      maxPhase1Timestamp = timestamp;
-                    }
-                  }
-                  if (timestamp >= stTime) {
-                    if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
-                      maxPhase2Timestamp = timestamp;
-                    }
-                  }
-                  if (maxPhase1Timestamp && maxPhase2Timestamp) {
-                    maxTimestamp = Math.max(maxPhase1Timestamp, maxPhase2Timestamp);
-                  }
-                });
+//                 Object.keys(MVDEntry).forEach(timestamp => {
+//                   if (timestamp <= stTime) {
+//                     if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
+//                       maxPhase1Timestamp = timestamp;
+//                     }
+//                   }
+//                   if (timestamp >= stTime) {
+//                     if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
+//                       maxPhase2Timestamp = timestamp;
+//                     }
+//                   }
+//                   if (maxPhase1Timestamp && maxPhase2Timestamp) {
+//                     maxTimestamp = Math.max(maxPhase1Timestamp, maxPhase2Timestamp);
+//                   }
+//                 });
 
-                const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+//                 const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
 
-                if (result) {
-                  if (selectedPhase === "1" && maxPhase1Timestamp) {
-                    const type = MVDEntry[maxPhase1Timestamp]["bp"];
-                    const bpData = type.split("/");
-                    let systolic = bpData[0]
-                    let diastolic = bpData[1]
-                    // console.log("systolic ",systolic ," diastolic ",diastolic , " uuid ",uuid)
-                    if ((systolic < 90) && (diastolic < 60)) {
-                      lower++;
-                      // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                 if (result) {
+//                   if (selectedPhase === "1" && maxPhase1Timestamp) {
+//                     const type = MVDEntry[maxPhase1Timestamp]["bp"];
+//                     const bpData = type.split("/");
+//                     let systolic = bpData[0]
+//                     let diastolic = bpData[1]
+//                     // console.log("systolic ",systolic ," diastolic ",diastolic , " uuid ",uuid)
+//                     if ((systolic < 90) && (diastolic < 60)) {
+//                       lower++;
+//                       // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                    }
-                    else if (((90 <= systolic) && (systolic < 120)) && ((60 <= diastolic) && (diastolic <= 80))) {
-                      normal++;
-                      // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                     }
+//                     else if (((90 <= systolic) && (systolic < 120)) && ((60 <= diastolic) && (diastolic <= 80))) {
+//                       normal++;
+//                       // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                    }
-                    else if (((120 <= systolic) && (systolic <= 129)) && (diastolic <= 80)) {
-                      elevated++;
-                      // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                     }
+//                     else if (((120 <= systolic) && (systolic <= 129)) && (diastolic <= 80)) {
+//                       elevated++;
+//                       // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                    }
-                    else if (((130 <= systolic) && (systolic <= 139)) || ((80 <= diastolic) && (diastolic <= 89))) {
-                      high1++;
-                      // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                     }
+//                     else if (((130 <= systolic) && (systolic <= 139)) || ((80 <= diastolic) && (diastolic <= 89))) {
+//                       high1++;
+//                       // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                    }
-                    else if ((140 <= systolic) || (90 <= diastolic)) {
-                      high2++;
-                      // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                     }
+//                     else if ((140 <= systolic) || (90 <= diastolic)) {
+//                       high2++;
+//                       // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                    }
-                  }
-                  if (selectedPhase === "2" && maxPhase2Timestamp) {
-                    const type = MVDEntry[maxPhase2Timestamp]["bp"];
-                    const bpData = type.split("/");
-                    let systolic = bpData[0]
-                    let diastolic = bpData[1]
-                    // console.log("systolic ",systolic ," diastolic ",diastolic , " uuid ",uuid)
-                    if ((systolic < 90) && (diastolic < 60)) {
-                      lower++;
-                      // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                     }
+//                   }
+//                   if (selectedPhase === "2" && maxPhase2Timestamp) {
+//                     const type = MVDEntry[maxPhase2Timestamp]["bp"];
+//                     const bpData = type.split("/");
+//                     let systolic = bpData[0]
+//                     let diastolic = bpData[1]
+//                     // console.log("systolic ",systolic ," diastolic ",diastolic , " uuid ",uuid)
+//                     if ((systolic < 90) && (diastolic < 60)) {
+//                       lower++;
+//                       // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                    }
-                    else if (((90 <= systolic) && (systolic < 120)) && ((60 <= diastolic) && (diastolic <= 80))) {
-                      normal++;
-                      // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                     }
+//                     else if (((90 <= systolic) && (systolic < 120)) && ((60 <= diastolic) && (diastolic <= 80))) {
+//                       normal++;
+//                       // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                    }
-                    else if (((120 <= systolic) && (systolic <= 129)) && (diastolic <= 80)) {
-                      elevated++;
-                      // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                     }
+//                     else if (((120 <= systolic) && (systolic <= 129)) && (diastolic <= 80)) {
+//                       elevated++;
+//                       // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                    }
-                    else if (((130 <= systolic) && (systolic <= 139)) || ((80 <= diastolic) && (diastolic <= 89))) {
-                      high1++;
-                      // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                     }
+//                     else if (((130 <= systolic) && (systolic <= 139)) || ((80 <= diastolic) && (diastolic <= 89))) {
+//                       high1++;
+//                       // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                    }
-                    else if ((140 <= systolic) || (90 <= diastolic)) {
-                      high2++;
-                      // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                     }
+//                     else if ((140 <= systolic) || (90 <= diastolic)) {
+//                       high2++;
+//                       // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                    }
-                  }
-                  if (selectedPhase === "All") {
+//                     }
+//                   }
+//                   if (selectedPhase === "All") {
 
-                    if (maxPhase1Timestamp && !maxPhase2Timestamp) {
-                      const type = MVDEntry[maxPhase1Timestamp]["bp"];
-                      const bpData = type.split("/");
-                      let systolic = bpData[0]
-                      let diastolic = bpData[1]
-                      // console.log("systolic ",systolic ," diastolic ",diastolic , " uuid ",uuid)
-                      if ((systolic < 90) && (diastolic < 60)) {
-                        lower++;
-                        // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                     if (maxPhase1Timestamp && !maxPhase2Timestamp) {
+//                       const type = MVDEntry[maxPhase1Timestamp]["bp"];
+//                       const bpData = type.split("/");
+//                       let systolic = bpData[0]
+//                       let diastolic = bpData[1]
+//                       // console.log("systolic ",systolic ," diastolic ",diastolic , " uuid ",uuid)
+//                       if ((systolic < 90) && (diastolic < 60)) {
+//                         lower++;
+//                         // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                      }
-                      else if (((90 <= systolic) && (systolic < 120)) && ((60 <= diastolic) && (diastolic <= 80))) {
-                        normal++;
-                        // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                       }
+//                       else if (((90 <= systolic) && (systolic < 120)) && ((60 <= diastolic) && (diastolic <= 80))) {
+//                         normal++;
+//                         // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                      }
-                      else if (((120 <= systolic) && (systolic <= 129)) && (diastolic <= 80)) {
-                        elevated++;
-                        // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                       }
+//                       else if (((120 <= systolic) && (systolic <= 129)) && (diastolic <= 80)) {
+//                         elevated++;
+//                         // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                      }
-                      else if (((130 <= systolic) && (systolic <= 139)) || ((80 <= diastolic) && (diastolic <= 89))) {
-                        high1++;
-                        // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                       }
+//                       else if (((130 <= systolic) && (systolic <= 139)) || ((80 <= diastolic) && (diastolic <= 89))) {
+//                         high1++;
+//                         // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                      }
-                      else if ((140 <= systolic) || (90 <= diastolic)) {
-                        high2++;
-                        // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                       }
+//                       else if ((140 <= systolic) || (90 <= diastolic)) {
+//                         high2++;
+//                         // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                      }
-                    }
-                    if (maxPhase2Timestamp && !maxPhase1Timestamp) {
-                      const type = MVDEntry[maxPhase2Timestamp]["bp"];
-                      const bpData = type.split("/");
-                      let systolic = bpData[0]
-                      let diastolic = bpData[1]
-                      // console.log("systolic ",systolic ," diastolic ",diastolic , " uuid ",uuid)
-                      if ((systolic < 90) && (diastolic < 60)) {
-                        lower++;
-                        // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                       }
+//                     }
+//                     if (maxPhase2Timestamp && !maxPhase1Timestamp) {
+//                       const type = MVDEntry[maxPhase2Timestamp]["bp"];
+//                       const bpData = type.split("/");
+//                       let systolic = bpData[0]
+//                       let diastolic = bpData[1]
+//                       // console.log("systolic ",systolic ," diastolic ",diastolic , " uuid ",uuid)
+//                       if ((systolic < 90) && (diastolic < 60)) {
+//                         lower++;
+//                         // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                      }
-                      else if (((90 <= systolic) && (systolic < 120)) && ((60 <= diastolic) && (diastolic <= 80))) {
-                        normal++;
-                        // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                       }
+//                       else if (((90 <= systolic) && (systolic < 120)) && ((60 <= diastolic) && (diastolic <= 80))) {
+//                         normal++;
+//                         // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                      }
-                      else if (((120 <= systolic) && (systolic <= 129)) && (diastolic <= 80)) {
-                        elevated++;
-                        // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                       }
+//                       else if (((120 <= systolic) && (systolic <= 129)) && (diastolic <= 80)) {
+//                         elevated++;
+//                         // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                      }
-                      else if (((130 <= systolic) && (systolic <= 139)) || ((80 <= diastolic) && (diastolic <= 89))) {
-                        high1++;
-                        // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                       }
+//                       else if (((130 <= systolic) && (systolic <= 139)) || ((80 <= diastolic) && (diastolic <= 89))) {
+//                         high1++;
+//                         // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                      }
-                      else if ((140 <= systolic) || (90 <= diastolic)) {
-                        high2++;
-                        // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                       }
+//                       else if ((140 <= systolic) || (90 <= diastolic)) {
+//                         high2++;
+//                         // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                      }
-                    }
-                    if (maxPhase1Timestamp && maxPhase2Timestamp) {
-                      if (maxTimestamp) {
-                        const type = MVDEntry[maxTimestamp]["bp"];
-                        const bpData = type.split("/");
-                        let systolic = bpData[0]
-                        let diastolic = bpData[1]
-                        // console.log("systolic ",systolic ," diastolic ",diastolic , " uuid ",uuid)
-                        if ((systolic < 90) && (diastolic < 60)) {
-                          lower++;
-                          // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                       }
+//                     }
+//                     if (maxPhase1Timestamp && maxPhase2Timestamp) {
+//                       if (maxTimestamp) {
+//                         const type = MVDEntry[maxTimestamp]["bp"];
+//                         const bpData = type.split("/");
+//                         let systolic = bpData[0]
+//                         let diastolic = bpData[1]
+//                         // console.log("systolic ",systolic ," diastolic ",diastolic , " uuid ",uuid)
+//                         if ((systolic < 90) && (diastolic < 60)) {
+//                           lower++;
+//                           // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                        }
-                        else if (((90 <= systolic) && (systolic < 120)) && ((60 <= diastolic) && (diastolic <= 80))) {
-                          normal++;
-                          // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                         }
+//                         else if (((90 <= systolic) && (systolic < 120)) && ((60 <= diastolic) && (diastolic <= 80))) {
+//                           normal++;
+//                           // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                        }
-                        else if (((120 <= systolic) && (systolic <= 129)) && (diastolic <= 80)) {
-                          elevated++;
-                          // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                         }
+//                         else if (((120 <= systolic) && (systolic <= 129)) && (diastolic <= 80)) {
+//                           elevated++;
+//                           // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                        }
-                        else if (((130 <= systolic) && (systolic <= 139)) || ((80 <= diastolic) && (diastolic <= 89))) {
-                          high1++;
-                          // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                         }
+//                         else if (((130 <= systolic) && (systolic <= 139)) || ((80 <= diastolic) && (diastolic <= 89))) {
+//                           high1++;
+//                           // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                        }
-                        else if ((140 <= systolic) || (90 <= diastolic)) {
-                          high2++;
-                          // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
+//                         }
+//                         else if ((140 <= systolic) || (90 <= diastolic)) {
+//                           high2++;
+//                           // console.log("systolic ", systolic, " diastolic ", diastolic, " uuid ", uuid)
 
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            });
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching data for UUID:", uuid, error);
-      });
+//                         }
+//                       }
+//                     }
+//                   }
+//                 }
+//               }
+//             });
+//         }
+//       })
+//       .catch((error) => {
+//         console.error("Error fetching data for UUID:", uuid, error);
+//       });
 
-    fetchPromises.push(MVDPromise);
-  });
+//     fetchPromises.push(MVDPromise);
+//   });
 
-  Promise.all(fetchPromises)
-    .then(() => {
+//   Promise.all(fetchPromises)
+//     .then(() => {
 
-      console.log("Lower", lower);
-      console.log("Normal", normal);
-      console.log("Elevated", elevated);
-      console.log("High 1", high1);
-      console.log("High 2", high2);
-      bpChart(lower, normal, elevated, high1, high2);
-      bpres = true;
-    })
-    .catch((error) => {
-      console.error("Error completing fetch operations:", error);
-    });
-}
+//       console.log("Lower", lower);
+//       console.log("Normal", normal);
+//       console.log("Elevated", elevated);
+//       console.log("High 1", high1);
+//       console.log("High 2", high2);
+//       bpChart(lower, normal, elevated, high1, high2);
+//       bpres = true;
+//     })
+//     .catch((error) => {
+//       console.error("Error completing fetch operations:", error);
+//     });
+// }
 
 async function GRBS(data, MVD, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
   let type1 = 0;
@@ -6742,172 +7434,165 @@ async function GRBS(data, MVD, selectedFieldworker, selectedPanchayat, selectedV
 }
 
 
-async function remoteScreening(selectedPhase, selectedFieldworker, selectedPanchayat, selectedVillage) {
-  const form2Ref = fb.database().ref().child("Form_2");
-
-  const form2Promises = [];
-  const patientPromises = [];
-
+async function remoteScreening(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase){
   let maleCount = 0;
   let femaleCount = 0;
-
-
-  let upids;
   let fetchPromises = [];
-  let p1 = [];
-  let p2 = [];
-  let pall = [];
 
-  //  if (selectedPanchayat === "All" || selectedVillage === "All") {
-  upids = fb.database().ref().child('U_pchyat');
-  upids.once('value', function (snapshot) {
-    snapshot.forEach(function (childSnapshot) {
-      const panchayatId = childSnapshot.key;
+  if (selectedVillage == "All") {
+    data.forEach((item) => {
+      const villageId = item.village;
+      const panchayatId = villageId.substring(0, 2);
+      const uuid = item.uuid;
+      let fwid = item.fw_id;
+      const gender = item.gen?.toLowerCase(); // Use 'gen' field for gender
 
-      if (panchayatId.length === 2) {
-        childSnapshot.forEach(function (villageSnapshot) {
-          villageSnapshot.forEach(function (uuidSnapshot) {
-            const villageId = villageSnapshot.key;
-            const puuid = uuidSnapshot.key;
+      form2Ref = fb.database().ref().child("Form_2").child(panchayatId).child(villageId);
+      // const pref = fb.database().ref().child("patients1").child(panchayatId).child(villageId);
 
-            const form3 = fb.database().ref().child("Form_2").child(puuid);
+      const f2Promise = form2Ref.child(uuid).once("value")
+        .then(function (snap) {
+          let form2Data = snap.val();
 
-            const promise = form3.once("value").then(function (snap) {
-              let form3Data = snap.val();
-              if (form3Data) {
-                let maxPhase1Timestamp = null;
-                let maxPhase2Timestamp = null;
-                let maxTimestamp = null;
+          infoExist = false;
+          if (form2Data) {
+            infoExist = true;
+          }
+          if (infoExist) {
 
-                let findp1 = false, findp2 = false, findall = false;
+  
+            let maxPhase1Timestamp = null;
+            let maxPhase2Timestamp = null;
+            let maxTimestamp = null;
 
-                Object.keys(form3Data).forEach(timestamp => {
-                  let year = new Date(Number(timestamp) * 1000).getFullYear();
-
-                  if (timestamp <= stTime) {
-                    if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
-                      maxPhase1Timestamp = timestamp;
-                      findp1 = true;
-                    }
-                  }
-                  if (timestamp >= stTime) {
-                    if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
-                      maxPhase2Timestamp = timestamp;
-                      findp2 = true;
-                    }
-                  }
-                  if (timestamp <= stTime || timestamp >= stTime) {
-                    if (!maxTimestamp || Number(timestamp) > Number(maxTimestamp)) {
-                      maxTimestamp = timestamp;
-                      findall = true;
-                    }
-                  }
-                });
-
-                if (findp1) {
-                  p1.push({
-                    "uuid": puuid,
-                    "village": villageId
-                  });
+            Object.keys(form2Data).forEach(timestamp => {
+              if (timestamp <= stTime) {
+                if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
+                  maxPhase1Timestamp = timestamp;
                 }
-                if (findp2) {
-                  p2.push({
-                    "uuid": puuid,
-                    "village": villageId
-                  });
-                }
-
-                // if (findall) {
-                pall = p1.concat(p2);
-                // pall.push(p2);
-                // }
-
               }
-            }).catch((error) => {
-              console.error("Error fetching patient data for UUID:", puuid, error);
+              if (timestamp >= stTime) {
+                if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
+                  maxPhase2Timestamp = timestamp;
+                }
+              }
+              if (maxPhase1Timestamp && maxPhase2Timestamp) {
+                maxTimestamp = Math.max(maxPhase1Timestamp, maxPhase2Timestamp);
+              }
             });
 
-            fetchPromises.push(promise); // Add each promise to the array
-          });
+            const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+
+            if (result) {
+              // const gender = pinfo.gndr?.toLowerCase();
+              if (gender === 'male' || gender === 'm') {
+                maleCount++;
+              }
+              else if (gender === 'female' || gender === 'f') {
+                femaleCount++;
+              }
+            }
+            // });
+
+
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching data for UUID:", uuid, error);
         });
-      }
+
+      fetchPromises.push(f2Promise);
     });
 
-    // Wait for all promises to complete before logging the results
     Promise.all(fetchPromises)
       .then(() => {
-        // console.log("p1 - :", p1);
-        // console.log("p2 - :", p2);
-        // console.log("pall - :", pall);
-
-        var data = [];
-        if (selectedPhase === "1") {
-          data = p1;
-        }
-        if (selectedPhase === "2") {
-          data = p2;
-        }
-        if (selectedPhase === "All") {
-          data = pall;
-        }
-
-        data.forEach(item => {
-          const villageId = item.village;
-          const panchayatId = villageId.substring(0, 2);
-          const uuid = item.uuid;
-
-          const patientsRef = fb.database().ref().child("patients1").child(panchayatId).child(villageId);
-
-          form2Promises.push(
-            form2Ref.child(uuid).once("value")
-              .then(snapshot => {
-                if (snapshot.exists()) {
-
-                  patientPromises.push(
-                    patientsRef.child(uuid).once("value")
-                      .then(patientSnapshot => {
-                        const patientData = patientSnapshot.val();
-                        const fwid = patientData.fw_id;
-
-                        const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
-
-                        if (patientData && result) {
-                          if (patientData.gndr.toLowerCase() === 'male' || patientData.gndr.toLowerCase() === 'm') {
-                            maleCount++;
-                          } else if (patientData.gndr.toLowerCase() === 'female' || patientData.gndr.toLowerCase() === 'f') {
-                            femaleCount++;
-                          }
-                        }
-                      })
-                      .catch(error => {
-                        // console.error(`Error fetching patient data for UUID: ${uuid}`, error);
-                      })
-                  );
-                }
-              })
-              .catch(error => {
-                console.error(`Error fetching Form_2 data for UUID: ${uuid}`, error);
-              })
-          );
-        });
-
-        Promise.all(form2Promises);
-        Promise.all(patientPromises);
-        // Log or use the counts as needed
-        // console.log("Number of remote screenings: ", form2Promises.length);
-        // console.log("Number of males: ", maleCount);
-        // console.log("Number of females: ", femaleCount);
         let remoteGenderCount = maleCount + femaleCount;
         document.getElementById("rs").innerText = remoteGenderCount;
         // document.getElementById("RM").innerText = remoteGenderCount;
         remoteSrcGenderChart(maleCount, femaleCount);
         remoteSrc = true;
-
       })
       .catch((error) => {
-        console.error("Error in processing data:", error);
+        console.error("Error in completing fetch operations:", error);
       });
-  });
+  }
+  else if (selectedVillage !== "All") {
+
+
+    data.forEach((item) => {
+      const villageId = item.village;
+      const panchayatId = villageId.substring(0, 2);
+      const uuid = item.uuid;
+      let fwid = item.fw_id;
+      const gender = item.gen?.toLowerCase(); // Use 'gen' field for gender
+
+      form2Ref = fb.database().ref().child("Form_2").child(panchayatId).child(villageId);
+      const f2Promise = form2Ref.child(uuid).once("value")
+        .then(function (snap) {
+          let form2Data = snap.val();
+          // console.log("Hello Bhanu",form2Data)
+
+          infoExist = false;
+          if (form2Data) {
+            infoExist = true;
+          }
+          if (infoExist) {
+
+            let maxPhase1Timestamp = null;
+            let maxPhase2Timestamp = null;
+            let maxTimestamp = null;
+
+            Object.keys(form2Data).forEach(timestamp => {
+              if (timestamp <= stTime) {
+                if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
+                  maxPhase1Timestamp = timestamp;
+                }
+              }
+              if (timestamp >= stTime) {
+                if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
+                  maxPhase2Timestamp = timestamp;
+                }
+              }
+              if (maxPhase1Timestamp && maxPhase2Timestamp) {
+                maxTimestamp = Math.max(maxPhase1Timestamp, maxPhase2Timestamp);
+              }
+            });
+
+            const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+
+            if (result) {
+              // const gender = pinfo.gndr?.toLowerCase();
+              if (gender === 'male' || gender === 'm') {
+                maleCount++;
+              }
+              else if (gender === 'female' || gender === 'f') {
+                femaleCount++;
+              }
+            }
+            // });
+
+
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching data for UUID:", uuid, error);
+        });
+
+      fetchPromises.push(f2Promise);
+    });
+
+    Promise.all(fetchPromises)
+      .then(() => {
+        let remoteGenderCount = maleCount + femaleCount;
+        document.getElementById("rs").innerText = remoteGenderCount;
+        // document.getElementById("RM").innerText = remoteGenderCount;
+        remoteSrcGenderChart(maleCount, femaleCount);
+        remoteSrc = true;
+      })
+      .catch((error) => {
+        console.error("Error in completing fetch operations:", error);
+      });
+  }
 }
 
 // async function inPresonDocScreening(data, selectedFieldworker, selectedPanchayat, selectedVillage) {
@@ -7264,7 +7949,7 @@ async function reScreening(data, selectedFieldworker, selectedPanchayat, selecte
                       }
                       else {
                         nRescreening++;
-                        console.log("rescreening Count:", uuid)
+                        // console.log("rescreening Count:", uuid)
                       }
                     }
                     else {
@@ -7712,6 +8397,13 @@ async function ScrTobaccoConsumption(data, selectedFieldworker, selectedPanchaya
 async function oralScreeningData(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
   let normalCount = 0;
   let abnormalCount = 0;
+
+  let brnormalCount = 0;
+  let brAbnormalCount = 0;
+
+  let cvnormalCount = 0;
+  let cvAbnormalCount = 0;
+
   let fetchPromises = [];
 
   const uniqueData = removeDuplicateUUIDs(data);
@@ -7725,7 +8417,7 @@ async function oralScreeningData(data, selectedFieldworker, selectedPanchayat, s
     // console.log("Panchayat", panchayatId)
 
     var form3 = fb.database().ref().child("Form_3").child(panchayatId).child(villageId);
-    var pref = fb.database().ref().child("patients1").child(panchayatId).child(villageId);
+    // var pref = fb.database().ref().child("patients1").child(panchayatId).child(villageId);
 
     const form3Promise = form3.child(uuid).once("value")
       .then(function (snap) {
@@ -7764,22 +8456,22 @@ async function oralScreeningData(data, selectedFieldworker, selectedPanchayat, s
 
                   // Count normal and abnormal findings
                   if (oral) {
-                    pref.child(uuid).once("value")
-                      .then(function (snap) {
-                        let pinfo = snap.val();
-                        const pName = pinfo.name;
-                        const pinfoid = pinfo.pid;
-                        // console.log("patient oral normal info: ", " Name: ", pName, " UUID: ", uuid, " pid ", pinfoid)
-                      });
+                    // pref.child(uuid).once("value")
+                    //   .then(function (snap) {
+                    //     let pinfo = snap.val();
+                    //     const pName = pinfo.name;
+                    //     const pinfoid = pinfo.pid;
+                    //     // console.log("patient oral normal info: ", " Name: ", pName, " UUID: ", uuid, " pid ", pinfoid)
+                    //   });
                     normalCount++;
                   } else {
-                    pref.child(uuid).once("value")
-                      .then(function (snap) {
-                        let pinfo = snap.val();
-                        const pName = pinfo.name;
-                        const pinfoid = pinfo.pid;
-                        // console.log("patient oral abnormal info: ", " Name: ", pName, " UUID: ", uuid, " pid ", pinfoid)
-                      });
+                    // pref.child(uuid).once("value")
+                    //   .then(function (snap) {
+                    //     let pinfo = snap.val();
+                    //     const pName = pinfo.name;
+                    //     const pinfoid = pinfo.pid;
+                    //     // console.log("patient oral abnormal info: ", " Name: ", pName, " UUID: ", uuid, " pid ", pinfoid)
+                    //   });
                     abnormalCount++;
 
                     // console.log("UUid of Abnormal in oral Screening :",uuid);
@@ -7798,22 +8490,22 @@ async function oralScreeningData(data, selectedFieldworker, selectedPanchayat, s
 
                   // Count normal and abnormal findings
                   if (oral) {
-                    pref.child(uuid).once("value")
-                      .then(function (snap) {
-                        let pinfo = snap.val();
-                        const pName = pinfo.name;
-                        const pinfoid = pinfo.pid;
-                        // console.log("patient oral normal info: ", " Name: ", pName, " UUID: ", uuid, " pid ", pinfoid)
-                      });
+                    // pref.child(uuid).once("value")
+                    //   .then(function (snap) {
+                    //     let pinfo = snap.val();
+                    //     const pName = pinfo.name;
+                    //     const pinfoid = pinfo.pid;
+                    //     // console.log("patient oral normal info: ", " Name: ", pName, " UUID: ", uuid, " pid ", pinfoid)
+                    //   });
                     normalCount++;
                   } else {
-                    pref.child(uuid).once("value")
-                      .then(function (snap) {
-                        let pinfo = snap.val();
-                        const pName = pinfo.name;
-                        const pinfoid = pinfo.pid;
-                        // console.log("patient oral abnormal info: ", " Name: ", pName, " UUID: ", uuid, " pid ", pinfoid)
-                      });
+                    // pref.child(uuid).once("value")
+                    //   .then(function (snap) {
+                    //     let pinfo = snap.val();
+                    //     const pName = pinfo.name;
+                    //     const pinfoid = pinfo.pid;
+                    //     // console.log("patient oral abnormal info: ", " Name: ", pName, " UUID: ", uuid, " pid ", pinfoid)
+                    //   });
                     abnormalCount++;
 
                     // console.log("UUid of Abnormal in oral Screening :",uuid);
@@ -7832,22 +8524,22 @@ async function oralScreeningData(data, selectedFieldworker, selectedPanchayat, s
 
                   // Count normal and abnormal findings
                   if (oral) {
-                    pref.child(uuid).once("value")
-                      .then(function (snap) {
-                        let pinfo = snap.val();
-                        const pName = pinfo.name;
-                        const pinfoid = pinfo.pid;
-                        // console.log("patient oral normal info: ", " Name: ", pName, " UUID: ", uuid, " pid ", pinfoid)
-                      });
+                    // pref.child(uuid).once("value")
+                    //   .then(function (snap) {
+                    //     let pinfo = snap.val();
+                    //     const pName = pinfo.name;
+                    //     const pinfoid = pinfo.pid;
+                    //     // console.log("patient oral normal info: ", " Name: ", pName, " UUID: ", uuid, " pid ", pinfoid)
+                    //   });
                     normalCount++;
                   } else {
-                    pref.child(uuid).once("value")
-                      .then(function (snap) {
-                        let pinfo = snap.val();
-                        const pName = pinfo.name;
-                        const pinfoid = pinfo.pid;
-                        // console.log("patient oral abnormal info: ", " Name: ", pName, " UUID: ", uuid, " pid ", pinfoid)
-                      });
+                    // pref.child(uuid).once("value")
+                    //   .then(function (snap) {
+                    //     let pinfo = snap.val();
+                    //     const pName = pinfo.name;
+                    //     const pinfoid = pinfo.pid;
+                    //     // console.log("patient oral abnormal info: ", " Name: ", pName, " UUID: ", uuid, " pid ", pinfoid)
+                    //   });
                     abnormalCount++;
 
                     // console.log("UUid of Abnormal in oral Screening :",uuid);
@@ -7864,22 +8556,22 @@ async function oralScreeningData(data, selectedFieldworker, selectedPanchayat, s
 
                   // Count normal and abnormal findings
                   if (oral) {
-                    pref.child(uuid).once("value")
-                      .then(function (snap) {
-                        let pinfo = snap.val();
-                        const pName = pinfo.name;
-                        const pinfoid = pinfo.pid;
-                        // console.log("patient oral normal info: ", " Name: ", pName, " UUID: ", uuid, " pid ", pinfoid)
-                      });
+                    // pref.child(uuid).once("value")
+                    //   .then(function (snap) {
+                    //     let pinfo = snap.val();
+                    //     const pName = pinfo.name;
+                    //     const pinfoid = pinfo.pid;
+                    //     // console.log("patient oral normal info: ", " Name: ", pName, " UUID: ", uuid, " pid ", pinfoid)
+                    //   });
                     normalCount++;
                   } else {
-                    pref.child(uuid).once("value")
-                      .then(function (snap) {
-                        let pinfo = snap.val();
-                        const pName = pinfo.name;
-                        const pinfoid = pinfo.pid;
-                        // console.log("patient oral abnormal info: ", " Name: ", pName, " UUID: ", uuid, " pid ", pinfoid)
-                      });
+                    // pref.child(uuid).once("value")
+                    //   .then(function (snap) {
+                    //     let pinfo = snap.val();
+                    //     const pName = pinfo.name;
+                    //     const pinfoid = pinfo.pid;
+                    //     // console.log("patient oral abnormal info: ", " Name: ", pName, " UUID: ", uuid, " pid ", pinfoid)
+                    //   });
                     abnormalCount++;
 
                     // console.log("UUid of Abnormal in oral Screening :",uuid);
@@ -7891,6 +8583,132 @@ async function oralScreeningData(data, selectedFieldworker, selectedPanchayat, s
           }
 
 
+          if (selectedPhase === "1") {
+            if (maxPhase1Timestamp) {
+              if (form3Data[maxPhase1Timestamp]["scr_dne_for"]["bc"] === true) {
+                if (maxPhase1Timestamp && form3Data[maxPhase1Timestamp]["brst_exm"]) {
+                  const breastExamination = form3Data[maxPhase1Timestamp]["brst_exm"];
+                  const leftBreastNormal = breastExamination.l_b?.nml;
+                  const rightBreastNormal = breastExamination.r_b?.nml;
+
+                  if (leftBreastNormal === true && rightBreastNormal === true) {
+                    brnormalCount++;
+                  } else {
+                    brAbnormalCount++;
+                  }
+                }
+              }
+            }
+          }
+          else if (selectedPhase === "2") {
+            if (maxPhase2Timestamp) {
+              if (form3Data[maxPhase2Timestamp]["scr_dne_for"]["bc"] === true) {
+                if (maxPhase2Timestamp && form3Data[maxPhase2Timestamp]["brst_exm"]) {
+                  const breastExamination = form3Data[maxPhase2Timestamp]["brst_exm"];
+                  const leftBreastNormal = breastExamination.l_b?.nml;
+                  const rightBreastNormal = breastExamination.r_b?.nml;
+
+                  if (leftBreastNormal === true && rightBreastNormal === true) {
+                    brnormalCount++;
+                  } else {
+                    brAbnormalCount++;
+                  }
+                }
+              }
+            }
+          }
+          else if (selectedPhase === "All") {
+            if (maxPhase1Timestamp) {
+              if (form3Data[maxPhase1Timestamp]["scr_dne_for"]["bc"] === true) {
+                if (maxPhase1Timestamp && form3Data[maxPhase1Timestamp]["brst_exm"]) {
+                  const breastExamination = form3Data[maxPhase1Timestamp]["brst_exm"];
+                  const leftBreastNormal = breastExamination.l_b?.nml;
+                  const rightBreastNormal = breastExamination.r_b?.nml;
+
+                  if (leftBreastNormal === true && rightBreastNormal === true) {
+                    brnormalCount++;
+                  } else {
+                    brAbnormalCount++;
+                  }
+                }
+              }
+            }
+            if (maxPhase2Timestamp) {
+              if (form3Data[maxPhase2Timestamp]["scr_dne_for"]["bc"] === true) {
+                if (maxPhase2Timestamp && form3Data[maxPhase2Timestamp]["brst_exm"]) {
+                  const breastExamination = form3Data[maxPhase2Timestamp]["brst_exm"];
+                  const leftBreastNormal = breastExamination.l_b?.nml;
+                  const rightBreastNormal = breastExamination.r_b?.nml;
+
+                  if (leftBreastNormal === true && rightBreastNormal === true) {
+                    brnormalCount++;
+                  } else {
+                    brAbnormalCount++;
+                  }
+                }
+              }
+            }
+          }
+
+
+          if (selectedPhase === "1") {
+            if (maxPhase1Timestamp) {
+              if (form3Data[maxPhase1Timestamp]["scr_dne_for"]["cc"] === true) {
+                if (maxPhase1Timestamp && form3Data[maxPhase1Timestamp]["trtpap"] !== undefined) {
+                  const ttp = form3Data[maxPhase1Timestamp]["trtpap"];
+                  const cervical = ttp;
+                  if (cervical === "Yes" || cervical === "Unwilling" || cervical === "y" || cervical === "unwg") {
+                    cvAbnormalCount++;
+                  } else {
+                    cvnormalCount++;
+                  }
+                }
+              }
+            }
+          }
+          else if (selectedPhase === "2") {
+            if (maxPhase2Timestamp) {
+              if (form3Data[maxPhase2Timestamp]["scr_dne_for"]["cc"] === true) {
+                if (maxPhase2Timestamp && form3Data[maxPhase2Timestamp]["trtpap"] !== undefined) {
+                  const ttp = form3Data[maxPhase2Timestamp]["trtpap"];
+                  const cervical = ttp;
+                  if (cervical === "Yes" || cervical === "Unwilling" || cervical === "y" || cervical === "unwg") {
+                    cvAbnormalCount++;
+                  } else {
+                    cvnormalCount++;
+                  }
+                }
+              }
+            }
+          }
+          else if (selectedPhase === "All") {
+            if (maxPhase1Timestamp) {
+              if (form3Data[maxPhase1Timestamp]["scr_dne_for"]["cc"] === true) {
+                if (maxPhase1Timestamp && form3Data[maxPhase1Timestamp]["trtpap"] !== undefined) {
+                  const ttp = form3Data[maxPhase1Timestamp]["trtpap"];
+                  const cervical = ttp;
+                  if (cervical === "Yes" || cervical === "Unwilling" || cervical === "y" || cervical === "unwg") {
+                    cvAbnormalCount++;
+                  } else {
+                    cvnormalCount++;
+                  }
+                }
+              }
+            }
+            if (maxPhase2Timestamp) {
+              if (form3Data[maxPhase2Timestamp]["scr_dne_for"]["cc"] === true) {
+                if (maxPhase2Timestamp && form3Data[maxPhase2Timestamp]["trtpap"] !== undefined) {
+                  const ttp = form3Data[maxPhase2Timestamp]["trtpap"];
+                  const cervical = ttp;
+                  if (cervical === "Yes" || cervical === "Unwilling" || cervical === "y" || cervical === "unwg") {
+                    cvAbnormalCount++;
+                  } else {
+                    cvnormalCount++;
+                  }
+                }
+              }
+            }
+          }
         }
 
 
@@ -7916,8 +8734,19 @@ async function oralScreeningData(data, selectedFieldworker, selectedPanchayat, s
       console.log("Normal Per:", normalCount);
       console.log("Abnormal Per:", abnormalCount);
       oralScr = true;
+      const brtotal = brnormalCount + brAbnormalCount;
+      // console.log("Br Normal: ", brnormalCount);
+      // console.log("Br AbNormal: ", brAbnormalCount);
+      document.getElementById("brscount").innerText = brtotal;
+      brScreeningGraph(brnormalCount, brAbnormalCount);
+      brScr = true;
+      // return { normalCount, abnormalCount };
 
-      return { normalCount, abnormalCount };
+      const cvtotal = cvnormalCount + cvAbnormalCount;
+      document.getElementById("crscount").innerText = cvtotal;
+      cervi = true;
+      cScreeningGraph(cvnormalCount, cvAbnormalCount);
+      // return { cvnormalCount, cvAbnormalCount };
     })
     .catch(error => {
       console.error("Error processing data:", error);
@@ -8308,8 +9137,8 @@ async function countTTC_Val(data, selectedFieldworker, selectedPanchayat, select
 }
 
 async function brScreeningData(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
-  let normalCount = 0;
-  let abnormalCount = 0;
+  let brnormalCount = 0;
+  let brAbnormalCount = 0;
   let fetchPromises = [];
 
   const uniqueData = removeDuplicateUUIDs(data);
@@ -8367,14 +9196,15 @@ async function brScreeningData(data, selectedFieldworker, selectedPanchayat, sel
                   const rightBreastNormal = breastExamination.r_b?.nml;
 
                   if (leftBreastNormal === true && rightBreastNormal === true) {
-                    normalCount++;
+                    brnormalCount++;
                   } else {
-                    abnormalCount++;
+                    brAbnormalCount++;
                   }
                 }
               }
             }
-          } else if (selectedPhase === "2") {
+          }
+          else if (selectedPhase === "2") {
             if (maxPhase2Timestamp) {
               if (form3Data[maxPhase2Timestamp]["scr_dne_for"]["bc"] === true) {
                 if (maxPhase2Timestamp && form3Data[maxPhase2Timestamp]["brst_exm"]) {
@@ -8383,14 +9213,15 @@ async function brScreeningData(data, selectedFieldworker, selectedPanchayat, sel
                   const rightBreastNormal = breastExamination.r_b?.nml;
 
                   if (leftBreastNormal === true && rightBreastNormal === true) {
-                    normalCount++;
+                    brnormalCount++;
                   } else {
-                    abnormalCount++;
+                    brAbnormalCount++;
                   }
                 }
               }
             }
-          } else if (selectedPhase === "All") {
+          }
+          else if (selectedPhase === "All") {
             if (maxPhase1Timestamp) {
               if (form3Data[maxPhase1Timestamp]["scr_dne_for"]["bc"] === true) {
                 if (maxPhase1Timestamp && form3Data[maxPhase1Timestamp]["brst_exm"]) {
@@ -8399,9 +9230,9 @@ async function brScreeningData(data, selectedFieldworker, selectedPanchayat, sel
                   const rightBreastNormal = breastExamination.r_b?.nml;
 
                   if (leftBreastNormal === true && rightBreastNormal === true) {
-                    normalCount++;
+                    brnormalCount++;
                   } else {
-                    abnormalCount++;
+                    brAbnormalCount++;
                   }
                 }
               }
@@ -8414,9 +9245,9 @@ async function brScreeningData(data, selectedFieldworker, selectedPanchayat, sel
                   const rightBreastNormal = breastExamination.r_b?.nml;
 
                   if (leftBreastNormal === true && rightBreastNormal === true) {
-                    normalCount++;
+                    brnormalCount++;
                   } else {
-                    abnormalCount++;
+                    brAbnormalCount++;
                   }
                 }
               }
@@ -8432,13 +9263,13 @@ async function brScreeningData(data, selectedFieldworker, selectedPanchayat, sel
   });
   Promise.all(fetchPromises)
     .then(() => {
-      const total = normalCount + abnormalCount;
-      // console.log("Br Normal: ", normalCount);
-      // console.log("Br AbNormal: ", abnormalCount);
-      document.getElementById("brscount").innerText = total;
-      brScreeningGraph(normalCount, abnormalCount);
+      const brtotal = brnormalCount + brAbnormalCount;
+      // console.log("Br Normal: ", brnormalCount);
+      // console.log("Br AbNormal: ", brAbnormalCount);
+      document.getElementById("brscount").innerText = brtotal;
+      brScreeningGraph(brnormalCount, brAbnormalCount);
       brScr = true;
-      return { normalCount, abnormalCount };
+      // return { brnormalCount, brAbnormalCount };
     })
     .catch(error => {
       console.error("Error processing data:", error);
@@ -8447,8 +9278,8 @@ async function brScreeningData(data, selectedFieldworker, selectedPanchayat, sel
 
 async function cervicalScreeningData(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
 
-  let normalCount = 0;
-  let abnormalCount = 0;
+  let cvnormalCount = 0;
+  let cvAbnormalCount = 0;
   let fetchPromises = [];
 
   const uniqueData = removeDuplicateUUIDs(data);
@@ -8503,9 +9334,9 @@ async function cervicalScreeningData(data, selectedFieldworker, selectedPanchaya
                   const ttp = form3Data[maxPhase1Timestamp]["trtpap"];
                   const cervical = ttp;
                   if (cervical === "Yes" || cervical === "Unwilling" || cervical === "y" || cervical === "unwg") {
-                    abnormalCount++;
+                    cvAbnormalCount++;
                   } else {
-                    normalCount++;
+                    cvnormalCount++;
                   }
                 }
               }
@@ -8517,9 +9348,9 @@ async function cervicalScreeningData(data, selectedFieldworker, selectedPanchaya
                   const ttp = form3Data[maxPhase2Timestamp]["trtpap"];
                   const cervical = ttp;
                   if (cervical === "Yes" || cervical === "Unwilling" || cervical === "y" || cervical === "unwg") {
-                    abnormalCount++;
+                    cvAbnormalCount++;
                   } else {
-                    normalCount++;
+                    cvnormalCount++;
                   }
                 }
               }
@@ -8531,9 +9362,9 @@ async function cervicalScreeningData(data, selectedFieldworker, selectedPanchaya
                   const ttp = form3Data[maxPhase1Timestamp]["trtpap"];
                   const cervical = ttp;
                   if (cervical === "Yes" || cervical === "Unwilling" || cervical === "y" || cervical === "unwg") {
-                    abnormalCount++;
+                    cvAbnormalCount++;
                   } else {
-                    normalCount++;
+                    cvnormalCount++;
                   }
                 }
               }
@@ -8544,9 +9375,9 @@ async function cervicalScreeningData(data, selectedFieldworker, selectedPanchaya
                   const ttp = form3Data[maxPhase2Timestamp]["trtpap"];
                   const cervical = ttp;
                   if (cervical === "Yes" || cervical === "Unwilling" || cervical === "y" || cervical === "unwg") {
-                    abnormalCount++;
+                    cvAbnormalCount++;
                   } else {
-                    normalCount++;
+                    cvnormalCount++;
                   }
                 }
               }
@@ -8563,11 +9394,11 @@ async function cervicalScreeningData(data, selectedFieldworker, selectedPanchaya
   });
   Promise.all(fetchPromises)
     .then(() => {
-      const total = normalCount + abnormalCount;
+      const total = cvnormalCount + cvAbnormalCount;
       document.getElementById("crscount").innerText = total;
       cervi = true;
-      cScreeningGraph(normalCount, abnormalCount);
-      return { normalCount, abnormalCount };
+      cScreeningGraph(cvnormalCount, cvAbnormalCount);
+      return { cvnormalCount, cvAbnormalCount };
     })
     .catch(error => {
       console.error("Error processing data:", error);
@@ -8936,7 +9767,15 @@ async function countTobaccoConsumptions(data, selectedFieldworker, selectedPanch
   let consumption_5_Counts = 0;
   let miscellaneousCounts = 0;
 
+  let Low = 0;
+  let Low_to_mod = 0;
+  let Mod = 0;
+  let High = 0;
 
+  let LLow = 0;
+  let LLow_to_mod = 0;
+  let LMod = 0;
+  let LHigh = 0;
 
   const fetchPromises = data.map((item) => {
     const villageId = item.village;
@@ -8949,9 +9788,9 @@ async function countTobaccoConsumptions(data, selectedFieldworker, selectedPanch
     return tccRef.child(uuid).once("value")
       .then((snapshot) => {
         if (snapshot.exists()) {
-          const userRecords = snapshot.val();
-          // const lastRecordKey = Object.keys(userRecords).pop();
-          // const lastRecord = userRecords[lastRecordKey];
+          let tccData = snapshot.val();
+          // const lastRecordKey = Object.keys(tccData).pop();
+          // const lastRecord = tccData[lastRecordKey];
 
 
           let maxPhase1Timestamp = null;
@@ -8959,7 +9798,7 @@ async function countTobaccoConsumptions(data, selectedFieldworker, selectedPanch
           let maxTimestamp = null;
           let p1 = false, p2 = false, pall = false;
 
-          Object.keys(userRecords).forEach(timestamp => {
+          Object.keys(tccData).forEach(timestamp => {
             let year = new Date(Number(timestamp) * 1000).getFullYear();
             if (timestamp <= stTime) {
               p1 = true;
@@ -8982,7 +9821,7 @@ async function countTobaccoConsumptions(data, selectedFieldworker, selectedPanch
           if (selectedPhase === "1") {
             if (maxPhase1Timestamp) {
               if (result) {
-                var lastRecord = userRecords[maxPhase1Timestamp];
+                var lastRecord = tccData[maxPhase1Timestamp];
 
                 // Extract tobacco consumption types
                 const {
@@ -9018,7 +9857,7 @@ async function countTobaccoConsumptions(data, selectedFieldworker, selectedPanch
             if (maxPhase2Timestamp) {
               if (result) {
                 // Extract tobacco consumption types
-                var lastRecord = userRecords[maxPhase2Timestamp];
+                var lastRecord = tccData[maxPhase2Timestamp];
 
                 const {
                   types_of_tobacco_consumption1,
@@ -9053,7 +9892,7 @@ async function countTobaccoConsumptions(data, selectedFieldworker, selectedPanch
             if (result) {
               if (maxPhase1Timestamp) {
                 if (result) {
-                  var lastRecord = userRecords[maxPhase1Timestamp];
+                  var lastRecord = tccData[maxPhase1Timestamp];
 
                   // Extract tobacco consumption types
                   const {
@@ -9087,7 +9926,7 @@ async function countTobaccoConsumptions(data, selectedFieldworker, selectedPanch
               if (maxPhase2Timestamp) {
                 if (result) {
                   // Extract tobacco consumption types
-                  var lastRecord = userRecords[maxPhase2Timestamp];
+                  var lastRecord = tccData[maxPhase2Timestamp];
 
                   const {
                     types_of_tobacco_consumption1,
@@ -9120,6 +9959,242 @@ async function countTobaccoConsumptions(data, selectedFieldworker, selectedPanch
             }
           }
 
+          if (selectedPhase === "1") {
+            if (tccData) {
+              if (maxPhase1Timestamp) {
+                const lastRecord = tccData[maxPhase1Timestamp];
+                let hb = lastRecord.hb;
+
+                const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+                // console.log(result);
+                if (result) {
+                  if (hb === "hbda") {
+                    Low++;
+                  }
+                  else if (hb === "hbdb") {
+                    Low_to_mod++;
+                  }
+                  else if (hb === "hbdc") {
+                    Mod++;
+                  }
+                  else if (hb === "hbdd") {
+                    High++;
+                  }
+                  else {
+                    console.log("uuid in smoke", uuid)
+                  }
+                }
+                const timestamp = Date.now();
+                counter_check.push(timestamp);
+              }
+            }
+          }
+          if (selectedPhase === "2") {
+            if (tccData) {
+              if (maxPhase2Timestamp) {
+                const lastRecord = tccData[maxPhase2Timestamp];
+                let hb = lastRecord.hb;
+
+                const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+                // console.log(result);
+                if (result) {
+                  if (hb === "hbda") {
+                    Low++;
+                  }
+                  else if (hb === "hbdb") {
+                    Low_to_mod++;
+                  }
+                  else if (hb === "hbdc") {
+                    Mod++;
+                  }
+                  else if (hb === "hbdd") {
+                    High++;
+                  }
+                  else {
+                    console.log("uuid in smoke", uuid)
+                  }
+                }
+                const timestamp = Date.now();
+                counter_check.push(timestamp);
+              }
+            }
+          }
+          if (selectedPhase === "All") {
+            if (tccData) {
+              if (maxPhase1Timestamp) {
+                const lastRecord = tccData[maxPhase1Timestamp];
+                let hb = lastRecord.hb;
+
+                const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+                // console.log(result);
+                if (result) {
+                  if (hb === "hbda") {
+                    Low++;
+                  }
+                  else if (hb === "hbdb") {
+                    Low_to_mod++;
+                  }
+                  else if (hb === "hbdc") {
+                    Mod++;
+                  }
+                  else if (hb === "hbdd") {
+                    High++;
+                  }
+                  else {
+                    console.log("uuid in smoke", uuid)
+                  }
+                }
+                const timestamp = Date.now();
+                counter_check.push(timestamp);
+              }
+              if (maxPhase2Timestamp) {
+                const lastRecord = tccData[maxPhase2Timestamp];
+                let hb = lastRecord.hb;
+
+                const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+                // console.log(result);
+                if (result) {
+                  if (hb === "hbda") {
+                    Low++;
+                  }
+                  else if (hb === "hbdb") {
+                    Low_to_mod++;
+                  }
+                  else if (hb === "hbdc") {
+                    Mod++;
+                  }
+                  else if (hb === "hbdd") {
+                    High++;
+                  }
+                  else {
+                    console.log("uuid in smoke", uuid)
+                  }
+                }
+                const timestamp = Date.now();
+                counter_check.push(timestamp);
+              }
+            }
+          }
+
+          if (selectedPhase === "1") {
+            if (tccData) {
+              if (maxPhase1Timestamp) {
+                // console.log("uuid Of tcc form 2", uuid);
+                const lastRecord = tccData[maxPhase1Timestamp];
+                let hd = lastRecord.hd;
+
+                const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+                // console.log(result);
+                if (result) {
+                  if (hd === "hbda") {
+                    LLow++;
+                  }
+                  else if (hd === "hbdb") {
+                    LLow_to_mod++;
+                  }
+                  else if (hd === "hbdc") {
+                    LMod++;
+                  }
+                  else if (hd === "hbdd") {
+                    LHigh++;
+                  }
+                  else {
+                    console.log("uuid in smoke", uuid)
+                  }
+                }
+                const timestamp = Date.now();
+                counter_check.push(timestamp);
+              }
+            }
+          }
+          if (selectedPhase === "2") {
+            if (tccData) {
+              if (maxPhase2Timestamp) {
+                // console.log("uuid Of tcc form 2", uuid);
+                const lastRecord = tccData[maxPhase2Timestamp];
+                let hd = lastRecord.hd;
+
+                const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+                // console.log(result);
+                if (result) {
+                  if (hd === "hbda") {
+                    LLow++;
+                  }
+                  else if (hd === "hbdb") {
+                    LLow_to_mod++;
+                  }
+                  else if (hd === "hbdc") {
+                    LMod++;
+                  }
+                  else if (hd === "hbdd") {
+                    LHigh++;
+                  }
+                  else {
+                    console.log("uuid in smoke", uuid)
+                  }
+                }
+                const timestamp = Date.now();
+                counter_check.push(timestamp);
+              }
+            }
+          }
+          if (selectedPhase === "All") {
+            if (tccData) {
+              if (maxPhase1Timestamp) {
+                // console.log("uuid Of tcc form 2", uuid);
+                const lastRecord = tccData[maxPhase1Timestamp];
+                let hd = lastRecord.hd;
+
+                const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+                // console.log(result);
+                if (result) {
+                  if (hd === "hbda") {
+                    LLow++;
+                  }
+                  else if (hd === "hbdb") {
+                    LLow_to_mod++;
+                  }
+                  else if (hd === "hbdc") {
+                    LMod++;
+                  }
+                  else if (hd === "hbdd") {
+                    LHigh++;
+                  }
+                  else {
+                    console.log("uuid in smoke", uuid)
+                  }
+                }
+                const timestamp = Date.now();
+                counter_check.push(timestamp);
+              }
+              if (maxPhase2Timestamp) {
+                const lastRecord = tccData[maxPhase2Timestamp];
+                let hd = lastRecord.hd;
+
+                const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+                // console.log(result);
+                if (result) {
+                  if (hd === "hbda") {
+                    LLow++;
+                  }
+                  else if (hd === "hbdb") {
+                    LLow_to_mod++;
+                  }
+                  else if (hd === "hbdc") {
+                    LMod++;
+                  }
+                  else if (hd === "hbdd") {
+                    LHigh++;
+                  }
+                  else {
+                    console.log("uuid in smoke", uuid)
+                  }
+                }
+                const timestamp = Date.now();
+                counter_check.push(timestamp);
+              }
+            }
+          }
           // if (result) {
           //   // Extract tobacco consumption types
           //   const {
@@ -9167,14 +10242,25 @@ async function countTobaccoConsumptions(data, selectedFieldworker, selectedPanch
 
       // Once all promises are resolved, update the chart
       TobaccoCons = true;
-      tccConsumptionChart(
-        consumption_1_Counts,
-        consumption_2_Counts,
-        consumption_3_Counts,
-        consumption_4_Counts,
-        consumption_5_Counts,
-        miscellaneousCounts
-      );
+      tccConsumptionChart(consumption_1_Counts, consumption_2_Counts, consumption_3_Counts, consumption_4_Counts, consumption_5_Counts, miscellaneousCounts);
+
+      const total = Low + Low_to_mod + Mod + High;
+      document.getElementById("TCC_S").innerHTML = total;
+      // console.log("tcc smoker Low", Low);
+      // console.log("tcc smoker Low_to_mod", Low_to_mod);
+      // console.log("tcc smoker Mod", Mod);
+      // console.log("tcc smoker High", High);
+      tccSmokeChart(Low, Low_to_mod, Mod, High);
+
+      TCCGen = true;
+
+      const Ltotal = LLow + LLow_to_mod + LMod + LHigh;
+      document.getElementById("TCC_SL").innerHTML = Ltotal;
+      // console.log("tcc smoker Low", Low);
+      // console.log("tcc smoker Low_to_mod", Low_to_mod);
+      // console.log("tcc smoker Mod", Mod);
+      // console.log("tcc smoker High", High);
+      tccSmokeLessChart(LLow, LLow_to_mod, LMod, LHigh);
     })
     .catch((error) => {
       console.error("Error in processing data:", error);
@@ -9375,10 +10461,10 @@ async function tccSmokeCount(data, selectedFieldworker, selectedPanchayat, selec
 }
 
 async function tccSmokeLessCount(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
-  let Low = 0;
-  let Low_to_mod = 0;
-  let Mod = 0;
-  let High = 0;
+  let LLow = 0;
+  let LLow_to_mod = 0;
+  let LMod = 0;
+  let LHigh = 0;
 
   let fetchPromises = [];
 
@@ -9430,16 +10516,16 @@ async function tccSmokeLessCount(data, selectedFieldworker, selectedPanchayat, s
               // console.log(result);
               if (result) {
                 if (hd === "hbda") {
-                  Low++;
+                  LLow++;
                 }
                 else if (hd === "hbdb") {
-                  Low_to_mod++;
+                  LLow_to_mod++;
                 }
                 else if (hd === "hbdc") {
-                  Mod++;
+                  LMod++;
                 }
                 else if (hd === "hbdd") {
-                  High++;
+                  LHigh++;
                 }
                 else {
                   console.log("uuid in smoke", uuid)
@@ -9461,16 +10547,16 @@ async function tccSmokeLessCount(data, selectedFieldworker, selectedPanchayat, s
               // console.log(result);
               if (result) {
                 if (hd === "hbda") {
-                  Low++;
+                  LLow++;
                 }
                 else if (hd === "hbdb") {
-                  Low_to_mod++;
+                  LLow_to_mod++;
                 }
                 else if (hd === "hbdc") {
-                  Mod++;
+                  LMod++;
                 }
                 else if (hd === "hbdd") {
-                  High++;
+                  LHigh++;
                 }
                 else {
                   console.log("uuid in smoke", uuid)
@@ -9493,16 +10579,16 @@ async function tccSmokeLessCount(data, selectedFieldworker, selectedPanchayat, s
               // console.log(result);
               if (result) {
                 if (hd === "hbda") {
-                  Low++;
+                  LLow++;
                 }
                 else if (hd === "hbdb") {
-                  Low_to_mod++;
+                  LLow_to_mod++;
                 }
                 else if (hd === "hbdc") {
-                  Mod++;
+                  LMod++;
                 }
                 else if (hd === "hbdd") {
-                  High++;
+                  LHigh++;
                 }
                 else {
                   console.log("uuid in smoke", uuid)
@@ -9519,16 +10605,16 @@ async function tccSmokeLessCount(data, selectedFieldworker, selectedPanchayat, s
               // console.log(result);
               if (result) {
                 if (hd === "hbda") {
-                  Low++;
+                  LLow++;
                 }
                 else if (hd === "hbdb") {
-                  Low_to_mod++;
+                  LLow_to_mod++;
                 }
                 else if (hd === "hbdc") {
-                  Mod++;
+                  LMod++;
                 }
                 else if (hd === "hbdd") {
-                  High++;
+                  LHigh++;
                 }
                 else {
                   console.log("uuid in smoke", uuid)
@@ -9551,13 +10637,13 @@ async function tccSmokeLessCount(data, selectedFieldworker, selectedPanchayat, s
 
   Promise.all(fetchPromises)
     .then(() => {
-      const total = Low + Low_to_mod + Mod + High;
-      document.getElementById("TCC_SL").innerHTML = total;
+      const Ltotal = LLow + LLow_to_mod + LMod + LHigh;
+      document.getElementById("TCC_SL").innerHTML = Ltotal;
       // console.log("tcc smoker Low", Low);
       // console.log("tcc smoker Low_to_mod", Low_to_mod);
       // console.log("tcc smoker Mod", Mod);
       // console.log("tcc smoker High", High);
-      tccSmokeLessChart(Low, Low_to_mod, Mod, High);
+      tccSmokeLessChart(LLow, LLow_to_mod, LMod, LHigh);
     })
     .catch((error) => {
       console.error("Error in processing data:", error);
@@ -9685,160 +10771,144 @@ async function tccSmokeLessCount(data, selectedFieldworker, selectedPanchayat, s
 
 async function TccFollowup(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
   const followUpKeys = ['afu', 'bfu', 'cfu', 'dfu', 'efu', 'ffu', 'gfu'];
-  let followUpData = {};
-  let tccFollows = []
-  let fetchFollowUpPromises = []
+  const followUpTimes = {
+    'afu': 1 * 86400,
+    'bfu': 27 * 86400,
+    'cfu': 47 * 86400,
+    'dfu': 67 * 86400,
+    'efu': 97 * 86400,
+    'ffu': 157 * 86400,
+    'gfu': 217 * 86400
+  };
 
-  data.map(item => {
+  let followUpData = {};
+  let fetchFollowUpPromises = [];
+  followUpKeys.forEach(key => followUpData[key] = []);
+
+  const uniqueData = removeDuplicateUUIDs(data);
+
+  // Fetch follow-up data
+  uniqueData.forEach(item => {
     const villageId = item.village;
     const panchayatId = villageId.substring(0, 2);
-    var uuid = item.uuid;
-    var fwid = item.fw_id;
-    tccFollows = fb.database().ref().child("tcc_form_followup").child(panchayatId).child(villageId);
-    followUpKeys.forEach(key => followUpData[key] = []);
+    const tccFollows = fb.database().ref().child("tcc_form_followup").child(panchayatId).child(villageId);
 
-    fetchFollowUpPromises = data.map(item =>
+    fetchFollowUpPromises.push(
       tccFollows.child(item.uuid).once("value")
         .then(snapshot => {
-          const uuid = item.uuid;
           if (snapshot.exists()) {
             const data_val = snapshot.val();
             followUpKeys.forEach(key => {
-              if (data_val[key] && !followUpData[key].some(entry => entry.uuid === uuid)) {
-                followUpData[key].push({ uuid, data: data_val[key] });
+              if (data_val[key] && !followUpData[key].some(entry => entry.uuid === item.uuid)) {
+                followUpData[key].push({ uuid: item.uuid, data: data_val[key] });
               }
             });
           }
         })
         .catch(error => {
-          console.error(`Error fetching TCC data for UUID: ${uuid}`, error);
+          console.error(`Error fetching TCC data for UUID: ${item.uuid}`, error);
         })
     );
-  })
+  });
 
-
-
-  console.log("followUpData", followUpData)
-  // console.log("followUpKeys", followUpKeys);
   await Promise.all(fetchFollowUpPromises);
 
-  followUpKeys.forEach((key, index) => {
-    // console.log("followUpData", followUpData)
+  // Process each follow-up key data
+  if (followUpKeys !== "") {
+    followUpKeys.forEach((key, index) => {
+      const FT = followUpTimes[key];
+      const followUpArray = followUpData[key];
+      // console.log("followUpArray", followUpArray);
+      let available = 0, nonavailable = 0, agree = 0, nonagree = 0;
+      let noChange = 0, reduced = 0, stopped = 0, relapse = 0, na = 0;
+      let maleCount = 0, femaleCount = 0;
 
-    const followUpArray = followUpData[key];
-    console.log("followUpArray", followUpArray)
-    var FT = 0;
-    if (key === "afu") {
-      FT = 1 * 86400;
-    }
-    if (key === "bfu") {
-      FT = 86400 * 27;
-    }
-    if (key === "cfu") {
-      FT = 86400 * 47;
-    }
-    if (key === "dfu") {
-      FT = 86400 * 67;
-    }
-    if (key === "efu") {
-      FT = 86400 * 97;
-    }
-    if (key === "ffu") {
-      FT = 86400 * 157;
-    }
-    if (key === "gfu") {
-      FT = 86400 * 217;
-    }
+      const fetchGenderPromises = uniqueData.map(item => {
+        const villageId = item.village;
+        const panchayatId = villageId.substring(0, 2);
+        const fwid = item.fw_id;
+        const gender = item.gen?.toLowerCase(); // Use 'gen' field for gender
 
-    if (followUpArray !== undefined) {
-      followUpArray.map(entry => {
-        let maxPhase1Timestamp = null;
-        let maxPhase2Timestamp = null;
-        Object.keys(entry.data).forEach(timestamp => {
-          const year = new Date(Number(timestamp) * 1000).getFullYear();
-          if (timestamp <= (stTime + FT)) {
-            if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
-              maxPhase1Timestamp = timestamp;
-            }
-          }
-          if (timestamp >= (stTime + FT)) {
-            if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
-              maxPhase2Timestamp = timestamp;
-            }
-          }
-        });
-        if (selectedPhase === '1' && maxPhase1Timestamp) return entry.uuid;
-        if (selectedPhase === '2' && maxPhase2Timestamp) return entry.uuid;
-        if (selectedPhase === 'All') return entry.uuid;
-      }).filter(Boolean);
-    }
+        followUpArray.forEach(entry => {
+          if (entry.uuid === item.uuid) {
+            let maxPhase1Timestamp = null;
+            let maxPhase2Timestamp = null;
 
-    let maleCount = 0;
-    let femaleCount = 0;
-    const uniqueData = removeDuplicateUUIDs(data);
-
-    const fetchGenderPromises = uniqueData.map(item => {
-      const villageId = item.village;
-      const panchayatId = villageId.substring(0, 2);
-      var uuid = item.uuid;
-      var fwid = item.fw_id;
-
-      var patientsRef = fb.database().ref().child("patients1").child(panchayatId).child(villageId);
-      return patientsRef.child(uuid).once("value")
-        .then(patientSnap => {
-          const patientData = patientSnap.val();
-          const uuidExistsInFollowUp = followUpArray.some(entry => entry.uuid === uuid);
-          if (patientData && uuidExistsInFollowUp) {
-            const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
-            if (result) {
-              const gender = patientData.gndr?.toLowerCase();
-              if (gender === 'male' || gender === 'm' || gender === 'M') {
-                maleCount++;
-
-                // console.log("UUid in followup", uuid)
-
-                // console.log("patient Data",patientData.pid);
-              } else if (gender === 'female' || gender === 'f' || gender === 'F') {
-                femaleCount++;
-                // console.log("patient Data",patientData.pid);
-                // console.log("UUid in followup", uuid)
-
+            // Determine the relevant timestamps for phase 1 and 2
+            Object.keys(entry.data).forEach(timestamp => {
+              if ((timestamp) <= (stTime + FT)) {
+                maxPhase1Timestamp = Math.max(maxPhase1Timestamp, timestamp);
               }
+              if ((timestamp) >= (stTime + FT)) {
+                maxPhase2Timestamp = Math.max(maxPhase2Timestamp, timestamp);
+              }
+            });
 
+            const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+            if (result && ((maxPhase1Timestamp && selectedPhase === '1') || (maxPhase2Timestamp && selectedPhase === '2') || selectedPhase === 'All')) {
+              const timestamp = selectedPhase === '1' ? maxPhase1Timestamp : selectedPhase === '2' ? maxPhase2Timestamp : selectedPhase === 'All' ? Math.max(maxPhase1Timestamp, maxPhase2Timestamp) : null;
+
+              // Update gender counts
+              if (gender === 'male' || gender === 'm') maleCount++;
+              if (gender === 'female' || gender === 'f') femaleCount++;
+
+              // Process availability and status
+              const entryData = entry.data[timestamp];
+              if (entryData?.batc === 'y' || entryData?.catc === 'y') {
+                available++;
+                if (entryData?.bwsth === 'y' || entryData?.dwsth === 'y') {
+                  agree++;
+                  if (['bsts1'].includes(entryData?.amse || entryData?.dsts || entryData?.bsts)) noChange++;
+                  else if (['bsts2'].includes(entryData?.amse || entryData?.dsts || entryData?.bsts)) reduced++;
+                  else if (['bsts3'].includes(entryData?.amse || entryData?.dsts || entryData?.bsts)) stopped++;
+                  else if (['bsts4'].includes(entryData?.amse || entryData?.dsts || entryData?.bsts)) relapse++;
+                  else na++;
+                } else {
+                  nonagree++;
+                }
+              } else if (entryData?.batc === 'n' || entryData?.catc === 'n') {
+                nonavailable++;
+              }
             }
           }
-
-        })
-        .catch(error => {
-          console.error(`Error fetching patient data for UUID: ${uuid}`, error);
         });
+      });
 
-    });
-    Promise.all(fetchGenderPromises)
-      .then(() => {
+      Promise.all(fetchGenderPromises).then(() => {
         const totalCount = maleCount + femaleCount;
         document.getElementById(`F_${index + 1}`).innerText = totalCount;
 
+
         const chartFunction = `tccFW0${index + 1}GenderChart`;
-        // console.log(`Calling chart function: ${chartFunction}`);
         window[chartFunction](maleCount, femaleCount);
+
+        const totalCount1 = available + nonavailable;
+        document.getElementById(`BA_${index + 1}`).innerText = totalCount1;
+
+        const totalCount_agree = agree + nonagree;
+        document.getElementById(`BW_${index + 1}`).innerText = totalCount_agree;
+
+        const totalCountSts = noChange + reduced + stopped + relapse + na;
+        document.getElementById(`RS_${index + 1}`).innerText = totalCountSts;
+
+        const chartFunction1 = `tccBA0${index + 1}Chart`;
+        window[chartFunction1](available, nonavailable);
+
+        const chartFunction2 = `tccBW0${index + 1}Chart`;
+        window[chartFunction2](agree, nonagree);
+
+        const chartFunction3 = `tccRS0${index + 1}Chart`;
+        window[chartFunction3](noChange, reduced, stopped, relapse, na);
+
         TccFoll = true;
-        // console.log("male count:", maleCount);
-        // console.log("female count:", femaleCount);
-
-        tccArray.push({
-          [`follow-${index + 1}`]: {
-            "Male": maleCount,
-            "Female": femaleCount
-          }
-        });
-      })
-      .catch(error => {
-        console.error("Error processing data:", error);
+        Tccbatc = true;
+      }).catch(error => {
+        console.error("Error processing gender data:", error);
       });
-
-  });
+    });
+  }
 }
+
 
 // async function TccFollowup(data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase, stTime) {
 //   const tccFollows = fb.database().ref().child("tcc_form_followup");
@@ -10150,6 +11220,7 @@ async function TccbatcFollowup(data, selectedFieldworker, selectedPanchayat, sel
       })
     );
   }
+  console.log("followUpData", followUpData)
 
   // Wait for all follow-up data fetches to complete
   await Promise.all(fetchFollowUpPromises);
@@ -10167,8 +11238,9 @@ async function TccbatcFollowup(data, selectedFieldworker, selectedPanchayat, sel
     let stopped = 0;
     let relapse = 0;
     let na = 0;
-    const uniqueData = removeDuplicateUUIDs(data);
 
+    const uniqueData = removeDuplicateUUIDs(data);
+    console.log("followUpArray", followUpArray)
     uniqueData.forEach(item => {
       const villageId = item.village;
       const panchayatId = villageId.substring(0, 2);
@@ -10210,9 +11282,10 @@ async function TccbatcFollowup(data, selectedFieldworker, selectedPanchayat, sel
               } else if (selectedPhase === "All") {
                 timestamps = maxPhase1Timestamp || maxPhase2Timestamp;
               }
-              // console.log("entry.data[timestamps]", entry.data[timestamps]);
+              console.log("entry.data[timestamps]", entry);
               if (timestamps) {
-                if (entry.data[timestamps]?.batc === "y" || entry.data[timestamps]?.catc === "y") {
+                if ((entry.data[timestamps].batc === "y") || (entry.data[timestamps].catc === "y")) {
+                  console.log("entry.data[timestamps].batc ", entry.data[timestamps].batc, " uuid ", " entry.data[timestamps].catc ", entry.data[timestamps].catc, " Key ", key, " uuid ", uuid);
                   available++;
                   if (entry.data[timestamps]?.bwsth === "y" || entry.data[timestamps]?.dwsth === "y") {
                     agree++;
@@ -10230,7 +11303,8 @@ async function TccbatcFollowup(data, selectedFieldworker, selectedPanchayat, sel
                   } else {
                     nonagree++;
                   }
-                } else if (entry.data[timestamps]?.batc === "n" || entry.data[timestamps]?.catc === "n") {
+                } else if (entry.data[timestamps].batc === "n" || entry.data[timestamps].catc === "n") {
+                  console.log("entry.data[timestamps].batc ", entry.data[timestamps].batc, " uuid ", " entry.data[timestamps].catc ", entry.data[timestamps].catc, " Key ", key, " uuid ", uuid);
                   nonavailable++;
                 }
               }
@@ -10577,16 +11651,25 @@ async function pendingTccFOLLOW(p1, p2, selectedFieldworker, selectedPanchayat, 
             // console.log("UUid in the tcc Follow", followUp)
 
             if (selectedPhase === '1' || selectedPhase === 'All') {
-              if (followUp[panchayatId][villageId][uuid] && followUp[panchayatId][villageId][uuid].due_dt) {
-                const dueDate = new Date(followUp[panchayatId][villageId][uuid].due_dt.split("/").reverse().join("-")).getTime();
+              if (followUp[panchayatId] !== undefined) {
+                if (followUp[panchayatId][villageId] !== undefined) {
 
-                if (dueDate < currentDate) {
-                  const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
-                  if (result) {
-                    followUpCounts[fuKey].phase1 += 1;
+                  if (followUp[panchayatId][villageId][uuid] && followUp[panchayatId][villageId][uuid].due_dt) {
+                    const dueDate = new Date(followUp[panchayatId][villageId][uuid].due_dt.split("/").reverse().join("-")).getTime();
                     // console.log("Follow Up uuid: ", uuid, " fuKey ", fuKey, " Phase1 ", villageId)
+
+                    if (dueDate < currentDate) {
+                      const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+                      if (result) {
+                        followUpCounts[fuKey].phase1 += 1;
+                      }
+                    }
                   }
                 }
+              } else {
+                // console.log("No data for this village")
+                pass;
+
               }
             }
           });
@@ -10597,19 +11680,28 @@ async function pendingTccFOLLOW(p1, p2, selectedFieldworker, selectedPanchayat, 
             const panchayatId = villageId.substring(0, 2);
             const uuid = item.uuid;
             const fwid = item.fw_id;
-            // console.log("UUid in the tcc Follow", followUp)
+            // console.log("UUid in the tcc Follow", villageId)
+            // console.log("UUid in the tcc Follow", followUp[panchayatId])
             if (selectedPhase === '2' || selectedPhase === 'All') {
-              if (followUp[panchayatId][villageId][uuid] && followUp[panchayatId][villageId][uuid].due_dt) {
-                const dueDate = new Date(followUp[panchayatId][villageId][uuid].due_dt.split("/").reverse().join("-")).getTime();
+              if (followUp[panchayatId] !== undefined) {
+                if (followUp[panchayatId][villageId] !== undefined) {
 
-                if (dueDate < currentDate) {
-                  const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
-                  if (result) {
-                    followUpCounts[fuKey].phase2 += 1;
+                  if (followUp[panchayatId][villageId][uuid] && followUp[panchayatId][villageId][uuid].due_dt) {
+                    const dueDate = new Date(followUp[panchayatId][villageId][uuid].due_dt.split("/").reverse().join("-")).getTime();
                     // console.log("Follow Up uuid: ", uuid, " fuKey ", fuKey, " Phase2 ", villageId)
+
+                    if (dueDate < currentDate) {
+                      const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
+                      if (result) {
+                        followUpCounts[fuKey].phase2 += 1;
+                      }
+                    }
                   }
                 }
+              } else {
+                // pass;
               }
+
             }
           });
           fetchPromises.push(promise2);
@@ -10718,6 +11810,7 @@ function isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVil
 async function clearData() {
 
   document.getElementById("ts").innerText = 0;
+  initMap()
   genderChart("00", "00");
   attendChart("00", "00");
   eligibilityChart("00", "00");
@@ -10856,6 +11949,7 @@ async function clearData() {
 async function clearData_Fm() {
 
   document.getElementById("ts").innerText = 0;
+  initMap()
   genderChart("00", "00");
   attendChart("00", "00");
   eligibilityChart("00", "00");
@@ -10886,6 +11980,7 @@ async function clearData_Fm() {
 async function clearData_Doc() {
 
   document.getElementById("ts").innerText = 0;
+  initMap()
   genderChart("00", "00");
   attendChart("00", "00");
   eligibilityChart("00", "00");
@@ -11747,7 +12842,8 @@ function saveFile(blob, filename) {
 
 
 async function processPatientData(p1, p2, data, selectedFieldworker, selectedPanchayat, selectedVillage, selectedPhase) {
-
+  console.log("Data p1", p1)
+  console.log("Data p2", p2)
   let form3Data = {};
   let patientD = {};
   const uniqueData = removeDuplicateUUIDs(data);
@@ -11781,11 +12877,11 @@ async function processPatientData(p1, p2, data, selectedFieldworker, selectedPan
     form3Promises.push(
       fb.database().ref().child("Form_3").child(panchayatId).child(villageId).child(uuid).once("value")
         .then(snap => {
+          let formData = snap.val();
           const result = isMatchingCondition(selectedFieldworker, selectedPanchayat, selectedVillage, fwid, panchayatId, villageId);
           if (result) {
-
             if (snap.exists()) {
-              form3Data[uuid] = snap.val();
+              form3Data[uuid] = formData;
             }
           }
         })
@@ -11916,6 +13012,53 @@ async function processPatientData(p1, p2, data, selectedFieldworker, selectedPan
   };
 
 
+  const checkScreeningUse = (uuid, phase) => {
+    if (form3Data.hasOwnProperty(uuid) && patientD[uuid]) {
+
+      let maxPhase1Timestamp = null;
+      let maxPhase2Timestamp = null;
+
+      // Iterate through all timestamps in form1Data for the given uuid
+      Object.keys(form3Data[uuid]).forEach(timestamp => {
+        let year = new Date(Number(timestamp) * 1000).getFullYear();
+
+        if (phase === 1 && timestamp <= stTime) {
+          ph1 = true;
+          if (!maxPhase1Timestamp || Number(timestamp) > Number(maxPhase1Timestamp)) {
+            maxPhase1Timestamp = timestamp;
+          }
+
+
+        }
+        if (phase === 2 && (timestamp >= stTime)) {
+          ph2 = true;
+          if (!maxPhase2Timestamp || Number(timestamp) > Number(maxPhase2Timestamp)) {
+            maxPhase2Timestamp = timestamp;
+          }
+
+        }
+      });
+      if (maxPhase1Timestamp) {
+        const screeningUse = form3Data[uuid][maxPhase1Timestamp];
+        if (screeningUse) {
+          if (ph1) {
+            phase1FormCount++;
+          }
+        }
+      }
+      if (maxPhase2Timestamp) {
+        const screeningUse = form3Data[uuid][maxPhase2Timestamp];
+        if (screeningUse) {
+          if (ph2) {
+            // console.log("uuids of yes in habit", uuid)
+            phase2FormCount++;
+          }
+        }
+      }
+    }
+  };
+
+
 
 
   const countUUIDs = (uuids, formData) => {
@@ -11930,11 +13073,43 @@ async function processPatientData(p1, p2, data, selectedFieldworker, selectedPan
     return count;
   };
 
+  // let uniqueDataU1 = [];
+  // let uniqueDataU2 = [];
+
+  // let seenUUIDs = new Set();
+
+  // p1.forEach(entry => {
+  //   if (!seenUUIDs.has(entry.uuid)) {
+  //     uniqueDataU1.push(entry);
+  //     seenUUIDs.add(entry.uuid);
+  //   }
+  // });
+  // p2.forEach(entry => {
+  //   if (!seenUUIDs.has(entry.uuid)) {
+  //     uniqueDataU2.push(entry);
+  //     seenUUIDs.add(entry.uuid);
+  //   }
+  // });
+  // const sCountUUIDs = (uuids, form1Data, form3Data, patientD) => {
+
+  //   let count = 0;
+  //   uuids.forEach(item => {
+  //     let uuid = item.uuid;
+  //     if (form3Data.hasOwnProperty(uuid) && patientD.hasOwnProperty(uuid) && form1Data.hasOwnProperty(uuid)) {
+  //       count++;
+  //       console.log("uuid of inpersonScreening", uuid)
+  //     }
+  //   });
+  //   return count;
+  // };
+
+  // console.log("uniqueDataU: ", uniqueDataU);
+
   p1.forEach(item => checkTobaccoUse(item.uuid, 1));
   p2.forEach(item => checkTobaccoUse(item.uuid, 2));
 
-  phase1FormCount = countUUIDs(p1, form3Data);
-  phase2FormCount = countUUIDs(p2, form3Data);
+  p1.forEach(item => checkScreeningUse(item.uuid, 1));
+  p2.forEach(item => checkScreeningUse(item.uuid, 2));
 
   phase1surveyCount = countUUIDs(p1, form1Data);
   phase2surveyCount = countUUIDs(p2, form1Data);
